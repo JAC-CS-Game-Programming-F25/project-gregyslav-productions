@@ -10,27 +10,35 @@
 
 ---
 
-# Sample Proposal - Pokémon the Trading Card Game
-
-> [!note]
-> This was taken from a project I did in university so the scope is **much** larger than what I'm expecting from you in terms of number of features!
+# TITLE_PENDING
 
 ## ✒️ Description
 
-In this turn-based battle card game, players assume the role of a Pokémon trainer and use their Pokémon to battle their opponent's Pokémon. Players play Pokémon to the field and attack their opponent's Pokémon. A Pokémon that has sustained enough damage is Knocked Out, and the player who knocked it out draws a Prize card. There are usually six Prize cards, and the primary win condition is to draw all of them. Other ways to win are by knocking out all the Pokémon the opponent has on the field so that the opponent has none left, or if at the beginning of their opponent's turn there are no cards left to draw in the opponent's deck.
+Our game is a roguelike top-down shooter, where you control a speceship and fight bosses. You control a small space ship, which you can move on the screen with wasd, while it shoots automatically.
 
-## 🕹️ Gameplay
+The boss has a healthbar on the top of the screen, and the player has a healthbar in a bottom corner.
 
-Players begin by having one player select heads or tails, and the other flips a coin; the winner of the coin flip will decide who goes first or second. The player going first cannot attack their first turn, unless the card says otherwise. (Dice may be used in place of coins, with even numbers representing heads and odd numbers representing tails). Players then shuffle their decks and draw seven cards, then play one Basic Pokémon onto the field. This Pokémon is known as the Active Pokémon and is usually the one that attacks and receives damage. If a player does not have any Basic Pokémon, they must shuffle and draw a new hand, and the opponent may draw one additional card. Once both players have at least one Basic Pokémon, they can play up to five more Basic Pokémon onto their "Bench" (representing the maximum-carry limit of six from the video games). Players then take the top six cards of their deck and place them to the side as Prize Cards. Play then begins with the player who won the coin flip.
+The bosses you face have lots of health and unique attacks and abilities for attacking the player. The bosses stay on the top of the screen, in most cases.
 
-Play alternates between players who may take several actions during their turn, including playing new Basic Pokémon, evolving their Pokémon, playing Trainer cards and Energy cards, and using Pokémon Abilities. A player may also retreat their Active Pokémon, switching the Active Pokémon with one on the Bench. At the end of their turn, a player may use one of their Active Pokémon's attacks, provided the prerequisite amount and types of Energy are attached to that Pokémon. Effects from that attack are then activated and damage may be placed on the Defending Pokémon; some attacks simply have effects but do not do damage. Damage may be modified depending on whether the defender has a weakness or a resistance to the attacker's Pokémon type. If the final damage exceeds the defending Pokémon's HP, it is Knocked Out, and the active player takes a prize card and ends their turn.
+Only one boss will be implemented, the MechTitan, which can use:
+- Laser Barrage, where it fires a bunch of projectiles of the player for a duration, with a spread
+- Missile Swarm, where it fires 5 missiles that home in on the player and explode after a while
+- Shield Bash, where it becomes invincible, dashes forward, comes back to the top of the screen and stops being invincible
 
-This implementation of _Pokémon the Trading Card Game_ is a single player experience with an AI. The game is played primarily with the mouse to interact with the cards and general GUI. The players can optionally hit `M` on their keyboard to mute all game sounds.
+While you fight the bosses, asteroids spawn on the screen, which can be destroyed by shooting them. Destroyed asteroids drop temporary power-ups.
+
+The possible power-ups are:
+- Rapid Fire, which increases the rate of fire of your weapon
+- Triple Shot, which make your weapon fire 3 projectiles in a small spread instead of 1
+- Shield, which makes your ship invincible
+- Speed Boost, which makes your ship move faster
+- Screen Clear, which clears all projectiles from the screen
+
+When a boss is defeated, there's a small intermission delay, then the next boss spawns
+
+For now, you fight increasing numbers of the same boss at a time (first one, then two at a time, etc.)
 
 ## 📃 Requirements
-
-> [!note]
-> This was a web project so that's why you'll see requirements about logging in and uploading data which for you is irrelevant. Focus more on the requirements describing actions taken for gameplay.
 
 1. The user shall register to be able to login.
 2. The user shall login to be able to play a game.
