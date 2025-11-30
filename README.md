@@ -40,14 +40,14 @@ For now, you fight increasing numbers of the same boss at a time (first one, the
 
 ## 📃 Requirements
 
-1. The user shall register to be able to login.
-2. The user shall login to be able to play a game.
-3. The user shall upload a valid deck file.
-4. The user shall upload a valid cards file.
-5. The user shall upload a valid abilities file.
-6. The user shall select which deck they will use in the game.
-7. The user shall select which deck the AI will use in the game.
-8. The system shall "flip a coin" to decide which player goes first.
+1. The user can move the ship with WASD.
+2. The user ship fires automatically.
+3. The user ship can pick up power-ups.
+4. The user ship gets effects from picked up power-ups.
+5. The user ship can get hit by asteroids and boss attacks.
+6. When the user ship health hits 0, it explodes.
+7. The asteroids can be destroyed by player bullets.
+8. When destroyed, the asteroids drop a power-up.
 9. The system shall shuffle the user's deck.
 10. The system shall draw the top 7 cards from the user's deck.
 11. If the user does not have a Basic Pokémon in their hand the system shall "mulligan" until they do.
@@ -69,14 +69,11 @@ For now, you fight increasing numbers of the same boss at a time (first one, the
 
 ### 🤖 State Diagram
 
-> [!note]
-> Remember that you'll need diagrams for not only game states but entity states as well.
-
 ![State Diagram](./assets/images/StateDiagram.png)
 
 ### 🗺️ Class Diagram
 
-![Class Diagram](./assets/images/ClassDiagram.png)
+![Class Diagram](./assets/images/ClassDiagramZoom.png)
 
 ### 🧵 Wireframes
 
