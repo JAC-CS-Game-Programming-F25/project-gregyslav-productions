@@ -105,4 +105,4 @@ We also used [Krita](https://krita.org/en/) for wireframes
 
 #### 🖼️ Images
 
--   Ship, boss, asteroids, projectiles and background are taken from Starsector [Starsector](https://fractalsoftworks.com/)
+-   Ship, boss, asteroids, projectiles and background are taken from [Starsector](https://fractalsoftworks.com/)
