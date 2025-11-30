@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="Claude" version="21.0.0" type="device">
+  <diagram id="shoot-em-up-class-diagram" name="Class Diagram">
+    <mxGraphModel dx="2000" dy="2000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="4000" pageHeight="6000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- ==================== ENUMERATIONS ==================== -->
+        
+        <!-- GameState Enum -->
+        <mxCell id="enum_gamestate" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;GameState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;MAIN_MENU&lt;br&gt;LOADING&lt;br&gt;PLAYING&lt;br&gt;PAUSED&lt;br&gt;SHOP&lt;br&gt;VICTORY&lt;br&gt;GAME_OVER&lt;br&gt;RESULTS&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="140" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- EntityState Enum -->
+        <mxCell id="enum_entitystate" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;EntityState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;IDLE&lt;br&gt;MOVING&lt;br&gt;SHOOTING&lt;br&gt;TAKING_DAMAGE&lt;br&gt;INVINCIBLE&lt;br&gt;BUFFED&lt;br&gt;DEAD&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="140" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- BossState Enum -->
+        <mxCell id="enum_bossstate" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;BossState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;INTRO&lt;br&gt;IDLE&lt;br&gt;ATTACKING&lt;br&gt;HIT&lt;br&gt;PHASE_TRANSITION&lt;br&gt;DEFEATED&lt;br&gt;DEATH_ANIMATION&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="150" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- BossPhase Enum -->
+        <mxCell id="enum_bossphase" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;BossPhase&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;PHASE_1&lt;br&gt;PHASE_2&lt;br&gt;PHASE_3&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="530" y="40" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- BulletPattern Enum -->
+        <mxCell id="enum_bulletpattern" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;BulletPattern&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;STRAIGHT&lt;br&gt;SPREAD&lt;br&gt;SPIRAL&lt;br&gt;AIMED&lt;br&gt;WAVE&lt;br&gt;RANDOM&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="670" y="40" width="130" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- PowerUpType Enum -->
+        <mxCell id="enum_poweruptype" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;PowerUpType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;RAPID_FIRE&lt;br&gt;TRIPLE_SHOT&lt;br&gt;SHIELD&lt;br&gt;DAMAGE_BOOST&lt;br&gt;SPEED_BOOST&lt;br&gt;SCREEN_CLEAR&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="820" y="40" width="130" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- BuffType Enum -->
+        <mxCell id="enum_bufftype" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;BuffType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;MAX_HEALTH_UP&lt;br&gt;DAMAGE_UP&lt;br&gt;FIRE_RATE_UP&lt;br&gt;SPEED_UP&lt;br&gt;MAGNET_RANGE_UP&lt;br&gt;CRITICAL_CHANCE&lt;br&gt;LIFE_STEAL&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="970" y="40" width="150" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- AsteroidSize Enum -->
+        <mxCell id="enum_asteroidsize" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;AsteroidSize&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;SMALL&lt;br&gt;MEDIUM&lt;br&gt;LARGE&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="40" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- ProjectileOwner Enum -->
+        <mxCell id="enum_projectileowner" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ProjectileOwner&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;PLAYER&lt;br&gt;BOSS&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="40" width="130" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- TweenType Enum -->
+        <mxCell id="enum_tweentype" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;TweenType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;LINEAR&lt;br&gt;EASE_IN&lt;br&gt;EASE_OUT&lt;br&gt;EASE_IN_OUT&lt;br&gt;BOUNCE&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="40" width="120" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- FontType Enum -->
+        <mxCell id="enum_fonttype" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;FontType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;TITLE&lt;br&gt;HUD&lt;br&gt;MENU&lt;br&gt;DAMAGE_NUMBER&lt;br&gt;SHOP&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="40" width="140" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- SoundType Enum -->
+        <mxCell id="enum_soundtype" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;SoundType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;PLAYER_SHOOT&lt;br&gt;BOSS_SHOOT&lt;br&gt;EXPLOSION&lt;br&gt;POWERUP_COLLECT&lt;br&gt;CURRENCY_COLLECT&lt;br&gt;PLAYER_HIT&lt;br&gt;BOSS_HIT&lt;br&gt;BOSS_DEFEAT&lt;br&gt;SHOP_OPEN&lt;br&gt;SHOP_CLOSE&lt;br&gt;PURCHASE_SUCCESS&lt;br&gt;PURCHASE_FAIL&lt;br&gt;MENU_SELECT&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="40" width="150" height="250" as="geometry" />
+        </mxCell>
+        
+        <!-- ShopState Enum -->
+        <mxCell id="enum_shopstate" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ShopState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;CLOSED&lt;br&gt;OPENING&lt;br&gt;BROWSING&lt;br&gt;ITEM_SELECTED&lt;br&gt;CONFIRMING&lt;br&gt;PURCHASE_SUCCESS&lt;br&gt;PURCHASE_FAILED&lt;br&gt;CLOSING&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="40" width="150" height="190" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== INTERFACES ==================== -->
+        
+        <!-- Collidable Interface -->
+        <mxCell id="interface_collidable" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Collidable&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ onCollision(other: GameObject)&lt;br&gt;+ getCollisionLayer(): Int&lt;br&gt;+ getCollisionMask(): Int&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="2080" y="40" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Damageable Interface -->
+        <mxCell id="interface_damageable" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Damageable&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ maxHealth: Int&lt;br&gt;+ currentHealth: Int&lt;br&gt;+ takeDamage(amount: Int)&lt;br&gt;+ heal(amount: Int)&lt;br&gt;+ isDead(): Boolean&lt;br&gt;+ getHealthPercent(): Float&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="2300" y="40" width="200" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== BASE CLASSES ==================== -->
+        
+        <!-- GameObject Abstract -->
+        <mxCell id="class_gameobject" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;GameObject&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# position: Vector2&lt;br&gt;# size: Vector2&lt;br&gt;# isActive: Boolean&lt;br&gt;# animController: AnimationController&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)*&lt;br&gt;+ render(canvas)*&lt;br&gt;+ getHitbox(): Hitbox&lt;br&gt;+ destroy()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="600" y="320" width="220" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- MovableObject Abstract -->
+        <mxCell id="class_movableobject" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;MovableObject&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# velocity: Vector2&lt;br&gt;# speed: Float&lt;br&gt;# maxSpeed: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ move(deltaTime)&lt;br&gt;+ setVelocity(vel: Vector2)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="600" y="560" width="220" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: GameObject -> MovableObject -->
+        <mxCell id="inherit_go_mo" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="class_movableobject" target="class_gameobject">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Vector2 -->
+        <mxCell id="class_vector2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Vector2&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ x: Float&lt;br&gt;+ y: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ add(other): Vector2&lt;br&gt;+ subtract(other): Vector2&lt;br&gt;+ multiply(scalar): Vector2&lt;br&gt;+ normalize(): Vector2&lt;br&gt;+ magnitude(): Float&lt;br&gt;+ distanceTo(other): Float&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="880" y="320" width="180" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Hitbox -->
+        <mxCell id="class_hitbox" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Hitbox&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ x, y: Float&lt;br&gt;+ width, height: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ intersects(other): Boolean&lt;br&gt;+ contains(point): Boolean&lt;br&gt;+ getCenter(): Vector2&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="880" y="520" width="180" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== PLAYER SYSTEM ==================== -->
+        
+        <!-- Player -->
+        <mxCell id="class_player" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Player&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- currentState: EntityState&lt;br&gt;- lives: Int&lt;br&gt;- invincibilityTimer: Float&lt;br&gt;- activePowerUp: PowerUpType&lt;br&gt;- powerUpTimer: Float&lt;br&gt;- currency: Int&lt;br&gt;- activeBuffs: List&amp;lt;Buff&amp;gt;&lt;br&gt;- stats: PlayerStats&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ handleInput(input)&lt;br&gt;+ shoot(): List&amp;lt;Projectile&amp;gt;&lt;br&gt;+ applyPowerUp(type)&lt;br&gt;+ applyBuff(buff: Buff)&lt;br&gt;+ addCurrency(amount: Int)&lt;br&gt;+ spendCurrency(amount): Boolean&lt;br&gt;+ takeDamage(amount: Int)&lt;br&gt;+ getStats(): PlayerStats&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="780" width="220" height="300" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: MovableObject -> Player -->
+        <mxCell id="inherit_mo_player" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_player" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- PlayerStats -->
+        <mxCell id="class_playerstats" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PlayerStats&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ maxHealth: Int&lt;br&gt;+ damage: Int&lt;br&gt;+ fireRate: Float&lt;br&gt;+ moveSpeed: Float&lt;br&gt;+ magnetRange: Float&lt;br&gt;+ criticalChance: Float&lt;br&gt;+ lifeStealPercent: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ applyBuff(buff: Buff)&lt;br&gt;+ removeBuff(buff: Buff)&lt;br&gt;+ reset()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="300" y="780" width="180" height="210" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: Player -> PlayerStats -->
+        <mxCell id="comp_player_stats" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_player" target="class_playerstats">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== BOSS SYSTEM ==================== -->
+        
+        <!-- Boss Abstract -->
+        <mxCell id="class_boss" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Boss&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# name: String&lt;br&gt;# currentState: BossState&lt;br&gt;# currentPhase: BossPhase&lt;br&gt;# phase1Attacks: List&amp;lt;AttackPattern&amp;gt;&lt;br&gt;# phase2Attacks: List&amp;lt;AttackPattern&amp;gt;&lt;br&gt;# phase3Attacks: List&amp;lt;AttackPattern&amp;gt;&lt;br&gt;# attackCooldown: Float&lt;br&gt;# currencyDropAmount: Int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ takeDamage(amount: Int)&lt;br&gt;+ checkPhaseTransition()&lt;br&gt;+ selectAttack(): AttackPattern&lt;br&gt;+ executeAttack(pattern)*&lt;br&gt;+ onPhaseChange(newPhase)*&lt;br&gt;+ onDefeat()*&lt;br&gt;+ dropCurrency(): List&amp;lt;Currency&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="520" y="780" width="250" height="320" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: MovableObject -> Boss -->
+        <mxCell id="inherit_mo_boss" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="class_boss" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Boss1_SpaceDragon -->
+        <mxCell id="class_boss1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Boss1_SpaceDragon&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ executeAttack(pattern)&lt;br&gt;+ onPhaseChange(phase)&lt;br&gt;+ onDefeat()&lt;br&gt;- fireBreathAttack()&lt;br&gt;- tailSweepAttack()&lt;br&gt;- summonMinions()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="400" y="1160" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Boss2_MechaTitan -->
+        <mxCell id="class_boss2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Boss2_MechaTitan&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ executeAttack(pattern)&lt;br&gt;+ onPhaseChange(phase)&lt;br&gt;+ onDefeat()&lt;br&gt;- laserBarrage()&lt;br&gt;- missileSwarm()&lt;br&gt;- shieldBash()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1160" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Boss3_VoidSerpent -->
+        <mxCell id="class_boss3" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Boss3_VoidSerpent&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ executeAttack(pattern)&lt;br&gt;+ onPhaseChange(phase)&lt;br&gt;+ onDefeat()&lt;br&gt;- voidBeam()&lt;br&gt;- portalSpawn()&lt;br&gt;- dimensionalRift()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="800" y="1160" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: Boss -> Boss1 -->
+        <mxCell id="inherit_boss_boss1" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.25;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_boss1" target="class_boss">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: Boss -> Boss2 -->
+        <mxCell id="inherit_boss_boss2" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="class_boss2" target="class_boss">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: Boss -> Boss3 -->
+        <mxCell id="inherit_boss_boss3" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.75;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_boss3" target="class_boss">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- AttackPattern -->
+        <mxCell id="class_attackpattern" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AttackPattern&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ name: String&lt;br&gt;+ bulletPattern: BulletPattern&lt;br&gt;+ bulletCount: Int&lt;br&gt;+ bulletSpeed: Float&lt;br&gt;+ spreadAngle: Float&lt;br&gt;+ cooldown: Float&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="800" y="780" width="180" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: Boss -> AttackPattern -->
+        <mxCell id="comp_boss_attack" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.2;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_boss" target="class_attackpattern">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== PROJECTILES ==================== -->
+        
+        <!-- Projectile Abstract -->
+        <mxCell id="class_projectile" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Projectile&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# damage: Int&lt;br&gt;# owner: ProjectileOwner&lt;br&gt;# pattern: BulletPattern&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ render(canvas)&lt;br&gt;+ onCollision(other)&lt;br&gt;+ onHit(target: Damageable)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="780" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: MovableObject -> Projectile -->
+        <mxCell id="inherit_mo_projectile" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_projectile" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- PlayerBullet -->
+        <mxCell id="class_playerbullet" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PlayerBullet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- isPiercing: Boolean&lt;br&gt;- isCritical: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ render(canvas)&lt;br&gt;+ onCollision(other)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="1020" width="160" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- BossBullet -->
+        <mxCell id="class_bossbullet" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BossBullet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- rotationSpeed: Float&lt;br&gt;- amplitude: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ render(canvas)&lt;br&gt;+ onCollision(other)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="1020" width="160" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: Projectile -> PlayerBullet -->
+        <mxCell id="inherit_proj_player" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.25;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_playerbullet" target="class_projectile">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance: Projectile -> BossBullet -->
+        <mxCell id="inherit_proj_boss" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.75;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_bossbullet" target="class_projectile">
+          <mxGeometry width="160" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== DROPS ==================== -->
+        
+        <!-- Asteroid -->
+        <mxCell id="class_asteroid" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Asteroid&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- size: AsteroidSize&lt;br&gt;- rotationSpeed: Float&lt;br&gt;- powerUpDropChance: Float&lt;br&gt;- currencyDropChance: Float&lt;br&gt;- health: Int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ takeDamage(amount: Int)&lt;br&gt;- onDestroyed()&lt;br&gt;- spawnDrop(): GameObject&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="780" width="180" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- PowerUp -->
+        <mxCell id="class_powerup" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PowerUp&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- type: PowerUpType&lt;br&gt;- lifetime: Float&lt;br&gt;- blinkTimer: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ onCollision(other)&lt;br&gt;+ apply(player: Player)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="780" width="170" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Currency -->
+        <mxCell id="class_currency" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Currency&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- value: Int&lt;br&gt;- lifetime: Float&lt;br&gt;- magnetSpeed: Float&lt;br&gt;- isBeingMagneted: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ startMagnet(playerPos)&lt;br&gt;+ collect(player: Player)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="780" width="180" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== SHOP SYSTEM ==================== -->
+        
+        <!-- ShopManager -->
+        <mxCell id="class_shopmanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ShopManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- currentState: ShopState&lt;br&gt;- availableItems: List&amp;lt;ShopItem&amp;gt;&lt;br&gt;- selectedItem: ShopItem&lt;br&gt;- playerRef: Player&lt;br&gt;- tweenManager: TweenManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ openShop()&lt;br&gt;+ closeShop()&lt;br&gt;+ selectItem(item: ShopItem)&lt;br&gt;+ attemptPurchase(): Boolean&lt;br&gt;+ update(deltaTime)&lt;br&gt;- onPurchaseSuccess(item)&lt;br&gt;- refreshItems()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1380" width="220" height="260" as="geometry" />
+        </mxCell>
+        
+        <!-- ShopItem -->
+        <mxCell id="class_shopitem" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ShopItem&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ name: String&lt;br&gt;+ description: String&lt;br&gt;+ cost: Int&lt;br&gt;+ icon: Sprite&lt;br&gt;+ buffType: BuffType&lt;br&gt;+ buffValue: Float&lt;br&gt;+ buffDuration: Float&lt;br&gt;+ isPermanent: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ isAffordable(currency): Boolean&lt;br&gt;+ createBuff(): Buff&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="300" y="1380" width="200" height="220" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: ShopManager -> ShopItem -->
+        <mxCell id="comp_shop_item" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_shopmanager" target="class_shopitem">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Buff -->
+        <mxCell id="class_buff" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Buff&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- type: BuffType&lt;br&gt;- value: Float&lt;br&gt;- duration: Float&lt;br&gt;- remainingTime: Float&lt;br&gt;- isPermanent: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ isExpired(): Boolean&lt;br&gt;+ apply(stats: PlayerStats)&lt;br&gt;+ remove(stats: PlayerStats)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1380" width="180" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Association: ShopItem -> Buff -->
+        <mxCell id="assoc_shopitem_buff" value="" style="endArrow=open;html=1;endSize=12;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="class_shopitem" target="class_buff">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ShopItemFactory -->
+        <mxCell id="class_shopitemfactory" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ShopItemFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ createHealthUpgrade(tier): ShopItem&lt;br&gt;+ createDamageUpgrade(tier): ShopItem&lt;br&gt;+ createSpeedUpgrade(tier): ShopItem&lt;br&gt;+ createFireRateUpgrade(tier): ShopItem&lt;br&gt;+ createCriticalUpgrade(tier): ShopItem&lt;br&gt;+ createMagnetUpgrade(tier): ShopItem&lt;br&gt;+ createTemporaryBuff(type, dur): ShopItem&lt;br&gt;+ getRandomItems(count): List&amp;lt;ShopItem&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="760" y="1380" width="280" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Dependency: ShopItemFactory -> ShopItem -->
+        <mxCell id="dep_factory_item" value="" style="endArrow=open;html=1;endSize=12;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.7;" edge="1" parent="1" source="class_shopitemfactory" target="class_shopitem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== COLLISION ==================== -->
+        
+        <!-- CollisionManager -->
+        <mxCell id="class_collisionmanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CollisionManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- collidables: List&amp;lt;Collidable&amp;gt;&lt;br&gt;- collisionMatrix: Int[][]&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ registerCollidable(obj)&lt;br&gt;+ unregisterCollidable(obj)&lt;br&gt;+ checkCollisions()&lt;br&gt;- broadPhase(): List&amp;lt;CollisionPair&amp;gt;&lt;br&gt;- narrowPhase(pairs)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="1380" width="230" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== SPRITES & ANIMATION ==================== -->
+        
+        <!-- SpriteManager -->
+        <mxCell id="class_spritemanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SpriteManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- sprites: Map&amp;lt;String, Sprite&amp;gt;&lt;br&gt;- spriteSheets: Map&amp;lt;String, SpriteSheet&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ loadSprite(name, path)&lt;br&gt;+ loadSpriteSheet(name, path, fw, fh)&lt;br&gt;+ getSprite(name): Sprite&lt;br&gt;+ getSpriteSheet(name): SpriteSheet&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="1380" width="250" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Sprite -->
+        <mxCell id="class_sprite" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Sprite&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ image: Bitmap&lt;br&gt;+ width, height: Int&lt;br&gt;+ sourceRect: Rect&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ draw(canvas, x, y)&lt;br&gt;+ drawScaled(canvas, destRect)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="1560" width="170" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- SpriteSheet -->
+        <mxCell id="class_spritesheet" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SpriteSheet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- sheet: Bitmap&lt;br&gt;- frameWidth, frameHeight: Int&lt;br&gt;- columns: Int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getFrame(index): Sprite&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="1560" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: SpriteManager -> Sprite -->
+        <mxCell id="comp_spritemgr_sprite" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="class_spritemanager" target="class_sprite">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: SpriteManager -> SpriteSheet -->
+        <mxCell id="comp_spritemgr_sheet" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="class_spritemanager" target="class_spritesheet">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Animation -->
+        <mxCell id="class_animation" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Animation&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- spriteSheet: SpriteSheet&lt;br&gt;- frameIndices: List&amp;lt;Int&amp;gt;&lt;br&gt;- frameDuration: Float&lt;br&gt;- isLooping: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime)&lt;br&gt;+ getCurrentSprite(): Sprite&lt;br&gt;+ isComplete(): Boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1740" y="1560" width="180" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- AnimationController -->
+        <mxCell id="class_animcontroller" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AnimationController&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- animations: Map&amp;lt;String, Animation&amp;gt;&lt;br&gt;- currentAnimation: Animation&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addAnimation(name, anim)&lt;br&gt;+ play(animationName: String)&lt;br&gt;+ getCurrentSprite(): Sprite&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="1560" width="220" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: AnimationController -> Animation -->
+        <mxCell id="comp_animctrl_anim" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0;exitY=0.5;entryX=1;entryY=0.4;" edge="1" parent="1" source="class_animcontroller" target="class_animation">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== TWEENS ==================== -->
+        
+        <!-- TweenManager -->
+        <mxCell id="class_tweenmanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TweenManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- activeTweens: List&amp;lt;Tween&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ createTween(start, end, dur, type): Tween&lt;br&gt;+ tweenPosition(obj, target, dur)&lt;br&gt;+ tweenAlpha(obj, target, dur)&lt;br&gt;+ update(deltaTime)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1380" width="260" height="130" as="geometry" />
+        </mxCell>
+        
+        <!-- Tween -->
+        <mxCell id="class_tween" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Tween&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- startValue: Float&lt;br&gt;- endValue: Float&lt;br&gt;- duration: Float&lt;br&gt;- elapsed: Float&lt;br&gt;- type: TweenType&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ update(deltaTime): Float&lt;br&gt;+ isFinished(): Boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="2180" y="1560" width="160" height="170" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== AUDIO & FONTS ==================== -->
+        
+        <!-- AudioManager -->
+        <mxCell id="class_audiomanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AudioManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- soundEffects: Map&amp;lt;SoundType, SoundPool&amp;gt;&lt;br&gt;- musicPlayer: MediaPlayer&lt;br&gt;- sfxVolume, musicVolume: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ loadSound(type, path)&lt;br&gt;+ playSound(type: SoundType)&lt;br&gt;+ playMusic(loop: Boolean)&lt;br&gt;+ setVolume(vol: Float)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="1380" width="250" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- FontManager -->
+        <mxCell id="class_fontmanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FontManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- fonts: Map&amp;lt;FontType, Typeface&amp;gt;&lt;br&gt;- paints: Map&amp;lt;FontType, Paint&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ loadFont(type, path)&lt;br&gt;+ drawText(canvas, text, x, y, type)&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="2220" y="1380" width="220" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== PERSISTENCE ==================== -->
+        
+        <!-- SaveManager -->
+        <mxCell id="class_savemanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SaveManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- saveFilePath: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ saveGame(data): Boolean&lt;br&gt;+ loadGame(): GameSaveData&lt;br&gt;+ saveExists(): Boolean&lt;br&gt;+ deleteSave()&lt;br&gt;+ saveHighScores(scores)&lt;br&gt;+ loadHighScores(): List&amp;lt;HighScoreEntry&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1720" width="250" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- GameSaveData -->
+        <mxCell id="class_gamesavedata" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameSaveData&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ playerHealth: Int&lt;br&gt;+ playerLives: Int&lt;br&gt;+ playerCurrency: Int&lt;br&gt;+ score: Int&lt;br&gt;+ currentBossIndex: Int&lt;br&gt;+ bossPhase: BossPhase&lt;br&gt;+ activeBuffs: List&amp;lt;Buff&amp;gt;&lt;br&gt;+ permanentBuffs: List&amp;lt;Buff&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ toJson(): String&lt;br&gt;+ fromJson(json): GameSaveData&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1720" width="200" height="220" as="geometry" />
+        </mxCell>
+        
+        <!-- Association: SaveManager -> GameSaveData -->
+        <mxCell id="assoc_save_data" value="" style="endArrow=open;html=1;endSize=12;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_savemanager" target="class_gamesavedata">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- HighScoreEntry -->
+        <mxCell id="class_highscoreentry" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;HighScoreEntry&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ playerName: String&lt;br&gt;+ score: Int&lt;br&gt;+ bossesDefeated: Int&lt;br&gt;+ timestamp: Long&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="570" y="1720" width="160" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Aggregation: SaveManager -> HighScoreEntry -->
+        <mxCell id="aggr_save_highscore" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;exitX=1;exitY=0.7;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_savemanager" target="class_highscoreentry">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ScoreManager -->
+        <mxCell id="class_scoremanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ScoreManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- currentScore: Int&lt;br&gt;- highScore: Int&lt;br&gt;- combo: Int&lt;br&gt;- comboTimer: Float&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addScore(basePoints: Int)&lt;br&gt;+ addCombo()&lt;br&gt;+ resetCombo()&lt;br&gt;+ getMultiplier(): Float&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="770" y="1720" width="170" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== FACTORY ==================== -->
+        
+        <!-- GameEntityFactory -->
+        <mxCell id="class_gameentityfactory" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameEntityFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- spriteManager: SpriteManager&lt;br&gt;- audioManager: AudioManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ createPlayer(position): Player&lt;br&gt;+ createBoss(bossId, position): Boss&lt;br&gt;+ createPlayerBullet(pos, vel, dmg): PlayerBullet&lt;br&gt;+ createBossBullet(pos, pattern): BossBullet&lt;br&gt;+ createAsteroid(size, position): Asteroid&lt;br&gt;+ createPowerUp(type, position): PowerUp&lt;br&gt;+ createCurrency(value, position): Currency&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="980" y="1720" width="290" height="190" as="geometry" />
+        </mxCell>
+        
+        <!-- InputManager -->
+        <mxCell id="class_inputmanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;InputManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- touchPosition: Vector2&lt;br&gt;- isTouching: Boolean&lt;br&gt;- firePressed: Boolean&lt;br&gt;- pausePressed: Boolean&lt;br&gt;- shopPressed: Boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ processInput(event: MotionEvent)&lt;br&gt;+ getMoveDirection(): Vector2&lt;br&gt;+ isFiring(): Boolean&lt;br&gt;+ isShopPressed(): Boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="1720" width="220" height="190" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== GAME MANAGER ==================== -->
+        
+        <!-- GameManager -->
+        <mxCell id="class_gamemanager" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- currentState: GameState&lt;br&gt;- player: Player&lt;br&gt;- currentBoss: Boss&lt;br&gt;- currentBossIndex: Int&lt;br&gt;- gameObjects: List&amp;lt;GameObject&amp;gt;&lt;br&gt;- collisionManager: CollisionManager&lt;br&gt;- factory: GameEntityFactory&lt;br&gt;- shopManager: ShopManager&lt;br&gt;- scoreManager: ScoreManager&lt;br&gt;- saveManager: SaveManager&lt;br&gt;- tweenManager: TweenManager&lt;br&gt;- audioManager: AudioManager&lt;br&gt;- fontManager: FontManager&lt;br&gt;- spriteManager: SpriteManager&lt;br&gt;- inputManager: InputManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ startGame()&lt;br&gt;+ pauseGame()&lt;br&gt;+ resumeGame()&lt;br&gt;+ openShop() / closeShop()&lt;br&gt;+ update(deltaTime)&lt;br&gt;+ render(canvas)&lt;br&gt;+ saveGame() / loadGame()&lt;br&gt;- checkWinCondition(): Boolean&lt;br&gt;- checkLossCondition(): Boolean&lt;br&gt;- onVictory() / onGameOver()&lt;br&gt;- spawnNextBoss()&lt;br&gt;- spawnAsteroid()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="40" y="2000" width="280" height="440" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> Player -->
+        <mxCell id="comp_gm_player" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_player">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameObject -> Vector2 (position, size) -->
+        <mxCell id="comp_go_vector2" value="2" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.3;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_gameobject" target="class_vector2">
+          <mxGeometry value="2" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameObject -> Hitbox -->
+        <mxCell id="comp_go_hitbox" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.7;entryX=0;entryY=0.3;" edge="1" parent="1" source="class_gameobject" target="class_hitbox">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: MovableObject -> Vector2 (velocity) -->
+        <mxCell id="comp_mo_vector2" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.7;" edge="1" parent="1" source="class_movableobject" target="class_vector2">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Association: Hitbox -> Vector2 (getCenter returns Vector2) -->
+        <mxCell id="assoc_hitbox_vector2" value="" style="endArrow=open;html=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="class_hitbox" target="class_vector2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Implements: Player -> Collidable -->
+        <mxCell id="impl_player_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=1;exitY=0;entryX=0;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_player" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="780" />
+              <mxPoint x="320" y="250" />
+              <mxPoint x="2080" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Player -> Damageable -->
+        <mxCell id="impl_player_damageable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=1;exitY=0.1;entryX=0;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_player" target="interface_damageable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="810" />
+              <mxPoint x="340" y="270" />
+              <mxPoint x="2300" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Boss -> Collidable -->
+        <mxCell id="impl_boss_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=1;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_boss" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2180" y="780" />
+              <mxPoint x="2180" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Boss -> Damageable -->
+        <mxCell id="impl_boss_damageable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=1;exitY=0.1;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_boss" target="interface_damageable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2400" y="812" />
+              <mxPoint x="2400" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Projectile -> Collidable -->
+        <mxCell id="impl_projectile_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.75;exitY=0;entryX=0.25;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_projectile" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="760" />
+              <mxPoint x="2130" y="760" />
+              <mxPoint x="2130" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Asteroid -> Collidable -->
+        <mxCell id="impl_asteroid_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0.75;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_asteroid" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1490" y="740" />
+              <mxPoint x="2230" y="740" />
+              <mxPoint x="2230" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Asteroid -> Damageable -->
+        <mxCell id="impl_asteroid_damageable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.75;exitY=0;entryX=0.25;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_asteroid" target="interface_damageable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1535" y="720" />
+              <mxPoint x="2350" y="720" />
+              <mxPoint x="2350" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameObject -> AnimationController -->
+        <mxCell id="comp_go_animctrl" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gameobject" target="class_animcontroller">
+          <mxGeometry value="1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="520" />
+              <mxPoint x="500" y="520" />
+              <mxPoint x="500" y="1340" />
+              <mxPoint x="2050" y="1340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== GAMEMANAGER COMPOSITIONS ==================== -->
+        
+        <!-- Composition: GameManager -> CollisionManager -->
+        <mxCell id="comp_gm_collision" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.2;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_collisionmanager">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> ScoreManager -->
+        <mxCell id="comp_gm_score" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.4;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_scoremanager">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> GameEntityFactory -->
+        <mxCell id="comp_gm_factory" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_gameentityfactory">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> InputManager -->
+        <mxCell id="comp_gm_input" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.6;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_inputmanager">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> SaveManager -->
+        <mxCell id="comp_gm_save" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.3;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_savemanager">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> ShopManager -->
+        <mxCell id="comp_gm_shop" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_shopmanager">
+          <mxGeometry value="1" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Composition: GameManager -> TweenManager -->
+        <mxCell id="comp_gm_tween" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.15;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_tweenmanager">
+          <mxGeometry value="1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="2066" />
+              <mxPoint x="400" y="1970" />
+              <mxPoint x="1620" y="1970" />
+              <mxPoint x="1620" y="1445" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameManager -> AudioManager -->
+        <mxCell id="comp_gm_audio" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.1;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_audiomanager">
+          <mxGeometry value="1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="2044" />
+              <mxPoint x="420" y="1960" />
+              <mxPoint x="1920" y="1960" />
+              <mxPoint x="1920" y="1460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameManager -> FontManager -->
+        <mxCell id="comp_gm_font" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.05;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_fontmanager">
+          <mxGeometry value="1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="2022" />
+              <mxPoint x="440" y="1950" />
+              <mxPoint x="2200" y="1950" />
+              <mxPoint x="2200" y="1440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameManager -> SpriteManager -->
+        <mxCell id="comp_gm_sprite" value="1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_spritemanager">
+          <mxGeometry value="1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="2110" />
+              <mxPoint x="380" y="1980" />
+              <mxPoint x="1330" y="1980" />
+              <mxPoint x="1330" y="1455" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameManager -> Boss -->
+        <mxCell id="comp_gm_boss" value="0..1" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.7;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_boss">
+          <mxGeometry value="0..1" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="236" y="1990" />
+              <mxPoint x="645" y="1990" />
+              <mxPoint x="645" y="1100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Composition: GameManager -> GameObject (gameObjects list) -->
+        <mxCell id="comp_gm_gameobjects" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=0.9;exitY=0;entryX=0;entryY=0.5;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gamemanager" target="class_gameobject">
+          <mxGeometry value="*" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="292" y="1990" />
+              <mxPoint x="460" y="1990" />
+              <mxPoint x="460" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== TWEENMANAGER -> TWEEN ==================== -->
+        
+        <!-- Composition: TweenManager -> Tween -->
+        <mxCell id="comp_tweenmgr_tween" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_tweenmanager" target="class_tween">
+          <mxGeometry value="*" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== MOVABLEOBJECT -> DROPS (Inheritance) ==================== -->
+        
+        <!-- Inheritance: MovableObject -> Asteroid -->
+        <mxCell id="inherit_mo_asteroid" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.7;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_asteroid" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1490" y="740" />
+              <mxPoint x="860" y="740" />
+              <mxPoint x="860" y="658" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Inheritance: MovableObject -> PowerUp -->
+        <mxCell id="inherit_mo_powerup" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.8;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_powerup" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="750" />
+              <mxPoint x="870" y="750" />
+              <mxPoint x="870" y="672" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Inheritance: MovableObject -> Currency -->
+        <mxCell id="inherit_mo_currency" value="" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.9;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_currency" target="class_movableobject">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1880" y="760" />
+              <mxPoint x="880" y="760" />
+              <mxPoint x="880" y="686" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== IMPLEMENTS FOR DROPS ==================== -->
+        
+        <!-- Implements: PowerUp -> Collidable -->
+        <mxCell id="impl_powerup_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0.6;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_powerup" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="730" />
+              <mxPoint x="2200" y="730" />
+              <mxPoint x="2200" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Implements: Currency -> Collidable -->
+        <mxCell id="impl_currency_collidable" value="" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0.8;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_currency" target="interface_collidable">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1880" y="710" />
+              <mxPoint x="2240" y="710" />
+              <mxPoint x="2240" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- ==================== FACTORY DEPENDENCIES ==================== -->
+        
+        <!-- Dependency: GameEntityFactory -> SpriteManager -->
+        <mxCell id="dep_factory_sprite" value="" style="endArrow=open;html=1;endSize=12;dashed=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gameentityfactory" target="class_spritemanager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Dependency: GameEntityFactory -> AudioManager -->
+        <mxCell id="dep_factory_audio" value="" style="endArrow=open;html=1;endSize=12;dashed=1;exitX=1;exitY=0.3;entryX=0;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_gameentityfactory" target="class_audiomanager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- ==================== COLLISIONMANAGER AGGREGATION ==================== -->
+        
+        <!-- Aggregation: CollisionManager -> Collidable -->
+        <mxCell id="aggr_collision_collidable" value="*" style="endArrow=open;html=1;endSize=12;startArrow=diamondThin;startSize=14;startFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="class_collisionmanager" target="interface_collidable">
+          <mxGeometry value="*" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1195" y="1340" />
+              <mxPoint x="2180" y="1340" />
+              <mxPoint x="2180" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

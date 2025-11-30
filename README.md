@@ -10,7 +10,7 @@
 
 ---
 
-# TITLE_PENDING
+# SPACE RAIDER XD
 
 ## ✒️ Description
 
@@ -44,28 +44,26 @@ For now, you fight increasing numbers of the same boss at a time (first one, the
 2. The user ship fires automatically.
 3. The user ship can pick up power-ups.
 4. The user ship gets effects from picked up power-ups.
-5. The user ship can get hit by asteroids and boss attacks.
+5. The user ship can get hit by asteroids, boss and boss attacks, which reduces it's health.
 6. When the user ship health hits 0, it explodes.
 7. The asteroids can be destroyed by player bullets.
 8. When destroyed, the asteroids drop a power-up.
-9. The system shall shuffle the user's deck.
-10. The system shall draw the top 7 cards from the user's deck.
-11. If the user does not have a Basic Pokémon in their hand the system shall "mulligan" until they do.
-12. Upon each mulligan, the AI shall draw a card.
-13. The user shall put one of their Basic Pokémon face down as their Active Pokémon.
-14. The user shall put up to 5 more Basic Pokémon face down on their Bench.
-15. Upon a new turn, the system shall draw a card from the deck of the current player.
-16. Upon a new turn, the system shall place the drawn card in the hand of the current player.
-17. The user shall put (up to 5 total) Basic Pokémon cards from their hand onto their Bench.
-18. The user shall Evolve their Pokémon as many times as they choose.
-19. The user shall attach an Energy card from their hand to one of their Pokémon once per turn.
-20. The user shall play Trainer cards (as many as they want, but only one Supporter card and one Stadium card per turn).
-21. The user shall Retreat their Active Pokémon once per turn.
-22. The user shall use as many Abilities as they choose.
-23. The user shall attack the opponent's Active Pokémon.
-24. After a player attacks, the system shall end their turn and start their opponent's turn.
-25. The system shall execute any "special conditions" after a turn is over.
-26. The user shall pick a Victory Card when the opposing Active Pokémon dies.
+9. Power-ups disappear if they are not quickly picked up.
+10. Power-up effects disappear after a certain time.
+11. Boss position is locked on the y-axis (unless special attacks)
+12. Boss follows player on the x-axis
+13. Boss uses various special attacks, such as laser barrage, missile swarm and shield bash.
+14. Laser barrage fires a stream of lasers at the player ship, with spread
+15. Missile swarm fires a bunch of homing projectiles that explode after a set amount of time or on contact with the player ship.
+16. Shield bash makes the boss invincible, fly down quickly, retreat slowly and stop being invincible.
+17. The boss takes damage if hit by player projectiles (unless special attacks)
+18. The boss explodes when it's health reaches 0.
+19. If the boss dies, the victory screen is displayed.
+20. If the player dies, the game over screen is displayed.
+21. After the victory screen, another boss battle is initiated.
+22. After the game over screen, the player is returned to the menu screen.
+23. The number of bosses killed without dying is stored as score.
+24. The high score is stored.
 
 ### 🤖 State Diagram
 
@@ -101,31 +99,10 @@ Try to avoid this screen.
 
 ### 🎨 Assets
 
-We used [app.diagrams.net](https://app.diagrams.net/) to create the wireframes. Wireframes are the equivalent to the skeleton of a web app since they are used to describe the functionality of the product and the users experience.
+We used [app.diagrams.net](https://app.diagrams.net/) to state and class diagrams.
 
-We plan on following trends already found in other trading card video games, such as Pokémon Trading Card Game Online, Hearthstone, Magic the Gathering Arena, and Gwent.
-
-The GUI will be kept simple and playful, as to make sure the game is easy to understand what each component does and is, as well as light hearted to keep to the Pokémon theme.
+We also used [Krita](https://krita.org/en/) for wireframes
 
 #### 🖼️ Images
 
--   Most images will be used from the well known community driven wikipedia site, [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Main_Page).
--   Especially their [Trading Card Game section](<https://bulbapedia.bulbagarden.net/wiki/Full_Art_card_(TCG)>).
-
-#### ✏️ Fonts
-
-For fonts, a simple sans-serif like Roboto will look quite nice. It's a font that is legible, light on storage size, and fun to keep with the theme we're going for. We also used a more cartoonish Pokemon font for the title screen.
-
--   [Pokemon](https://www.dafont.com/pokemon.font)
--   [Roboto](https://fonts.google.com/specimen/Roboto)
-
-#### 🔊 Sounds
-
-All sounds were taken from [freesound.org](https://freesound.org) for the actions pertaining to cards.
-
--   [Shuffle cards](https://freesound.org/people/VKProduktion/sounds/217502/)
--   [Flip card](https://freesound.org/people/Splashdust/sounds/84322/)
-
-### 📚 References
-
--   [Pokemon Rulebook](http://assets.pokemon.com/assets/cms2/pdf/trading-card-game/rulebook/xy8-rulebook-en.pdf)
+-   Ship, boss, asteroids, projectiles and background are taken from Starsector [Starsector](https://fractalsoftworks.com/)
