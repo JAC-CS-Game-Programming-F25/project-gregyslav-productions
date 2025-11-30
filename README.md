@@ -14,7 +14,7 @@
 
 ## ✒️ Description
 
-Our game is a roguelike top-down shooter, where you control a speceship and fight bosses. You control a small space ship, which you can move on the screen with wasd, while it shoots automatically.
+Our game is a roguelike top-down shooter, where you control a spaceship and fight bosses. You control a small space ship, which you can move on the screen with wasd, while it shoots automatically.
 
 The boss has a healthbar on the top of the screen, and the player has a healthbar in a bottom corner.
 
