@@ -80,18 +80,27 @@ For now, you fight increasing numbers of the same boss at a time (first one, the
 
 ### 🧵 Wireframes
 
-> [!note]
-> Your wireframes don't have to be super polished. They can even be black/white and hand drawn. I'm just looking for a rough idea about what you're visualizing.
+![Title Screen](./assets/images/wireframes/TitleScreen.png)
 
-![Main Menu](./assets/images/Main-Menu.png)
+A nice introduction for the player.
 
--   _Let's Play_ will navigate to the main game.
--   _Upload Cards_ will navigation to the forms for uploading and parsing the data files for the game.
--   _Change Log_ will navigate the user to a page with a list of features/changes that have been implemented throughout the development of the game.
+![Menu Screen](./assets/images/wireframes/MenuScreen.png)
 
-![Game Board](./assets/images/Game-Board.png)
+-   _High Score_ shows you how many bosses you managed to kill in a row before dying.
+-   _Resume_ loads your most recent save, so you can continue your fight.
+-   _Battle_ starts a new battle from the beginning.
 
-We want to keep the GUI as simple and clear as possible by having cards with relevant images to act as a way for the user to intuitively navigate the game. We want to implement a layout that would look like as if one were playing a match of the Pokémon Trading Card Game with physical cards in real life. Clicking on any of the cards will reveal that card's details to the player.
+![Game Screen](./assets/images/wireframes/GameScreen.png)
+
+The game screen, the heart of the project. Health bar on top for boss, on bottom for player. In the left bottom corner are the power-ups. The power-up duration left will be displayed with a bar inside it (think vertical health bar).
+
+![Victory Screen](./assets/images/wireframes/VictoryScreen.png)
+
+Your goal is to get to this screen. Serves as a short intermission before the next boss.
+
+![Victory Screen](./assets/images/wireframes/GameOverScreen.png)
+
+Try to avoid this screen.
 
 ### 🎨 Assets
 
