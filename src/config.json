@@ -1,31 +1,31 @@
 {
 	"images": [
 		{
-			"name": "playership",
+			"name": "player-ship",
 			"path": "../assets/images/aeroshuttle_base.png",
 			"width": 82,
 			"height": 66
 		},
 		{
-			"name": "bossship",
+			"name": "boss-ship",
 			"path": "../assets/images/onslaught_base.png",
 			"width": 288,
 			"height": 384
 		},
 		{
-			"name": "playerweapon",
+			"name": "player-weapon",
 			"path": "../assets/images/tactical_laser_turret.png",
 			"width": 26,
 			"height": 26
 		},
 		{
-			"name": "bossmissileweapon",
+			"name": "boss-missile-weapon",
 			"path": "../assets/images/locust_turret.png",
 			"width": 64,
 			"height": 64
 		},
 		{
-			"name": "bossmissile",
+			"name": "boss-missile",
 			"path": "../assets/images/missile_harpoon.png",
 			"width": 12,
 			"height": 26
@@ -37,25 +37,25 @@
 			"height": 384
 		},
 		{
-			"name": "asteroidsmall",
+			"name": "asteroid-small",
 			"path": "../assets/images/asteroid1.png",
 			"width": 23,
 			"height": 20
 		},
 		{
-			"name": "asteroidmedium",
+			"name": "asteroid-medium",
 			"path": "../assets/images/asteroid2.png",
 			"width": 38,
 			"height": 37
 		},
 		{
-			"name": "asteroidlarge",
+			"name": "asteroid-large",
 			"path": "../assets/images/asteroid3.png",
 			"width": 53,
 			"height": 53
 		},
 		{
-			"name": "asteroidextralarge",
+			"name": "asteroid-extra-large",
 			"path": "../assets/images/asteroid4.png",
 			"width": 88,
 			"height": 83
@@ -72,7 +72,7 @@
 			"volume": 0.1
 		},
 		{
-			"name": "bossabilityalarm",
+			"name": "boss-ability-alarm",
 			"path": "../assets/sounds/combat_readiness_malfunctions_alarm_allied_01.ogg",
 			"size": 1,
 			"volume": 0.1
@@ -84,25 +84,25 @@
 			"volume": 0.1
 		},
 		{
-			"name": "bossdeath",
+			"name": "boss-death",
 			"path": "../assets/sounds/explosion_02.ogg",
 			"size": 1,
 			"volume": 0.1
 		},
 		{
-			"name": "playerfire",
+			"name": "player-fire",
 			"path": "../assets/sounds/minipulser_fire_01.ogg",
 			"size": 10,
 			"volume": 0.1
 		},
 		{
-			"name": "bossmissilefire",
+			"name": "boss-missile-fire",
 			"path": "../assets/sounds/salamander_mrm_fire_01.ogg",
 			"size": 5,
 			"volume": 0.1
 		},
 		{
-			"name": "bossfire",
+			"name": "boss-fire",
 			"path": "../assets/sounds/thermal_pulse_cannon_fire_01.ogg",
 			"size": 10,
 			"volume": 0.1
