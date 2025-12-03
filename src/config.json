@@ -65,6 +65,47 @@
 
 	],
 	"sounds": [
-		
+		{
+			"name": "collision",
+			"path": "../assets/sounds/collision_asteriod_vs_asteroid_02.ogg",
+			"size": 3,
+			"volume": 0.1
+		},
+		{
+			"name": "bossabilityalarm",
+			"path": "../assets/sounds/combat_readiness_malfunctions_alarm_allied_01.ogg",
+			"size": 1,
+			"volume": 0.1
+		},
+		{
+			"name": "hit",
+			"path": "../assets/sounds/energy_hit_01.ogg",
+			"size": 25,
+			"volume": 0.1
+		},
+		{
+			"name": "bossdeath",
+			"path": "../assets/sounds/explosion_02.ogg",
+			"size": 1,
+			"volume": 0.1
+		},
+		{
+			"name": "playerfire",
+			"path": "../assets/sounds/minipulser_fire_01.ogg",
+			"size": 10,
+			"volume": 0.1
+		},
+		{
+			"name": "bossmissilefire",
+			"path": "../assets/sounds/salamander_mrm_fire_01.ogg",
+			"size": 5,
+			"volume": 0.1
+		},
+		{
+			"name": "bossfire",
+			"path": "../assets/sounds/thermal_pulse_cannon_fire_01.ogg",
+			"size": 10,
+			"volume": 0.1
+		}
 	]
 }
