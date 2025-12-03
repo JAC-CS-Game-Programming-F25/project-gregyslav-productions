@@ -1,6 +1,65 @@
 {
 	"images": [
-
+		{
+			"name": "playership",
+			"path": "../assets/images/aeroshuttle_base.png",
+			"width": 82,
+			"height": 66
+		},
+		{
+			"name": "bossship",
+			"path": "../assets/images/onslaught_base.png",
+			"width": 288,
+			"height": 384
+		},
+		{
+			"name": "playerweapon",
+			"path": "../assets/images/tactical_laser_turret.png",
+			"width": 26,
+			"height": 26
+		},
+		{
+			"name": "bossmissileweapon",
+			"path": "../assets/images/locust_turret.png",
+			"width": 64,
+			"height": 64
+		},
+		{
+			"name": "bossmissile",
+			"path": "../assets/images/missile_harpoon.png",
+			"width": 12,
+			"height": 26
+		},
+		{
+			"name": "background",
+			"path": "../assets/images/background4.jpg",
+			"width": 288,
+			"height": 384
+		},
+		{
+			"name": "asteroidsmall",
+			"path": "../assets/images/asteroid1.png",
+			"width": 23,
+			"height": 20
+		},
+		{
+			"name": "asteroidmedium",
+			"path": "../assets/images/asteroid2.png",
+			"width": 38,
+			"height": 37
+		},
+		{
+			"name": "asteroidlarge",
+			"path": "../assets/images/asteroid3.png",
+			"width": 53,
+			"height": 53
+		},
+		{
+			"name": "asteroidextralarge",
+			"path": "../assets/images/asteroid4.png",
+			"width": 88,
+			"height": 83
+		}
 	],
 	"fonts": [
 
