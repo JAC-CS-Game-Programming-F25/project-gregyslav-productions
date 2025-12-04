@@ -64,24 +64,24 @@ This implementation of _Pokémon the Trading Card Game_ is a single player exper
 > [!note]
 > Remember that you'll need diagrams for not only game states but entity states as well.
 
-![State Diagram](./assets/images/StateDiagram.png)
+![State Diagram](./assets/StateDiagram.png)
 
 ### 🗺️ Class Diagram
 
-![Class Diagram](./assets/images/ClassDiagram.png)
+![Class Diagram](./assets/ClassDiagram.png)
 
 ### 🧵 Wireframes
 
 > [!note]
 > Your wireframes don't have to be super polished. They can even be black/white and hand drawn. I'm just looking for a rough idea about what you're visualizing.
 
-![Main Menu](./assets/images/Main-Menu.png)
+![Main Menu](./assets/Main-Menu.png)
 
 -   _Let's Play_ will navigate to the main game.
 -   _Upload Cards_ will navigation to the forms for uploading and parsing the data files for the game.
 -   _Change Log_ will navigate the user to a page with a list of features/changes that have been implemented throughout the development of the game.
 
-![Game Board](./assets/images/Game-Board.png)
+![Game Board](./assets/Game-Board.png)
 
 We want to keep the GUI as simple and clear as possible by having cards with relevant images to act as a way for the user to intuitively navigate the game. We want to implement a layout that would look like as if one were playing a match of the Pokémon Trading Card Game with physical cards in real life. Clicking on any of the cards will reveal that card's details to the player.
 
