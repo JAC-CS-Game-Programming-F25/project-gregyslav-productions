@@ -1,15 +1,20 @@
+import Input from "../../../lib/Input.js";
 import Particle from "../../../lib/Particle.js";
 import Scene from "../../../lib/Scene.js";
 import State from "../../../lib/State.js";
 import { getRandomNumber } from "../../../lib/utilities.js";
 import Vector from "../../../lib/Vector.js";
 import Colors from "../../enums/Colors.js";
+import GameStateName from "../../enums/GameStateName.js";
 import ImageName from "../../enums/ImageName.js";
 import {
 	images,
 	context,
 	CANVAS_WIDTH,
-	CANVAS_HEIGHT
+	CANVAS_HEIGHT,
+	input,
+	keys,
+	stateMachine
 } from "../../globals.js";
 
 const PLAYER_SHIP_CENTER_X = CANVAS_WIDTH / 2;
@@ -30,7 +35,9 @@ export default class TitleScreenState extends State {
 		
 	}
 
-	exit() { }
+	exit() {
+
+	}
 
 	update(dt) {
 		this.particles.push(new Particle(this.shipX, this.shipY, 5, Colors.FIRE_COLORS[Math.floor(Math.random() * Colors.FIRE_COLORS.length)]));
@@ -64,11 +71,15 @@ export default class TitleScreenState extends State {
 		if (this.textBlinkTimer > 1) {
 			this.textBlinkTimer = 0;
 		}
+
+		if (input.isKeyPressed(Input.KEYS.SPACE)) {
+			stateMachine.change(GameStateName.Play, { scene: this.scene });
+		}
 	}
 
 	render() {
-		context.save();
 		this.scene.render();
+		context.save();
 		context.font = '40px Arial';
 		context.textAlign = 'center';
 		context.fillStyle = "white";
@@ -79,7 +90,7 @@ export default class TitleScreenState extends State {
 		if (this.textBlinkTimer > 0.5) {
 			context.fillStyle = "white";
 			context.font = '10px Arial';
-			context.fillText('> Press any key to start <', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 25);
+			context.fillText('> Press space to start <', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 25);
 		}
 		context.restore();
 	}

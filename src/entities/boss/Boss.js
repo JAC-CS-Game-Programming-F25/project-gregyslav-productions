@@ -1,16 +1,19 @@
-export default class Boss extends Entity {
+export default class Boss {
     constructor(x, y, width, height, health, name, ) {
-        super(x, y, width, height);
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.health = health;
         this.name = name;
     }
 
     update(dt) {
-        super.update(dt);
+        
     }
 
     render(canvas) {
-        super.render(canvas);
+        
     }
 
     takeDamage(amount) {
