@@ -21,10 +21,10 @@ import {
 	sounds,
 	stateMachine,
 } from './globals.js';
-import PlayState from './states/PlayState.js';
-import GameOverState from './states/GameOverState.js';
-import VictoryState from './states/VictoryState.js';
-import TitleScreenState from './states/TitleScreenState.js';
+import PlayState from './states/game/PlayState.js';
+import GameOverState from './states/game/GameOverState.js';
+import VictoryState from './states/game/VictoryState.js';
+import TitleScreenState from './states/game/TitleScreenState.js';
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -52,7 +52,7 @@ stateMachine.add(GameStateName.GameOver, new GameOverState());
 stateMachine.add(GameStateName.Victory, new VictoryState());
 stateMachine.add(GameStateName.Play, new PlayState());
 
-stateMachine.change(GameStateName.Play);
+stateMachine.change(GameStateName.TitleScreen);
 
 const game = new Game(
 	stateMachine,
