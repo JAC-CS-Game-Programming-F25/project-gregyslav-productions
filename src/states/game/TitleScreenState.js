@@ -1,6 +1,7 @@
 import Particle from "../../../lib/Particle.js";
 import Scene from "../../../lib/Scene.js";
 import State from "../../../lib/State.js";
+import { getRandomNumber } from "../../../lib/utilities.js";
 import Vector from "../../../lib/Vector.js";
 import Colors from "../../enums/Colors.js";
 import ImageName from "../../enums/ImageName.js";
@@ -11,13 +12,18 @@ import {
 	CANVAS_HEIGHT
 } from "../../globals.js";
 
+const PLAYER_SHIP_CENTER_X = CANVAS_WIDTH / 2;
+const PLAYER_SHIP_CENTER_Y = CANVAS_HEIGHT - 80;
+const MAX_PLAYER_SHIP_DIST_FROM_CENTER = 5;
+
 export default class TitleScreenState extends State {
 	constructor() {
 		super();
 		this.particles = [];
-		this.shipX = CANVAS_WIDTH / 2;
-		this.shipY = CANVAS_HEIGHT - 80;
+		this.shipX = PLAYER_SHIP_CENTER_X;
+		this.shipY = PLAYER_SHIP_CENTER_Y;
 		this.scene = new Scene();
+		this.textBlinkTimer = 0;
 	}
 
 	enter(parameters) {
@@ -37,6 +43,27 @@ export default class TitleScreenState extends State {
 		});
 
 		this.scene.update(dt);
+
+		this.shipX += getRandomNumber(-0.5, 0.5);
+		this.shipY += getRandomNumber(-0.5, 0.5);
+
+		if (this.shipX < PLAYER_SHIP_CENTER_X - MAX_PLAYER_SHIP_DIST_FROM_CENTER) {
+			this.shipX = PLAYER_SHIP_CENTER_X - MAX_PLAYER_SHIP_DIST_FROM_CENTER;
+		}
+		if (this.shipX > PLAYER_SHIP_CENTER_X + MAX_PLAYER_SHIP_DIST_FROM_CENTER) {
+			this.shipX = PLAYER_SHIP_CENTER_X + MAX_PLAYER_SHIP_DIST_FROM_CENTER;
+		}
+		if (this.shipY < PLAYER_SHIP_CENTER_Y - MAX_PLAYER_SHIP_DIST_FROM_CENTER) {
+			this.shipY = PLAYER_SHIP_CENTER_Y - MAX_PLAYER_SHIP_DIST_FROM_CENTER;
+		}
+		if (this.shipY > PLAYER_SHIP_CENTER_Y + MAX_PLAYER_SHIP_DIST_FROM_CENTER) {
+			this.shipY = PLAYER_SHIP_CENTER_Y + MAX_PLAYER_SHIP_DIST_FROM_CENTER;
+		}
+
+		this.textBlinkTimer += dt;
+		if (this.textBlinkTimer > 1) {
+			this.textBlinkTimer = 0;
+		}
 	}
 
 	render() {
@@ -49,9 +76,11 @@ export default class TitleScreenState extends State {
 		this.particles.forEach(particle => particle.render(context));
 		images.render(ImageName.PlayerShip, this.shipX - 20.5, this.shipY - 16, 41, 33);
 		
-		context.fillStyle = "white";
-		context.font = '10px Arial';
-		context.fillText('> Press any key to start <', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 25);
+		if (this.textBlinkTimer > 0.5) {
+			context.fillStyle = "white";
+			context.font = '10px Arial';
+			context.fillText('> Press any key to start <', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 25);
+		}
 		context.restore();
 	}
 }
