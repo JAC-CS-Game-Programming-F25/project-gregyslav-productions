@@ -1,17 +1,26 @@
-import Entity from './Entity.js';
-import StateMachine from '../../lib/StateMachine.js';
-import PlayerStateName from '../enums/PlayerStateName.js';
-import PlayerIdleState from '../states/player/PlayerIdleState.js';
-import PlayerMovingState from '../states/player/PlayerMovingState.js';
-import PlayerInvincibleState from '../states/player/PlayerInvincibleState.js';
-import PlayerBuffedState from '../states/player/PlayerBuffedState.js';
-import PlayerDeadState from '../states/player/PlayerDeadState.js';
-import CollisionLayer from '../enums/CollisionLayer.js';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../globals.js';
+import Entity from '../Entity.js';
+import StateMachine from '../../../lib/StateMachine.js';
+import PlayerStateName from '../../enums/PlayerStateName.js';
+import PlayerIdleState from '../../states/player/PlayerIdleState.js';
+import PlayerMovingState from '../../states/player/PlayerMovingState.js';
+import PlayerInvincibleState from '../../states/player/PlayerInvincibleState.js';
+import PlayerBuffedState from '../../states/player/PlayerBuffedState.js';
+import PlayerDeadState from '../../states/player/PlayerDeadState.js';
+import CollisionLayer from '../../enums/CollisionLayer.js';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../globals.js';
+import Sprite from '../../../../lib/Sprite.js';
+import { images } from '../../globals.js';
+import ImageName from '../../enums/ImageName.js';
 
 export default class Player extends Entity {
 	constructor(x, y) {
-		super(x, y, 32, 32); // TODO: Adjust to sprite size
+		super(x, y, 41, 33, 0, new Sprite(
+			images.get(ImageName.PlayerShip),
+			0,
+			0,
+			82,
+			66
+		));
 
 		// Movement
 		this.speed = 200;
@@ -31,7 +40,6 @@ export default class Player extends Entity {
 
 		// Visual
 		this.isVisible = true;
-		this.sprite = null; // TODO: Set player sprite
 		this.color = 'cyan'; // Placeholder color
 
 		// Power-ups

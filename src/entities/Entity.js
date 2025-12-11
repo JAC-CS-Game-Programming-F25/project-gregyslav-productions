@@ -4,15 +4,19 @@ import CollisionLayer from '../enums/CollisionLayer.js';
 
 
 export default class Entity {
-	constructor(x, y, width, height) {
+	constructor(x, y, width, height, angle = 0, sprite = null) {
 		this.position = new Vector(x, y);
 		this.dimensions = new Vector(width, height);
+		this.angle = angle;
 		this.velocity = new Vector(0, 0);
-		this.hitbox = new Hitbox(x, y, width, height);
+		this.hitbox = new Hitbox(x, y, width, height, angle);
 		this.isActive = true;
 		
-		// TODO: Add actual sprite (for now sprite placeholder color)
-		this.color = '#ffffff';
+		this.sprite = sprite;
+
+		if (this.sprite !== null && this.sprite !== undefined && this.dimensions.x > 0 && this.dimensions.y > 0) {
+			this.scale = new Vector(this.dimensions.x / this.sprite.width, this.dimensions.y / this.sprite.height);
+		}
 		
 		// Collision
 		this.collisionLayer = CollisionLayer.None;
@@ -25,18 +29,18 @@ export default class Entity {
 		this.position.y += this.velocity.y * dt;
 		
 		// Update hitbox
-		this.hitbox.update(this.position.x, this.position.y);
+		this.hitbox.set(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
 	}
 
 	render(context) {
-		// Sprite placeholder - colored rectangle
-		context.fillStyle = this.color;
-		context.fillRect(
-			Math.floor(this.position.x),
-			Math.floor(this.position.y),
-			this.dimensions.x,
-			this.dimensions.y
-		);
+		context.save();
+        this.hitbox.render(context);
+        context.translate(this.position.x, this.position.y);
+        context.rotate(this.angle * Math.PI / 180);
+		if (this.sprite !== null && this.sprite !== undefined) {
+        	this.sprite.render(this.dimensions.x / -2, this.dimensions.y / -2, { x: this.scale.x, y: this.scale.y });
+		}
+        context.restore();
 	}
 
 	getHitbox() {
