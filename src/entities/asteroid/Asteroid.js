@@ -1,16 +1,16 @@
-import MovableObject from './MovableObject.js';
-import StateMachine from '../../lib/StateMachine.js';
-import Sprite from '../../lib/Sprite.js';
-import AsteroidSize from '../enums/AsteroidSize.js';
-import AsteroidStateName from '../enums/AsteroidStateName.js';
-import AsteroidFloatingState from '../states/asteroid/AsteroidFloatingState.js';
-import AsteroidBreakingState from '../states/asteroid/AsteroidBreakingState.js';
-import AsteroidDestroyedState from '../states/asteroid/AsteroidDestroyedState.js';
-import CollisionLayer from '../enums/CollisionLayer.js';
-import ImageName from '../enums/ImageName.js';
-import { images } from '../globals.js';
+import Entity from './../Entity.js';
+import StateMachine from '../../../lib/StateMachine.js';
+import Sprite from '../../../lib/Sprite.js';
+import AsteroidSize from '../../../enums/AsteroidSize.js';
+import AsteroidStateName from '../../../enums/AsteroidStateName.js';
+import AsteroidFloatingState from '../../../states/asteroid/AsteroidFloatingState.js';
+import AsteroidBreakingState from '../../../states/asteroid/AsteroidBreakingState.js';
+import AsteroidDestroyedState from '../../../states/asteroid/AsteroidDestroyedState.js';
+import CollisionLayer from '../../../enums/CollisionLayer.js';
+import ImageName from '../../../enums/ImageName.js';
+import { images } from '../../globals.js';
 
-export default class Asteroid extends MovableObject {
+export default class Asteroid extends Entity {
 	constructor(x, y, size = AsteroidSize.Medium) {
 		const dimensions = Asteroid.getDimensionsForSize(size);
 		super(x, y, dimensions.width, dimensions.height);
