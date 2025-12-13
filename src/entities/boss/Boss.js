@@ -9,7 +9,7 @@ export default class Boss extends Entity {
         this.health = health;
         this.name = name;
         this.speed = speed;
-        this.moving = false;
+        this.actionDone = true;
         this.hit = false;
     }
 
@@ -53,7 +53,7 @@ export default class Boss extends Entity {
     }
 
     moveToLocation(x, y) {
-        if (this.moving) {
+        if (this.actionDone) {
             return;
         }
         let deltax = Math.abs(x - this.position.x);
@@ -61,7 +61,7 @@ export default class Boss extends Entity {
         let distance = Math.sqrt(deltax * deltax + deltay * deltay);
         let duration = distance / this.speed;
 
-        this.moving = true;
+        this.actionDone = false;
         timer.tween(
             this.position,
             {
@@ -71,8 +71,12 @@ export default class Boss extends Entity {
             duration,
             Easing.linear,
             () => {
-                this.moving = false;
+                this.actionDone = true;
             }
         )
+    }
+
+    isDoneWithAction() {
+        return this.actionDone;
     }
 }

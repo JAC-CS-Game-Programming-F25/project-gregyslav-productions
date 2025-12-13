@@ -9,6 +9,8 @@ export default class Weapon extends Entity {
         ]
 
         this.target = null;
+        this.attackQueue = [];
+        this.cooldown = null;
     }
 
     updatePosAndRotation(x, y, angle) {
@@ -26,8 +28,36 @@ export default class Weapon extends Entity {
         let deltaY = this.target.position.y - this.position.y;
         this.angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
         super.update(dt);
-        if (this.cooldown < 0) {
-            this.cooldown = 0;
+
+        if (this.attackQueue === undefined || this.attackQueue === null) {
+            return;
+        }
+        
+        while (this.attackQueue.at(-1) !== null || this.attackQueue.at(-1) !== undefined) {
+            if (this.attackQueue.at(-1) === undefined) {
+                break;
+            }
+            if (this.attackQueue.at(-1).delay <= 0) {
+                this.attackQueue.at(-1).action();
+                this.attackQueue.pop();
+            } else {
+                if (this.cooldown === null) {
+                    this.cooldown = this.attackQueue.at(-1).delay;
+                    break;
+                } else {
+                    if (this.cooldown <= 0) {
+                        this.attackQueue.at(-1).action();
+                        this.attackQueue.pop();
+                        this.cooldown = null;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (this.cooldown !== null) {
+            this.cooldown -= dt;
         }
     }
 
@@ -35,5 +65,9 @@ export default class Weapon extends Entity {
         this.target = target;
     }
 
-    fire() { }
+    fire() {
+        if (this.attackQueue.length > 0) {
+            return;
+        }
+     }
 }

@@ -52,7 +52,10 @@ export default class MechBoss extends Boss {
     }
 
     missileSwarm() {
-
+        for (let index = 0; index < 3; index++) {
+            this.leftWeapon.fire("", true);
+            this.rightWeapon.fire("", true);
+        }
     }
 
     shieldBash() {
