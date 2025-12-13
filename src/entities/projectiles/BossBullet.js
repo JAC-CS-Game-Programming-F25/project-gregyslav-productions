@@ -5,7 +5,7 @@ import { images } from "../../globals.js";
 import Projectile from "./Projectile.js";
 
 export default class BossBullet extends Projectile {
-    constructor(x, y, speed, damage, pattern, rotationSpeed, amplitude) {
+    constructor(x, y, angle, speed, damage, pattern, rotationSpeed, amplitude) {
         let sprite = new Sprite(
             images.get(ImageName.BossMissile),
             0,
@@ -13,7 +13,7 @@ export default class BossBullet extends Projectile {
             12,
             26
         );
-        super(x, y, 12, 26, 45, speed, damage, ProjectileOwner.Boss, pattern, sprite);
+        super(x, y, 6, 13, angle, speed, damage, ProjectileOwner.Boss, pattern, sprite);
 
         this.rotationSpeed = rotationSpeed;
         this.amplitude = amplitude;
