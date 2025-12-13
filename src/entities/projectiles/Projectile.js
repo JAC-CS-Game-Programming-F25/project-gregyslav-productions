@@ -3,8 +3,8 @@ import Vector2 from "../../../lib/Vector2.js";
 import { CANVAS_WIDTH } from "../../globals.js";
 import Entity from "../Entity.js";
 export default class Projectile extends Entity {
-    constructor(x = 0, y = 0, width = 0, height = 0, angle, speed = 0, damage = 0, owner, pattern, sprite) {
-        super(x, y, width, height, angle, sprite);
+    constructor(x = 0, y = 0, width = 0, height = 0, angle, speed = 0, damage = 0, owner, pattern) {
+        super(x, y, width, height, angle);
 
         let dx = Math.cos((this.angle - 90) * (Math.PI / 180)) * speed;
         let dy = Math.sin((this.angle - 90) * (Math.PI / 180)) * speed;

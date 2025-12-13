@@ -9,6 +9,7 @@ const ImageName = {
     AsteroidMedium: 'asteroid-medium',
     AsteroidLarge: 'asteroid-large',
     AsteroidExtraLarge: 'asteroid-extra-large',
+	Laser: 'laser'
 };
 
 export default ImageName;

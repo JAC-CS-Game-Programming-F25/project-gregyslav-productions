@@ -14,13 +14,17 @@ import ImageName from '../../enums/ImageName.js';
 
 export default class Player extends Entity {
 	constructor(x, y) {
-		super(x, y, 41, 33, 0, new Sprite(
+		super(x, y, 41, 33, 0);
+
+		this.sprites = [
+			new Sprite(
 			images.get(ImageName.PlayerShip),
 			0,
 			0,
 			82,
 			66
-		));
+			)
+		]
 
 		// Movement
 		this.speed = 200;

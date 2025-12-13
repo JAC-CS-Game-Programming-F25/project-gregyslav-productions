@@ -1,8 +1,8 @@
-import State from '../../lib/State.js';
-import Input from '../../lib/Input.js';
-import GameStateName from '../enums/GameStateName.js';
-import FontName from '../enums/FontName.js';
-import { input, gameData, stateMachine, saveHighScore, CANVAS_WIDTH, CANVAS_HEIGHT } from '../globals.js';
+import State from '../../../lib/State.js';
+import Input from '../../../lib/Input.js';
+import GameStateName from '../../enums/GameStateName.js';
+import FontName from '../../enums/FontName.js';
+import { input, gameData, stateMachine, saveHighScore, CANVAS_WIDTH, CANVAS_HEIGHT } from '../../globals.js';
 
 export default class VictoryState extends State {
 	constructor() {

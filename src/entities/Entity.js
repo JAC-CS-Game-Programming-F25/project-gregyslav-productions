@@ -44,17 +44,14 @@ export default class Entity {
 
 		context.save();
 		context.globalAlpha = this.alpha;
-
+        context.translate(this.position.x, this.position.y);
+        context.rotate(this.angle * Math.PI / 180);
+		this.sprites[this.currentFrame].render(this.dimensions.x / -2, this.dimensions.y / -2, { x: this.scale.x, y: this.scale.y });
+		context.restore();
+		
 		if (DEBUG) {
         	this.hitbox.render(context);
 		}
-        context.translate(this.position.x, this.position.y);
-        context.rotate(this.angle * Math.PI / 180);
-		if (this.sprite !== null && this.sprite !== undefined) {
-        	this.sprite.render(this.dimensions.x / -2, this.dimensions.y / -2, { x: this.scale.x, y: this.scale.y });
-		}
-
-		context.restore();
 	}
 
 	getHitbox() {

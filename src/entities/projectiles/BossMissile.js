@@ -1,6 +1,8 @@
 import Particle from "../../../lib/Particle.js";
 import Sprite from "../../../lib/Sprite.js";
+import Vector from "../../../lib/Vector.js";
 import Vector2 from "../../../lib/Vector2.js";
+import BulletPattern from "../../enums/BulletPattern.js";
 import Colors from "../../enums/Colors.js";
 import ImageName from "../../enums/ImageName.js";
 import ProjectileOwner from "../../enums/ProjectileOwner.js";
@@ -8,7 +10,7 @@ import { images, timer } from "../../globals.js";
 import Projectile from "./Projectile.js";
 
 export default class BossMissile extends Projectile {
-    constructor(x, y, angle, speed, damage, pattern, rotationSpeed, amplitude, target) {
+    constructor(x, y, angle, target) {
         let sprite = new Sprite(
             images.get(ImageName.BossMissile),
             0,
@@ -16,10 +18,13 @@ export default class BossMissile extends Projectile {
             12,
             26
         );
-        super(x, y, 6, 13, angle, speed, damage, ProjectileOwner.Boss, pattern, sprite);
-
-        this.rotationSpeed = rotationSpeed;
-        this.amplitude = amplitude;
+        super(x, y, 6, 13, angle, 200, 20, ProjectileOwner.Boss, BulletPattern.Straight);
+        this.sprites = [
+            sprite
+        ]
+        this.scale = new Vector(0.5, 0.5);
+        this.rotationSpeed = 90;
+        this.amplitude = 0;
         this.target = target;
         this.particles = [];
         

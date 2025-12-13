@@ -3,8 +3,11 @@ import Entity from "../Entity.js";
 
 export default class Weapon extends Entity {
     constructor(x, y, width, height, angle, sprite) {
-        super(x, y, width, height, angle, sprite);
-        this.cooldown = 0;
+        super(x, y, width, height, angle);
+        this.sprites = [
+            sprite
+        ]
+
         this.target = null;
     }
 
@@ -23,7 +26,6 @@ export default class Weapon extends Entity {
         let deltaY = this.target.position.y - this.position.y;
         this.angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
         super.update(dt);
-        this.cooldown -= dt;
         if (this.cooldown < 0) {
             this.cooldown = 0;
         }
@@ -33,20 +35,5 @@ export default class Weapon extends Entity {
         this.target = target;
     }
 
-    fire() {
-        if (this.cooldown <= 0) {
-        projectileFactory.fireBossMissile(
-            this.position.x,
-            this.position.y,
-            this.angle,
-            100,
-            10,
-            "straight",
-            720,
-            0,
-            this.target
-        );
-        this.cooldown = 1;
-    }
-    }
+    fire() { }
 }

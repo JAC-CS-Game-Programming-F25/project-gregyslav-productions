@@ -59,6 +59,12 @@
 			"path": "../assets/images/asteroid4.png",
 			"width": 88,
 			"height": 83
+		},
+		{
+			"name": "laser",
+			"path": "../assets/images/PngItem_1625645.png",
+			"width": 88,
+			"height": 83
 		}
 	],
 	"fonts": [

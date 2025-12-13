@@ -4,8 +4,8 @@ import Entity from "../Entity.js";
 import PlayerBullet from "../projectiles/PlayerBullet.js";
 
 export default class Boss extends Entity {
-    constructor(x, y, width, height, angle, sprite, name, health, speed) {
-        super(x, y, width, height, angle, sprite);
+    constructor(x, y, width, height, angle, name, health, speed) {
+        super(x, y, width, height, angle);
         this.health = health;
         this.name = name;
         this.speed = speed;

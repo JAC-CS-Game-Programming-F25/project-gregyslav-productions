@@ -1,3 +1,4 @@
+import BossBullet from "../entities/projectiles/BossBullet.js";
 import BossMissile from "../entities/projectiles/BossMissile.js";
 
 export default class ProjectileFactory {
@@ -5,8 +6,12 @@ export default class ProjectileFactory {
         this.projectiles = [];
     }
 
-    fireBossMissile(x, y, angle, speed, damage, pattern, rotationSpeed, amplitude, target) {
-        this.projectiles.push(new BossMissile(x, y, angle, speed, damage, pattern, rotationSpeed, amplitude, target));
+    fireBossMissile(x, y, angle, target) {
+        this.projectiles.push(new BossMissile(x, y, angle, target));
+    }
+
+    fireBossBullet(x, y, angle, pattern) {
+        this.projectiles.push(new BossBullet(x, y, angle, pattern))
     }
 
     update(dt) {

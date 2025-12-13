@@ -5,6 +5,7 @@ import ImageName from "../../enums/ImageName.js";
 import { images, projectileFactory } from "../../globals.js";
 import Weapon from "./Weapon.js";
 import Vector from "../../../lib/Vector.js";
+import BossWeapon from "./BossWeapon.js";
 
 const MECH_BOSS_WEAPON_OFFSET_FROM_CENTER = { x: 88, y: -27 };
 const SCALE = 0.3;
@@ -18,22 +19,15 @@ export default class MechBoss extends Boss {
             288,
             384
         );
-        super(x, y, 288 * SCALE, 384 * SCALE, 180, sprite, "Mech Boss", health, 50);
+        super(x, y, 288 * SCALE, 384 * SCALE, 180, "Mech Boss", health, 50);
+        this.scale = new Vector(SCALE, SCALE);
+        this.sprites = [
+            sprite
+        ]
         this.attackPatterns = attackPatterns;
-        let weaponsprite = new Sprite(
-            images.get(ImageName.BossMissileWeapon),
-            0,
-            0,
-            64,
-            64
-        );
-        this.leftWeapon = new Weapon(this.position.x - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 0, weaponsprite);
-        this.rightWeapon = new Weapon(this.position.x + (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 0, weaponsprite);
-        this.weapons = [
-            new Weapon(this.position.x + (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 180, weaponsprite),
-            new Weapon(this.position.x - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 180, weaponsprite)
-        ];
-
+        
+        this.leftWeapon = new BossWeapon(this.position.x - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 0);
+        this.rightWeapon = new BossWeapon(this.position.x + (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.x * SCALE), this.position.y - (MECH_BOSS_WEAPON_OFFSET_FROM_CENTER.y * SCALE), 64 * SCALE, 64 * SCALE, 0);
         this.target = null;
     }
 
