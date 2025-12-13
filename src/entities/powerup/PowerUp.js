@@ -1,12 +1,12 @@
-import Entity from './Entity.js';
-import StateMachine from '../../lib/StateMachine.js';
-import PowerUpStateName from '../enums/PowerUpStateName.js';
-import PowerUpSpawningState from '../states/powerup/PowerUpSpawningState.js';
-import PowerUpActiveState from '../states/powerup/PowerUpActiveState.js';
-import PowerUpBlinkingState from '../states/powerup/PowerUpBlinkingState.js';
-import PowerUpCollectedState from '../states/powerup/PowerUpCollectedState.js';
-import PowerUpExpiredState from '../states/powerup/PowerUpExpiredState.js';
-import CollisionLayer from '../enums/CollisionLayer.js';
+import Entity from './../Entity.js';
+import StateMachine from '../../../lib/StateMachine.js';
+import PowerUpStateName from '../../enums/PowerUpStateName.js';
+import PowerUpSpawningState from '../../states/powerup/PowerUpSpawningState.js';
+import PowerUpActiveState from '../../states/powerup/PowerUpActiveState.js';
+import PowerUpBlinkingState from '../../states/powerup/PowerUpBlinkingState.js';
+import PowerUpCollectedState from '../../states/powerup/PowerUpCollectedState.js';
+import PowerUpExpiredState from '../../states/powerup/PowerUpExpiredState.js';
+import CollisionLayer from '../../enums/CollisionLayer.js';
 
 export default class PowerUp extends Entity {
 	constructor(x, y, type) {
@@ -54,7 +54,7 @@ export default class PowerUp extends Entity {
 
 	update(dt) {
 		this.stateMachine.update(dt);
-		
+
 		// Update hitbox after state machine moves position
 		this.hitbox.update(this.position.x, this.position.y);
 	}
@@ -112,7 +112,6 @@ export default class PowerUp extends Entity {
 	}
 
 	getEffectDuration() {
-		// TODO: Different durations per type
 		const durations = {
 			'rapid-fire': 8,
 			'triple-shot': 10,

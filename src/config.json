@@ -62,7 +62,10 @@
 		}
 	],
 	"fonts": [
-
+		{
+		"name": "Press Start 2P",
+		"path": "./assets/PressStart2P-Regular.ttf"
+		}
 	],
 	"sounds": [
 		{
