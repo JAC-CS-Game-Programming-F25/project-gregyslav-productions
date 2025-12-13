@@ -11,10 +11,19 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../globals.js';
 import Sprite from '../../../../lib/Sprite.js';
 import { images } from '../../globals.js';
 import ImageName from '../../enums/ImageName.js';
+import Vector from '../../../lib/Vector.js';
+import Weapon from '../boss/Weapon.js';
+import PlayerWeapon from './PlayerWeapon.js';
+
+const SCALE = 0.3;
+const WEAPON_OFFSET = {
+	x: 0,
+	y: 11 * SCALE
+}
 
 export default class Player extends Entity {
 	constructor(x, y) {
-		super(x, y, 41, 33, 0);
+		super(x, y, 82 * SCALE, 66 * SCALE, 0);
 
 		this.sprites = [
 			new Sprite(
@@ -25,6 +34,8 @@ export default class Player extends Entity {
 			66
 			)
 		]
+		this.scale = new Vector(SCALE, SCALE);
+		this.weapon = new PlayerWeapon(this.position.x, this.position.y + WEAPON_OFFSET.y, 26 * SCALE, 26 * SCALE, 0)
 
 		// Movement
 		this.speed = 200;
@@ -72,10 +83,13 @@ export default class Player extends Entity {
 	}
 
 	update(dt, gameState) {
+		super.update(dt);
 		this.stateMachine.update(dt, gameState);
+		this.weapon.updatePosAndRotation(this.position.x, this.position.y + WEAPON_OFFSET.y, 26 * SCALE, 26 * SCALE, 0)
+		this.weapon.update(dt);
 		
 		// Update hitbox after state machine moves position
-		this.hitbox.update(this.position.x, this.position.y);
+		//this.hitbox.update(this.position.x, this.position.y);
 	}
 
 	render(context) {
@@ -93,10 +107,12 @@ export default class Player extends Entity {
 			// Use Entity's placeholder rendering
 			super.render(context);
 		}
+		this.weapon.render(context);
 	}
 
 	shoot(gameState) {
 		// TODO: Implement when Projectile class is added
+		this.weapon.fire();
 	}
 
 	/**
