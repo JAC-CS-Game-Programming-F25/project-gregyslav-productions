@@ -13,10 +13,11 @@ export default class GameOverState extends State {
 		this.canSelect = false;
 	}
 
-	enter() {
+	enter(params) {
 		this.timer = 0;
 		this.selectedOption = 0;
 		this.canSelect = false;
+		this.scene = params.scene;
 
 		if (gameData.score > gameData.highScore) {
 			gameData.highScore = gameData.score;
@@ -51,10 +52,10 @@ export default class GameOverState extends State {
 			case 0:
 				gameData.score = 0;
 				gameData.bossCount = 1;
-				stateMachine.change(GameStateName.Playing);
+				stateMachine.change(GameStateName.Play, {scene: this.scene});
 				break;
 			case 1:
-				stateMachine.change(GameStateName.MainMenu);
+				stateMachine.change(GameStateName.MainMenu, {scene: this.scene});
 				break;
 		}
 	}

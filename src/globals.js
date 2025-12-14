@@ -39,7 +39,8 @@ export const projectileFactory = new ProjectileFactory();
 export const DEBUG = false;
 export const gameData = {
 	score: 0,
-	highscore: 0
+	highscore: 0,
+	bossCount: 1
 }
 
 export const saveHighScore = () => {

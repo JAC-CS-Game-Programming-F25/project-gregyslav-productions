@@ -19,17 +19,19 @@ export default class ProjectileFactory {
         this.projectiles.push(new PlayerBullet(x, y, angle, piercing, critical))
     }
 
-    update(dt, player, boss) {
+    update(dt, player, bosses) {
         this.projectiles.forEach(projectile => {
                 projectile.update(dt);
                 if (projectile.hitbox.didCollide(player.hitbox)) {
                     player.onCollision(projectile);
                     projectile.onCollision(player);
                 }
+                bosses.forEach(boss => {
                 if (projectile.hitbox.didCollide(boss.hitbox)) {
                     boss.onCollision(projectile);
                     projectile.onCollision(boss);
                 }
+                });
             }
         );
 
@@ -38,5 +40,9 @@ export default class ProjectileFactory {
 
     render(canvas) {
         this.projectiles.forEach(projectile => projectile.render(canvas));
+    }
+
+    clear() {
+        this.projectiles = []
     }
 }

@@ -11,6 +11,7 @@ import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
   context,
+  gameData,
   input,
   projectileFactory,
   stateMachine,
@@ -22,19 +23,23 @@ export default class PlayState extends State {
   constructor() {
     super();
     this.scene = null;
-    this.bosses = [];
     this.player = null;
+    this.bosses = [];
   }
 
   enter(parameters) {
     this.scene = parameters.scene;
+    projectileFactory.clear();
     this.player = new GameEntityFactory().createPlayer(
       CANVAS_WIDTH / 2,
       CANVAS_HEIGHT - 100
     );
-    this.bosses.push(
-      new GameEntityFactory().createMechBoss(CANVAS_WIDTH / 2, 70)
-    );
+	this.bosses = [];
+    for (let index = 0; index < gameData.bossCount; index++) {
+      this.bosses.push(
+        new GameEntityFactory().createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
+      );
+    }
 
     this.bosses.forEach((boss) => {
       boss.lockOnTarget(this.player);
@@ -54,18 +59,18 @@ export default class PlayState extends State {
       }
     });
 
-	this.bosses = this.bosses.filter(boss => boss.isActive);
+    this.bosses = this.bosses.filter((boss) => boss.isActive);
 
-	if (this.bosses.length === 0) {
-		stateMachine.change(GameStateName.Victory)
-	} else if (!this.player.isActive) {
-		stateMachine.change(GameStateName.GameOver)
-	}
+    if (this.bosses.length === 0) {
+      stateMachine.change(GameStateName.Victory, { scene: this.scene });
+    } else if (!this.player.isActive) {
+      stateMachine.change(GameStateName.GameOver, { scene: this.scene });
+    }
   }
 
   render() {
     this.scene.render();
-	this.bosses.forEach((boss) => {
+    this.bosses.forEach((boss) => {
       boss.render(context);
     });
     this.player.render(context);

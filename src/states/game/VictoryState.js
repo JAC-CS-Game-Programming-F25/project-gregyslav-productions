@@ -11,7 +11,7 @@ export default class VictoryState extends State {
 		this.intermissionDuration = 3;
 	}
 
-	enter() {
+	enter(params) {
 		this.timer = 0;
 		gameData.score++;
 
@@ -19,6 +19,7 @@ export default class VictoryState extends State {
 			gameData.highScore = gameData.score;
 			saveHighScore();
 		}
+		this.scene = params.scene;
 	}
 
 	update(dt) {
@@ -26,12 +27,12 @@ export default class VictoryState extends State {
 
 		if (this.timer >= this.intermissionDuration) {
 			gameData.bossCount++;
-			stateMachine.change(GameStateName.Playing);
+			stateMachine.change(GameStateName.Play, {scene: this.scene});
 		}
 
 		if (input.isKeyPressed(Input.KEYS.ENTER) || input.isKeyPressed(Input.KEYS.SPACE)) {
 			gameData.bossCount++;
-			stateMachine.change(GameStateName.Playing);
+			stateMachine.change(GameStateName.Play, {scene: this.scene});
 		}
 	}
 
