@@ -1,5 +1,5 @@
 import Player from '../entities/player/Player.js';
-import PowerUp from '../entities/powerup/Powerup.js';
+import PowerUp from '../entities/powerup/PowerUp.js';
 /**
  * Factory pattern for creating game entities
  */
