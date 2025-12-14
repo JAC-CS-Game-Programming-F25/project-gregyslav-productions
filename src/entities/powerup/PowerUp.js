@@ -56,7 +56,7 @@ export default class PowerUp extends Entity {
 		this.stateMachine.update(dt);
 
 		// Update hitbox after state machine moves position
-		this.hitbox.update(this.position.x, this.position.y);
+		this.hitbox.set(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
 	}
 
 	render(context) {
