@@ -1,5 +1,6 @@
 import Hitbox from "../../../lib/Hitbox.js";
 import State from "../../../lib/State.js";
+import { getRandomPositiveNumber } from "../../../lib/utilities.js";
 import Vector from "../../../lib/Vector.js";
 import MechBoss from "../../entities/boss/MechBoss.js";
 import Player from "../../entities/player/Player.js";
@@ -25,25 +26,32 @@ export default class PlayState extends State {
     this.scene = null;
     this.player = null;
     this.bosses = [];
+    this.factory = new GameEntityFactory();
+    this.powerUps = [];
+    this.asteroids = [];
   }
 
   enter(parameters) {
     this.scene = parameters.scene;
     projectileFactory.clear();
-    this.player = new GameEntityFactory().createPlayer(
+    this.player = this.factory.createPlayer(
       CANVAS_WIDTH / 2,
       CANVAS_HEIGHT - 100
     );
 	this.bosses = [];
     for (let index = 0; index < gameData.bossCount; index++) {
       this.bosses.push(
-        new GameEntityFactory().createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
+        this.factory.createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
       );
     }
 
     this.bosses.forEach((boss) => {
       boss.lockOnTarget(this.player);
     });
+
+    
+
+    this.asteroids.push(this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50)), -50);
   }
 
   exit() {}
@@ -66,6 +74,10 @@ export default class PlayState extends State {
     } else if (!this.player.isActive) {
       stateMachine.change(GameStateName.GameOver, { scene: this.scene });
     }
+    
+    this.asteroids.forEach(asteroid => {
+      asteroid.update(dt, GameStateName.Play);
+    });
   }
 
   render() {
@@ -74,5 +86,8 @@ export default class PlayState extends State {
       boss.render(context);
     });
     this.player.render(context);
+    this.asteroids.forEach(asteroid => {
+      asteroid.render(context);
+    });
   }
 }

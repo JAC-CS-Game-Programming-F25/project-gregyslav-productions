@@ -121,12 +121,12 @@ export default class SaveManager {
 			attackCooldown: boss.attackCooldown,
 			leftWeapon: boss.leftWeapon,
 			rightWeapon: boss.rightWeapon,
-			shield: boss.shield
+			shield: boss.shield,
 			shieldMode: boss.shieldMode,
 			actionDone: boss.actionDone,
 			hit: boss.hit,
 			exploding: boss.exploding,
-			invincible: boss.invincible
+			invincible: boss.invincible,
 			stateName: boss.stateMachine?.currentStateName || 'idle'
 		}));
 	}

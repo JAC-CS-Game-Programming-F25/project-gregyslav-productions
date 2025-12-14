@@ -17,7 +17,7 @@ export default class AsteroidFloatingState extends AsteroidState {
 		this.asteroid.rotation += this.asteroid.rotationSpeed * dt;
 
 		// Update hitbox
-		this.asteroid.hitbox.update(this.asteroid.position.x, this.asteroid.position.y);
+		//this.asteroid.hitbox.update(this.asteroid.position.x, this.asteroid.position.y);
 
 		// Check if off screen (bottom)
 		if (this.asteroid.position.y > 650) {
