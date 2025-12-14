@@ -36,7 +36,7 @@ export const timer = new Timer();
 export const input = new Input(canvas);
 export const sounds = new Sounds();
 export const projectileFactory = new ProjectileFactory();
-export const DEBUG = false;
+export const DEBUG = true;
 export const gameData = {
 	score: 0,
 	highscore: 0,

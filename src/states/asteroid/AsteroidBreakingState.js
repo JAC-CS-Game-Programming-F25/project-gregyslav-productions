@@ -43,25 +43,25 @@ export default class AsteroidBreakingState extends AsteroidState {
 	render() {
 		if (!this.asteroid.isVisible) return;
 
-		const centerX = this.asteroid.position.x + this.asteroid.size.x / 2;
-		const centerY = this.asteroid.position.y + this.asteroid.size.y / 2;
+		const centerX = this.asteroid.position.x + this.asteroid.dimensions.x / 2;
+		const centerY = this.asteroid.position.y + this.asteroid.dimensions.y / 2;
 
 		context.save();
 		context.translate(centerX, centerY);
 		context.rotate(this.asteroid.rotation);
 
 		this.asteroid.sprites[this.asteroid.currentFrame].render(
-			-this.asteroid.size.x / 2,
-			-this.asteroid.size.y / 2
+			-this.asteroid.dimensions.x / 2,
+			-this.asteroid.dimensions.y / 2
 		);
 
 		context.globalCompositeOperation = 'source-atop';
 		context.fillStyle = 'white';
 		context.fillRect(
-			-this.asteroid.size.x / 2,
-			-this.asteroid.size.y / 2,
-			this.asteroid.size.x,
-			this.asteroid.size.y
+			-this.asteroid.dimensions.x / 2,
+			-this.asteroid.dimensions.y / 2,
+			this.asteroid.dimensions.x,
+			this.asteroid.dimensions.y
 		);
 
 		context.restore();

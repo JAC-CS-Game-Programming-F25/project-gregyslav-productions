@@ -45,6 +45,10 @@ export default class Projectile extends Entity {
                     this.isActive = false;
                 }
         }
+
+        if (other.collisionLayer === CollisionLayer.Asteroid) {
+            this.isActive = false;
+        } 
     }
 
     onHit(target) {

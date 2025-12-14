@@ -51,14 +51,14 @@ export default class PlayState extends State {
 
     
 
-    this.asteroids.push(this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50)), -50);
+    this.asteroids.push(this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50));
   }
 
   exit() {}
 
   update(dt) {
     this.scene.update(dt);
-    projectileFactory.update(dt, this.player, this.bosses);
+    projectileFactory.update(dt, this, this.player, this.bosses, this.asteroids);
     this.player.update(dt, GameStateName.Play);
     this.bosses.forEach((boss) => {
       boss.stateMachine.update(dt);
@@ -78,6 +78,8 @@ export default class PlayState extends State {
     this.asteroids.forEach(asteroid => {
       asteroid.update(dt, GameStateName.Play);
     });
+
+    this.asteroids = this.asteroids.filter((asteroid) => asteroid.isActive);
   }
 
   render() {

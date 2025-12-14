@@ -120,7 +120,7 @@ export default class Player extends Entity {
 
 	shoot(gameState) {
 		// TODO: Implement when Projectile class is added
-		this.weapon.fire(true, true);
+		this.weapon.fire(false, false);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 import Asteroid from '../entities/asteroid/Asteroid.js';
 import MechBoss from '../entities/boss/MechBoss.js';
 import Player from '../entities/player/Player.js';
-import PowerUp from '../entities/powerup/Powerup.js';
+import PowerUp from '../entities/powerup/PowerUp.js';
 import AsteroidSize from '../enums/AsteroidSize.js';
 import PowerUpType from '../enums/PowerUpType.js';
 /**

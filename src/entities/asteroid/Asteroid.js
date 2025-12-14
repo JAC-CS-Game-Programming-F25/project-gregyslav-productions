@@ -8,7 +8,7 @@ import AsteroidBreakingState from '../../states/asteroid/AsteroidBreakingState.j
 import AsteroidDestroyedState from '../../states/asteroid/AsteroidDestroyedState.js';
 import CollisionLayer from '../../enums/CollisionLayer.js';
 import ImageName from '../../enums/ImageName.js';
-import { images } from '../../globals.js';
+import { DEBUG, images } from '../../globals.js';
 
 export default class Asteroid extends Entity {
 	constructor(x, y, size = AsteroidSize.Medium) {
@@ -125,11 +125,8 @@ export default class Asteroid extends Entity {
 	renderSprite(context) {
 		if (!this.isVisible) return;
 
-		const centerX = this.position.x + this.dimensions.x / 2;
-		const centerY = this.position.y + this.dimensions.y / 2;
-
 		context.save();
-		context.translate(centerX, centerY);
+		context.translate(this.position.x, this.position.y);
 		context.rotate(this.rotation);
 
 		// Render sprite centered
@@ -139,6 +136,10 @@ export default class Asteroid extends Entity {
 		);
 
 		context.restore();
+
+		if (DEBUG) {
+			this.hitbox.render(context)
+		}
 	}
 
 	hit(damage, gameState) {

@@ -19,7 +19,7 @@ export default class ProjectileFactory {
         this.projectiles.push(new PlayerBullet(x, y, angle, piercing, critical))
     }
 
-    update(dt, player, bosses) {
+    update(dt, playState, player, bosses, asteroids) {
         this.projectiles.forEach(projectile => {
                 projectile.update(dt);
                 if (projectile.hitbox.didCollide(player.hitbox)) {
@@ -30,6 +30,12 @@ export default class ProjectileFactory {
                 if (projectile.hitbox.didCollide(boss.hitbox)) {
                     boss.onCollision(projectile);
                     projectile.onCollision(boss);
+                }
+                });
+                asteroids.forEach(asteroid => {
+                if (projectile.hitbox.didCollide(asteroid.hitbox)) {
+                    asteroid.onCollision(projectile, playState);
+                    projectile.onCollision(asteroid);
                 }
                 });
             }
