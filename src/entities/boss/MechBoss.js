@@ -65,15 +65,13 @@ export default class MechBoss extends Boss {
       return;
     }
     this.actionDone = false;
-    let num = getRandomNumber(0, 30);
-    if (num > 10) {
-      //this.laserBarrage()
-      this.shieldBash();
-    } else if (num > 20) {
-      //this.missileSwarm()
+    let num = getRandomNumber(0, 10);
+    if (num < 5) {
+      this.laserBarrage();
+    } else if (num < 8) {
       this.shieldBash();
     } else {
-      this.shieldBash();
+      this.missileSwarm();
     }
     this.attackCooldown = BASE_ATTACK_COOLDOWN;
   }

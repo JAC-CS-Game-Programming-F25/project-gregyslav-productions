@@ -212,6 +212,7 @@ export default class Player extends Entity {
         this.scale = new Vector(0.5, 0.5)
         this.dimensions.x = 98.2 * this.scale.x
         this.dimensions.y = 95.4 * this.scale.y
+		this.weapon.isVisible = false;
 
         this.sprites = [
             new Sprite(images.get(ImageName.Explosion), 0, 0, 98.2, 95.4),

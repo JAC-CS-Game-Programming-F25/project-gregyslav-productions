@@ -21,7 +21,7 @@ export default class BossMissile extends Projectile {
             26
         );
 
-        super(x, y, 6, 13, angle, 200, 20, ProjectileOwner.Boss, BulletPattern.Straight);
+        super(x, y, 6, 13, angle, 200, 1, ProjectileOwner.Boss, BulletPattern.Straight);
         this.explosionSprites = [
             new Sprite(images.get(ImageName.Explosion), 0, 0, 98.2, 95.4),
             new Sprite(images.get(ImageName.Explosion), 98.2, 0, 98.2, 95.4),

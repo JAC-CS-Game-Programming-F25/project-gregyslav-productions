@@ -16,7 +16,7 @@ export default class BossBullet extends Projectile {
             268,
             749
         );
-        super(x, y, 5, 10, angle, 200, 10, ProjectileOwner.Boss, pattern);
+        super(x, y, 5, 10, angle, 200, 1, ProjectileOwner.Boss, pattern);
         this.sprites = [
             sprite
         ]

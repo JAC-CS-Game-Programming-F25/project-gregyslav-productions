@@ -30,7 +30,11 @@ export default class PlayState extends State {
 		projectileFactory.update(dt, this.player, this.boss);
 		this.boss.stateMachine.update(dt);
 		this.player.update(dt, GameStateName.Play)
-		this.player.shoot();
+		//this.player.shoot();
+		if (this.player.hitbox.didCollide(this.boss.hitbox))
+		{
+			this.player.onCollision(this.boss)
+		}
 	}
 
 	render() {
