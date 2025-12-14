@@ -1,8 +1,10 @@
 import Easing from "../../../lib/Easing.js";
+import Sprite from "../../../lib/Sprite.js";
 import StateMachine from "../../../lib/StateMachine.js";
 import BossStateName from "../../enums/BossStateName.js";
 import CollisionLayer from "../../enums/CollisionLayer.js";
-import { timer } from "../../globals.js";
+import ImageName from "../../enums/ImageName.js";
+import { images, timer } from "../../globals.js";
 import BossAttackingState from "../../states/boss/BossAttackingState.js";
 import BossDyingState from "../../states/boss/BossDyingState.js";
 import BossHitState from "../../states/boss/BossHitState.js";
@@ -20,15 +22,20 @@ export default class Boss extends Entity {
         this.hit = false;
 
         this.attackCooldown = 1.5;
-        this.collisionLayer = CollisionLayer.Boss
+        this.collisionLayer = CollisionLayer.Boss;
+
+        this.exploding = false;
+        this.invincible = false;
 
         this.stateMachine = new StateMachine();
         this.initializeStateMachine();
     }
 
     update(dt) {
+        if (this.exploding) {
+            return;
+        }
         super.update(dt);
-        console.log(this.stateMachine.currentState)
     }
 
     render(canvas) {
@@ -57,6 +64,10 @@ export default class Boss extends Entity {
 
     onDefeat() {
 
+    }
+
+    isDead() {
+        return this.health <= 0;
     }
 
     onCollision(other) {
@@ -100,5 +111,46 @@ export default class Boss extends Entity {
         this.stateMachine.add(BossStateName.DeathAnimation, new BossDyingState(this))
         this.stateMachine.add(BossStateName.Hit, new BossHitState(this))
         this.stateMachine.add(BossStateName.Idle, new BossIdleState(this))
+    }
+
+    explode() {
+        if (this.exploding) {
+            return;
+        }
+        this.exploding = true;
+
+        this.sprites = [
+            new Sprite(images.get(ImageName.Explosion), 0, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 381.6, 98.2, 95.4),
+        ];
+
+        timer.addTask(() => {
+            if (this.currentFrame < this.sprites.length - 1) {
+                this.currentFrame += 1
+            }
+        }, 1/35, 1, () => {this.isActive = false;})
     }
 }

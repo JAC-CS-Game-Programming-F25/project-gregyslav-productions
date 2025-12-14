@@ -1,3 +1,4 @@
+import Easing from "../../../lib/Easing.js";
 import Particle from "../../../lib/Particle.js";
 import Sprite from "../../../lib/Sprite.js";
 import Vector from "../../../lib/Vector.js";
@@ -19,7 +20,36 @@ export default class BossMissile extends Projectile {
             12,
             26
         );
+
         super(x, y, 6, 13, angle, 200, 20, ProjectileOwner.Boss, BulletPattern.Straight);
+        this.explosionSprites = [
+            new Sprite(images.get(ImageName.Explosion), 0, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 381.6, 98.2, 95.4),
+        ]
+        
         this.sprites = [
             sprite
         ]
@@ -28,7 +58,8 @@ export default class BossMissile extends Projectile {
         this.amplitude = 0;
         this.target = target;
         this.particles = [];
-        this.collisionLayer = CollisionLayer.BossProjectile
+        this.collisionLayer = CollisionLayer.BossProjectile;
+        this.exploding = false;
         
         timer.addTask(() => {},
             5,
@@ -38,6 +69,9 @@ export default class BossMissile extends Projectile {
     }
 
     update(dt) {
+        if (this.exploding) {
+            return;
+        }
         super.update(dt);
         let deltaX = this.target.position.x - this.position.x;
         let deltaY = this.target.position.y - this.position.y;
@@ -82,10 +116,33 @@ export default class BossMissile extends Projectile {
     }
 
     onCollision(other) {
-        super.onCollision(other)
+        switch(this.owner) {
+            case ProjectileOwner.Boss:
+                if (other.collisionLayer === CollisionLayer.Player) {
+                    this.explode();
+                }
+                break;
+        }
     }
 
     explode() {
-        this.isActive = false;
+        if (this.exploding) {
+            return;
+        }
+        this.exploding = true;
+        this.particles = []
+        this.sprites = this.explosionSprites;
+        this.hitbox.dimensions.x = 15;
+        this.hitbox.dimensions.y = 15;
+        this.dimensions.x = 98.2 * this.scale.x
+        this.dimensions.y = 95.4 * this.scale.y
+        timer.addTask(() => { 
+            if (this.currentFrame < this.sprites.length - 1) {
+                this.currentFrame += 1
+            }
+            this.hitbox.dimensions.x *= 1.05
+            this.hitbox.dimensions.y *= 1.05
+            this.hitbox.updateCorners()
+        }, 0.1/35, 0.3, () => {this.isActive = false;})
     }
 }

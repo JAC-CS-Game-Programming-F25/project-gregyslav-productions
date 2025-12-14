@@ -7,13 +7,14 @@ import PlayerInvincibleState from '../../states/player/PlayerInvincibleState.js'
 import PlayerBuffedState from '../../states/player/PlayerBuffedState.js';
 import PlayerDeadState from '../../states/player/PlayerDeadState.js';
 import CollisionLayer from '../../enums/CollisionLayer.js';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../globals.js';
-import Sprite from '../../../../lib/Sprite.js';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, timer } from '../../globals.js';
 import { images } from '../../globals.js';
 import ImageName from '../../enums/ImageName.js';
 import Vector from '../../../lib/Vector.js';
 import Weapon from '../boss/Weapon.js';
 import PlayerWeapon from './PlayerWeapon.js';
+import Sprite from '../../../lib/Sprite.js';
+import Shield from '../Shield.js';
 
 const SCALE = 0.3;
 const WEAPON_OFFSET = {
@@ -56,6 +57,7 @@ export default class Player extends Entity {
 		// Visual
 		this.isVisible = true;
 		this.color = 'cyan'; // Placeholder color
+		this.animationComplete = false;
 
 		// Power-ups
 		this.activePowerUps = {};
@@ -63,6 +65,9 @@ export default class Player extends Entity {
 		// Collision
 		this.collisionLayer = CollisionLayer.Player;
 		this.collisionMask = CollisionLayer.BossProjectile | CollisionLayer.Asteroid | CollisionLayer.PowerUp;
+
+		this.shield = new Shield(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y, this.angle);
+		this.shield.isVisible = false;
 
 		// State machine
 		this.stateMachine = new StateMachine();
@@ -87,6 +92,8 @@ export default class Player extends Entity {
 		this.stateMachine.update(dt, gameState);
 		this.weapon.updatePosAndRotation(this.position.x, this.position.y + WEAPON_OFFSET.y, 26 * SCALE, 26 * SCALE, 0)
 		this.weapon.update(dt);
+		this.shield.updateLocation(this.position.x, this.position.y, this.angle);
+		this.shield.update(dt);
 		
 		// Update hitbox after state machine moves position
 		//this.hitbox.update(this.position.x, this.position.y);
@@ -108,6 +115,7 @@ export default class Player extends Entity {
 			super.render(context);
 		}
 		this.weapon.render(context);
+		this.shield.render(context);
 	}
 
 	shoot(gameState) {
@@ -176,8 +184,8 @@ export default class Player extends Entity {
 		if (other.collisionLayer & CollisionLayer.PowerUp) {
 			other.collect();
 			this.applyPowerUp(other.type, other.getEffectDuration());
-		} else if (other.collisionLayer & (CollisionLayer.BossProjectile | CollisionLayer.Asteroid)) {
-			//this.takeDamage(other.damage || 1);
+		} else if (other.collisionLayer & (CollisionLayer.BossProjectile | CollisionLayer.Asteroid | CollisionLayer.Boss)) {
+			this.takeDamage(other.damage || 1);
 		}
 	}
 
@@ -194,4 +202,49 @@ export default class Player extends Entity {
 		this.velocity.y = 0;
 		this.stateMachine.change(PlayerStateName.Idle);
 	}
+
+	explode() {
+        if (this.animationComplete) {
+            return;
+        }
+        this.animationComplete = true;
+
+        this.scale = new Vector(0.5, 0.5)
+        this.dimensions.x = 98.2 * this.scale.x
+        this.dimensions.y = 95.4 * this.scale.y
+
+        this.sprites = [
+            new Sprite(images.get(ImageName.Explosion), 0, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 0, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 95.4, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 190.8, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 286.2, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 0, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 98.2, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 196.4, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 294.6, 381.6, 98.2, 95.4),
+            new Sprite(images.get(ImageName.Explosion), 392.8, 381.6, 98.2, 95.4),
+        ];
+
+        timer.addTask(() => { 
+            if (this.currentFrame < this.sprites.length - 1) {
+                this.currentFrame += 1
+            }
+        }, 0.5/25, 1, () => {this.isActive = false;})
+    }
 }

@@ -5,6 +5,7 @@ import MechBoss from "../../entities/boss/MechBoss.js";
 import Player from "../../entities/player/Player.js";
 import BossBullet from "../../entities/projectiles/BossBullet.js";
 import PlayerBullet from "../../entities/projectiles/PlayerBullet.js";
+import Shield from "../../entities/Shield.js";
 import GameStateName from "../../enums/GameStateName.js";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, context, input, projectileFactory } from "../../globals.js";
 import ProjectileFactory from "../../services/ProjectileFactory.js";
