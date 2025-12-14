@@ -151,6 +151,12 @@
 			"path": "../assets/sounds/thermal_pulse_cannon_fire_01.ogg",
 			"size": 10,
 			"volume": 0.1
+		},
+		{
+			"name": "missile-explosion",
+			"path": "../assets/sounds/explosion_missile_02.ogg",
+			"size": 10,
+			"volume": 0.1
 		}
 	]
 }

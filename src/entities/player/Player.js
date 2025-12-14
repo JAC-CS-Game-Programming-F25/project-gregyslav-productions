@@ -7,7 +7,7 @@ import PlayerInvincibleState from '../../states/player/PlayerInvincibleState.js'
 import PlayerBuffedState from '../../states/player/PlayerBuffedState.js';
 import PlayerDeadState from '../../states/player/PlayerDeadState.js';
 import CollisionLayer from '../../enums/CollisionLayer.js';
-import { CANVAS_WIDTH, CANVAS_HEIGHT, timer } from '../../globals.js';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, timer, sounds } from '../../globals.js';
 import { images } from '../../globals.js';
 import ImageName from '../../enums/ImageName.js';
 import Vector from '../../../lib/Vector.js';
@@ -15,6 +15,7 @@ import Weapon from '../boss/Weapon.js';
 import PlayerWeapon from './PlayerWeapon.js';
 import Sprite from '../../../lib/Sprite.js';
 import Shield from '../Shield.js';
+import SoundName from '../../enums/SoundName.js';
 
 const SCALE = 0.3;
 const WEAPON_OFFSET = {
@@ -207,6 +208,7 @@ export default class Player extends Entity {
         if (this.animationComplete) {
             return;
         }
+		sounds.play(SoundName.BossDeath)
         this.animationComplete = true;
 
         this.scale = new Vector(0.5, 0.5)

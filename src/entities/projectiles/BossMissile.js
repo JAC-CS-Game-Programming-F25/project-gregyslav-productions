@@ -8,7 +8,8 @@ import CollisionLayer from "../../enums/CollisionLayer.js";
 import Colors from "../../enums/Colors.js";
 import ImageName from "../../enums/ImageName.js";
 import ProjectileOwner from "../../enums/ProjectileOwner.js";
-import { images, timer } from "../../globals.js";
+import SoundName from "../../enums/SoundName.js";
+import { images, sounds, timer } from "../../globals.js";
 import Projectile from "./Projectile.js";
 
 export default class BossMissile extends Projectile {
@@ -129,6 +130,7 @@ export default class BossMissile extends Projectile {
         if (this.exploding) {
             return;
         }
+        sounds.play(SoundName.MissileExplosion)
         this.exploding = true;
         this.particles = []
         this.sprites = this.explosionSprites;

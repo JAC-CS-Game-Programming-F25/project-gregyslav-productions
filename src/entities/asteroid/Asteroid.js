@@ -8,7 +8,8 @@ import AsteroidBreakingState from '../../states/asteroid/AsteroidBreakingState.j
 import AsteroidDestroyedState from '../../states/asteroid/AsteroidDestroyedState.js';
 import CollisionLayer from '../../enums/CollisionLayer.js';
 import ImageName from '../../enums/ImageName.js';
-import { DEBUG, images } from '../../globals.js';
+import SoundName from '../../enums/SoundName.js';
+import { DEBUG, images, sounds } from '../../globals.js';
 
 export default class Asteroid extends Entity {
 	constructor(x, y, size = AsteroidSize.Medium) {
@@ -150,7 +151,7 @@ export default class Asteroid extends Entity {
 
 		if (this.currentHealth <= 0) {
 			this.stateMachine.change(AsteroidStateName.Breaking, { gameState });
-			// TODO: Play breaking sound effect
+			sounds.play(SoundName.Collision)
 		}
 	}
 

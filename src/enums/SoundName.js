@@ -6,6 +6,7 @@ const SoundName = {
 	PlayerFire: "player-fire",
 	BossMissileFire: "boss-missile-fire",
 	BossFire: "boss-fire",
+	MissileExplosion: "missile-explosion"
 };
 
 export default SoundName;

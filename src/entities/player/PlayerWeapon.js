@@ -1,7 +1,8 @@
 import Sprite from "../../../lib/Sprite.js";
 import Vector from "../../../lib/Vector.js";
 import ImageName from "../../enums/ImageName.js";
-import { images, projectileFactory } from "../../globals.js";
+import SoundName from "../../enums/SoundName.js";
+import { images, projectileFactory, sounds } from "../../globals.js";
 import Weapon from "../boss/Weapon.js";
 
 export default class PlayerWeapon extends Weapon {
@@ -34,27 +35,29 @@ export default class PlayerWeapon extends Weapon {
     if (triple) {
       for (let index = -20; index < 21; index += 20) {
         this.attackStack.push({
-          action: () => 
+          action: () => {
             projectileFactory.firePlayerBullet(
               this.position.x,
               this.position.y,
               this.angle + index,
               false,
               false
-            ),
+            )
+          sounds.play(SoundName.PlayerFire)},
           delay: index === 20 ? delay : 0,
         });
       }
     } else {
       this.attackStack.push({
-        action: () => 
+        action: () => {
           projectileFactory.firePlayerBullet(
             this.position.x,
             this.position.y,
             this.angle,
             false,
             false
-          ),
+          )
+        sounds.play(SoundName.PlayerFire)},
         delay: delay,
       });
     }
