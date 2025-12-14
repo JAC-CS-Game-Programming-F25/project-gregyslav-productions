@@ -77,9 +77,21 @@ export default class PlayState extends State {
     
     this.asteroids.forEach(asteroid => {
       asteroid.update(dt, GameStateName.Play);
+      if (asteroid.hitbox.didCollide(this.player.hitbox)) {
+          this.player.onCollision(asteroid);
+          asteroid.onCollision(this.player);
+      }
+    });
+    this.powerUps.forEach(powerup => {
+      powerup.update(dt, GameStateName.Play);
+      if (powerup.hitbox.didCollide(this.player.hitbox)) {
+          this.player.onCollision(powerup);
+          powerup.onCollision(this.player);
+      }
     });
 
     this.asteroids = this.asteroids.filter((asteroid) => asteroid.isActive);
+    this.powerUps = this.powerUps.filter((powerUp) => powerUp.isActive);
   }
 
   render() {
@@ -90,6 +102,9 @@ export default class PlayState extends State {
     this.player.render(context);
     this.asteroids.forEach(asteroid => {
       asteroid.render(context);
+    });
+    this.powerUps.forEach(powerUp => {
+      powerUp.render(context);
     });
   }
 }

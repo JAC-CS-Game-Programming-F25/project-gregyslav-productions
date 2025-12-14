@@ -25,6 +25,6 @@ export default class GameEntityFactory {
 	}
 
 	createPowerUp(x, y) {
-		return new PowerUp(x, y, PowerUpType[Math.floor(Math.random() * Object.keys(PowerUpType).length)])
+		return new PowerUp(x, y, PowerUpType.SpeedBoost)
 	}
 }
