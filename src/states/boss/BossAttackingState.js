@@ -1,15 +1,22 @@
+import BossStateName from "../../enums/BossStateName.js";
 import BossState from "./BossState.js";
 
 export default class BossAttackingState extends BossState {
-    constructor() {
-        super();
+    constructor(boss) {
+        super(boss);
     }
 
     enter(params) {
-        super.enter(params);
-
         this.boss.executeAttack();
     }
 
-    
+    update(dt) {
+        super.update(dt);
+
+        this.boss.checkWeaponDone();
+
+        if (this.boss.actionDone) {
+            this.boss.stateMachine.change(BossStateName.Idle, {});
+        }
+    }
 }

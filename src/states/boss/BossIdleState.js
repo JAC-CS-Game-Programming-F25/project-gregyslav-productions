@@ -3,19 +3,16 @@ import BossStateName from "../../enums/BossStateName.js";
 import BossState from "./BossState.js";
 
 export default class BossIdleState extends BossState {
-    constructor() {
-        super();
+    constructor(boss) {
+        super(boss);
     }
 
     update(dt) {
-        if(getRandomPositiveNumber(0, 10) > 3) {
+        super.update(dt);
+        if(getRandomPositiveNumber(0, 10) > 1) {
             this.boss.stateMachine.change(BossStateName.Attacking, {boss: this.boss, player: this.player});
-            return;
-        }
-
-        if(this.boss.hit) {
-            this.boss.stateMachine.change(BossStateName.Hit, {boss: this.boss, player: this.player});
-            return;
+        }else if(this.boss.hit) {
+            this.boss.stateMachine.change(BossStateName.Hit, {});
         }
     }
 }

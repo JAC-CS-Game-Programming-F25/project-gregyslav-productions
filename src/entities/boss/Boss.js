@@ -1,5 +1,12 @@
 import Easing from "../../../lib/Easing.js";
+import StateMachine from "../../../lib/StateMachine.js";
+import BossStateName from "../../enums/BossStateName.js";
+import CollisionLayer from "../../enums/CollisionLayer.js";
 import { timer } from "../../globals.js";
+import BossAttackingState from "../../states/boss/BossAttackingState.js";
+import BossDyingState from "../../states/boss/BossDyingState.js";
+import BossHitState from "../../states/boss/BossHitState.js";
+import BossIdleState from "../../states/boss/BossIdleState.js";
 import Entity from "../Entity.js";
 import PlayerBullet from "../projectiles/PlayerBullet.js";
 
@@ -11,10 +18,17 @@ export default class Boss extends Entity {
         this.speed = speed;
         this.actionDone = true;
         this.hit = false;
+
+        this.attackCooldown = 1.5;
+        this.collisionLayer = CollisionLayer.Boss
+
+        this.stateMachine = new StateMachine();
+        this.initializeStateMachine();
     }
 
     update(dt) {
         super.update(dt);
+        console.log(this.stateMachine.currentState)
     }
 
     render(canvas) {
@@ -46,14 +60,14 @@ export default class Boss extends Entity {
     }
 
     onCollision(other) {
-        if (other === typeof(PlayerBullet)) {
+        if (other.collisionLayer === CollisionLayer.PlayerProjectile) {
             this.health -= other.damage;
             this.hit = true;
         }
     }
 
     moveToLocation(x, y) {
-        if (this.actionDone) {
+        if (!this.actionDone) {
             return;
         }
         let deltax = Math.abs(x - this.position.x);
@@ -62,6 +76,7 @@ export default class Boss extends Entity {
         let duration = distance / this.speed;
 
         this.actionDone = false;
+
         timer.tween(
             this.position,
             {
@@ -78,5 +93,12 @@ export default class Boss extends Entity {
 
     isDoneWithAction() {
         return this.actionDone;
+    }
+
+    initializeStateMachine() {
+        this.stateMachine.add(BossStateName.Attacking, new BossAttackingState(this))
+        this.stateMachine.add(BossStateName.DeathAnimation, new BossDyingState(this))
+        this.stateMachine.add(BossStateName.Hit, new BossHitState(this))
+        this.stateMachine.add(BossStateName.Idle, new BossIdleState(this))
     }
 }

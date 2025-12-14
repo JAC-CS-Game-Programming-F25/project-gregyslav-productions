@@ -1,7 +1,7 @@
-import BossState from "./BossState";
+import BossState from "./BossState.js";
 
 export default class BossDyingState extends BossState {
-    constructor() {
-        super();
+    constructor(boss) {
+        super(boss);
     }
 }

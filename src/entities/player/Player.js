@@ -177,7 +177,7 @@ export default class Player extends Entity {
 			other.collect();
 			this.applyPowerUp(other.type, other.getEffectDuration());
 		} else if (other.collisionLayer & (CollisionLayer.BossProjectile | CollisionLayer.Asteroid)) {
-			this.takeDamage(other.damage || 1);
+			//this.takeDamage(other.damage || 1);
 		}
 	}
 

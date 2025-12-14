@@ -9,7 +9,7 @@ export default class Weapon extends Entity {
         ]
 
         this.target = null;
-        this.attackQueue = [];
+        this.attackStack = [];
         this.cooldown = null;
     }
 
@@ -29,25 +29,25 @@ export default class Weapon extends Entity {
         this.angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90;
         super.update(dt);
 
-        if (this.attackQueue === undefined || this.attackQueue === null) {
+        if (this.attackStack === undefined || this.attackStack === null) {
             return;
         }
         
-        while (this.attackQueue.at(-1) !== null || this.attackQueue.at(-1) !== undefined) {
-            if (this.attackQueue.at(-1) === undefined) {
+        while (this.attackStack.at(-1) !== null || this.attackStack.at(-1) !== undefined) {
+            if (this.attackStack.at(-1) === undefined) {
                 break;
             }
-            if (this.attackQueue.at(-1).delay <= 0) {
-                this.attackQueue.at(-1).action();
-                this.attackQueue.pop();
+            if (this.attackStack.at(-1).delay <= 0) {
+                this.attackStack.at(-1).action();
+                this.attackStack.pop();
             } else {
                 if (this.cooldown === null) {
-                    this.cooldown = this.attackQueue.at(-1).delay;
+                    this.cooldown = this.attackStack.at(-1).delay;
                     break;
                 } else {
                     if (this.cooldown <= 0) {
-                        this.attackQueue.at(-1).action();
-                        this.attackQueue.pop();
+                        this.attackStack.at(-1).action();
+                        this.attackStack.pop();
                         this.cooldown = null;
                     } else {
                         break;
@@ -66,8 +66,12 @@ export default class Weapon extends Entity {
     }
 
     fire() {
-        if (this.attackQueue.length > 0) {
+        if (this.attackStack.length > 0) {
             return;
         }
-     }
+    }
+
+    isDoneFiring() {
+        return this.attackStack.length === 0
+    }
 }

@@ -3,6 +3,7 @@ import Sprite from "../../../lib/Sprite.js";
 import Vector from "../../../lib/Vector.js";
 import Vector2 from "../../../lib/Vector2.js";
 import BulletPattern from "../../enums/BulletPattern.js";
+import CollisionLayer from "../../enums/CollisionLayer.js";
 import Colors from "../../enums/Colors.js";
 import ImageName from "../../enums/ImageName.js";
 import ProjectileOwner from "../../enums/ProjectileOwner.js";
@@ -27,6 +28,7 @@ export default class BossMissile extends Projectile {
         this.amplitude = 0;
         this.target = target;
         this.particles = [];
+        this.collisionLayer = CollisionLayer.BossProjectile
         
         timer.addTask(() => {},
             5,
@@ -80,7 +82,7 @@ export default class BossMissile extends Projectile {
     }
 
     onCollision(other) {
-        
+        super.onCollision(other)
     }
 
     explode() {

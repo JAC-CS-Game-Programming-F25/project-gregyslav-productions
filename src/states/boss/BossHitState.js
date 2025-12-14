@@ -1,16 +1,14 @@
 import { getRandomPositiveNumber } from "../../../lib/utilities.js";
 import BossStateName from "../../enums/BossStateName.js";
-import { CANVAS_WIDTH } from "../../globals";
+import { CANVAS_WIDTH } from "../../globals.js";
 import BossState from "./BossState.js";
 
 export default class BossHitState extends BossState {
-    constructor() {
-        super();
+    constructor(boss) {
+        super(boss);
     }
 
     enter(params) {
-        super(params);
-
         this.randomX = getRandomPositiveNumber(50, CANVAS_WIDTH - 50);
 
         this.boss.moveToLocation(this.randomX, this.boss.position.y);
@@ -19,8 +17,12 @@ export default class BossHitState extends BossState {
     update(dt) {
         super.update(dt);
 
-        if (!this.boss.moving) {
+        if (this.boss.actionDone) {
             this.boss.stateMachine.change(BossStateName.Idle, {boss: this.boss, player: this.player});
         }
+    }
+
+    exit() {
+        this.boss.hit = false;
     }
 }

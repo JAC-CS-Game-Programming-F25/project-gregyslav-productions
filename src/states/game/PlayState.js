@@ -15,7 +15,6 @@ export default class PlayState extends State {
 		this.scene = null;
 		this.boss = new MechBoss(CANVAS_WIDTH / 2, 70, 100, 100, 1000, []);
 		this.player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
-		this.boss.moveToLocation(50, 50);
 		this.boss.lockOnTarget(this.player);
 	}
 
@@ -28,15 +27,14 @@ export default class PlayState extends State {
 	update(dt) {
 		this.scene.update(dt);
 		projectileFactory.update(dt, this.player, this.boss);
-		this.boss.update(dt);
+		this.boss.stateMachine.update(dt);
 		this.player.update(dt, GameStateName.Play)
-		this.boss.executeAttack();
 		this.player.shoot();
 	}
 
 	render() {
 		this.scene.render();
-		this.boss.render(context);
+		this.boss.stateMachine.render(context);
 		this.player.render(context);
 	}
 }

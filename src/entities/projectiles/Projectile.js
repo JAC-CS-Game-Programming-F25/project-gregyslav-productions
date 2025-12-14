@@ -1,5 +1,6 @@
 import Hitbox from "../../../lib/Hitbox.js";
 import Vector2 from "../../../lib/Vector2.js";
+import CollisionLayer from "../../enums/CollisionLayer.js";
 import ProjectileOwner from "../../enums/ProjectileOwner.js";
 import { CANVAS_WIDTH } from "../../globals.js";
 import Boss from "../boss/Boss.js";
@@ -35,12 +36,12 @@ export default class Projectile extends Entity {
     onCollision(other) {
         switch(this.owner) {
             case ProjectileOwner.Boss:
-                if (other instanceof Player) {
+                if (other.collisionLayer === CollisionLayer.Player) {
                     this.isActive = false;
                 }
                 break;
             case ProjectileOwner.Player:
-                if (other instanceof Boss) {
+                if (other.collisionLayer === CollisionLayer.Boss) {
                     this.isActive = false;
                 }
         }

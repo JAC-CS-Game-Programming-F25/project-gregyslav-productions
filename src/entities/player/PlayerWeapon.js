@@ -23,8 +23,8 @@ export default class PlayerWeapon extends Weapon {
     super.update(dt);
   }
 
-  fire(triple = true, rapid = true) {
-    if (this.attackQueue.length > 0) {
+  fire(triple = false, rapid = false) {
+    if (this.attackStack.length > 0) {
         return;
     }
 
@@ -33,7 +33,7 @@ export default class PlayerWeapon extends Weapon {
 
     if (triple) {
       for (let index = -20; index < 21; index += 20) {
-        this.attackQueue.push({
+        this.attackStack.push({
           action: () => 
             projectileFactory.firePlayerBullet(
               this.position.x,
@@ -46,7 +46,7 @@ export default class PlayerWeapon extends Weapon {
         });
       }
     } else {
-      this.attackQueue.push({
+      this.attackStack.push({
         action: () => 
           projectileFactory.firePlayerBullet(
             this.position.x,
