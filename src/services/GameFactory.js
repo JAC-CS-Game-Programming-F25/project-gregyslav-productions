@@ -11,4 +11,8 @@ export default class GameEntityFactory {
 	createPowerUp(x, y, type = null) {
 		return new PowerUp(x, y, type);
 	}
+
+	createMechBoss(x, y) {
+		return 
+	}
 }

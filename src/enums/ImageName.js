@@ -9,7 +9,13 @@ const ImageName = {
     AsteroidMedium: 'asteroid-medium',
     AsteroidLarge: 'asteroid-large',
     AsteroidExtraLarge: 'asteroid-extra-large',
-	Laser: 'laser'
+	Laser: 'laser',
+	SpeedPowerUp: 'speed-boost',
+	ShieldPowerUp: 'shield-boost',
+	TripleShotPowerUp: 'triple-shot-boost',
+	RapidFirePowerUp: 'fire-rate-boost',
+	ScreenClearPowerUp: 'clear-screen',
+	Explosion: 'explosion-sprites'
 };
 
 export default ImageName;

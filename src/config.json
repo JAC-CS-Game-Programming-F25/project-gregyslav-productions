@@ -65,6 +65,42 @@
 			"path": "../assets/images/PngItem_1625645.png",
 			"width": 88,
 			"height": 83
+		},
+		{
+			"name": "speed-boost",
+			"path": "../assets/images/auxilliary_thrusters.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "shield-boost",
+			"path": "../assets/images/accelerated_shields.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "triple-shot-boost",
+			"path": "../assets/images/advanced_turret_gyros.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "fire-rate-boost",
+			"path": "../assets/images/expanded_missile_racks.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "clear_screen",
+			"path": "../assets/images/high_volition_attractor.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "explosion-sprites",
+			"path": "../assets/images/NicePng_explotion-png_1023139.png",
+			"width": 491,
+			"height": 477
 		}
 	],
 	"fonts": [
