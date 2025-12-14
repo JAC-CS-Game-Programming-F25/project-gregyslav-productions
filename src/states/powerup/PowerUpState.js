@@ -1,15 +1,15 @@
-import StateMachine from '../../lib/StateMachine.js';
-import Vector from '../../lib/Vector.js';
-import Hitbox from '../../lib/Hitbox.js';
-import PowerUpStateName from '../enums/PowerUpStateName.js';
-import PowerUpSpawningState from '../states/powerup/PowerUpSpawningState.js';
-import PowerUpActiveState from '../states/powerup/PowerUpActiveState.js';
-import PowerUpBlinkingState from '../states/powerup/PowerUpBlinkingState.js';
-import PowerUpCollectedState from '../states/powerup/PowerUpCollectedState.js';
-import PowerUpExpiredState from '../states/powerup/PowerUpExpiredState.js';
-import CollisionLayer from '../enums/CollisionLayer.js';
+import StateMachine from '../../../lib/StateMachine.js';
+import Vector from '../../../lib/Vector.js';
+import Hitbox from '../../../lib/Hitbox.js';
+import PowerUpStateName from '../../enums/PowerUpStateName.js';
+import PowerUpSpawningState from '../../states/powerup/PowerUpSpawningState.js';
+import PowerUpActiveState from '../../states/powerup/PowerUpActiveState.js';
+import PowerUpBlinkingState from '../../states/powerup/PowerUpBlinkingState.js';
+import PowerUpCollectedState from '../../states/powerup/PowerUpCollectedState.js';
+import PowerUpExpiredState from '../../states/powerup/PowerUpExpiredState.js';
+import CollisionLayer from '../../enums/CollisionLayer.js';
 
-export default class PowerUp {
+export default class PowerUpState {
 	constructor(x, y, type) {
 		// Position and movement
 		this.position = new Vector(x, y);

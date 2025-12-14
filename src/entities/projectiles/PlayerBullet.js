@@ -16,7 +16,7 @@ export default class PlayerBullet extends Projectile {
             749
         );
 
-        super(x, y, 5, 10, angle, 200, 10, ProjectileOwner.Player, "");
+        super(x, y, 5, 10, angle, 200, 2, ProjectileOwner.Player, "");
         this.sprites = [
             sprite
         ]

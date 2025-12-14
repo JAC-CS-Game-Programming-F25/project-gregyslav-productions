@@ -73,7 +73,7 @@ export default class TitleScreenState extends State {
 		}
 
 		if (input.isKeyPressed(Input.KEYS.SPACE)) {
-			stateMachine.change(GameStateName.Play, { scene: this.scene });
+			stateMachine.change(GameStateName.MainMenu, { scene: this.scene });
 		}
 	}
 

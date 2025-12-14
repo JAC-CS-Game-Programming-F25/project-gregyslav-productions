@@ -1,3 +1,4 @@
+import MechBoss from '../entities/boss/MechBoss.js';
 import Player from '../entities/player/Player.js';
 import PowerUp from '../entities/powerup/Powerup.js';
 /**
@@ -13,6 +14,6 @@ export default class GameEntityFactory {
 	}
 
 	createMechBoss(x, y) {
-		return 
+		return new MechBoss(x, y, 200)
 	}
 }

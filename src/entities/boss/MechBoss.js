@@ -19,13 +19,11 @@ const SCALE = 0.3;
 const BASE_ATTACK_COOLDOWN = 2;
 
 export default class MechBoss extends Boss {
-  constructor(x, y, health, attackPatterns) {
+  constructor(x, y, health) {
     let sprite = new Sprite(images.get(ImageName.BossShip), 0, 0, 288, 384);
     super(x, y, 288 * SCALE, 384 * SCALE, 180, "Mech Boss", health, 200);
     this.scale = new Vector(SCALE, SCALE);
     this.sprites = [sprite];
-    this.attackPatterns = attackPatterns;
-
     this.attackCooldown = BASE_ATTACK_COOLDOWN;
 
     this.leftWeapon = new BossWeapon(
