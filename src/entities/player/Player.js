@@ -68,6 +68,8 @@ export default class Player extends Entity {
 
 		this.shield = new Shield(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y, this.angle);
 		this.shield.isVisible = false;
+		this.tripleShot = false;
+		this.hasShield = false;
 
 		// State machine
 		this.stateMachine = new StateMachine();
@@ -119,8 +121,7 @@ export default class Player extends Entity {
 	}
 
 	shoot(gameState) {
-		// TODO: Implement when Projectile class is added
-		this.weapon.fire(false, false);
+		this.weapon.fire(this.tripleShot, false);
 	}
 
 	/**
@@ -131,10 +132,15 @@ export default class Player extends Entity {
 			return;
 		}
 
-		this.currentHealth -= amount;
+		if (this.hasShield) {
+			this.hasShield = false;
+			this.shield.isVisible = false;
+			delete this.activePowerUps['shield'];
+			// TODO: Play shield break sound
+			return;
+		}
 
-		// TODO: Play damage sound effect
-		// TODO: Screen shake effect or something
+		this.currentHealth -= amount;
 
 		if (this.currentHealth <= 0) {
 			this.currentHealth = 0;
@@ -161,7 +167,24 @@ export default class Player extends Entity {
 			maxDuration: duration
 		};
 
-		// TODO: Apply stat modifications based on type
+		// Apply stat modifications
+		switch (type) {
+			case 'rapid-fire':
+				this.fireRate = 0.05;
+				break;
+			case 'triple-shot':
+				this.tripleShot = true;
+				break;
+			case 'shield':
+				this.hasShield = true;
+				this.shield.isVisible = true;
+				break;
+			case 'speed-boost':
+				this.speed = 350;
+				break;
+			case 'screen-clear':
+				break;
+		}
 
 		if (this.stateMachine.currentStateName !== PlayerStateName.Invincible &&
 			this.stateMachine.currentStateName !== PlayerStateName.Dead) {
@@ -169,11 +192,22 @@ export default class Player extends Entity {
 		}
 	}
 
-	/**
-	 * Remove a power-up from the player.
-	 */
 	removePowerUp(type) {
-		// TODO: Revert stat modifications based on type
+		switch (type) {
+			case 'rapid-fire':
+				this.fireRate = 0.2;
+				break;
+			case 'triple-shot':
+				this.tripleShot = false;
+				break;
+			case 'shield':
+				this.hasShield = false;
+				break;
+			case 'speed-boost':
+				this.speed = 200;
+				break;
+		}
+
 		delete this.activePowerUps[type];
 	}
 
