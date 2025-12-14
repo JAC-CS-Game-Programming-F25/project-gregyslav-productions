@@ -1,13 +1,12 @@
 /**
- * Game Name
+ * Space Raider XD
  *
- * Authors
+ * Greg, Vlad
  *
  * Brief description
  *
  * Asset sources
  */
-
 import GameStateName from './enums/GameStateName.js';
 import Game from '../lib/Game.js';
 import {
@@ -21,6 +20,7 @@ import {
 	sounds,
 	stateMachine,
 } from './globals.js';
+import MainMenuState from './states/MainMenuState.js';
 import PlayState from './states/PlayState.js';
 import GameOverState from './states/GameOverState.js';
 import VictoryState from './states/VictoryState.js';
@@ -47,12 +47,13 @@ fonts.load(fontDefinitions);
 sounds.load(soundDefinitions);
 
 // Add all the states to the state machine.
+stateMachine.add(GameStateName.MainMenu, new MainMenuState());
 stateMachine.add(GameStateName.TitleScreen, new TitleScreenState());
 stateMachine.add(GameStateName.GameOver, new GameOverState());
 stateMachine.add(GameStateName.Victory, new VictoryState());
 stateMachine.add(GameStateName.Play, new PlayState());
 
-stateMachine.change(GameStateName.Play);
+stateMachine.change(GameStateName.MainMenu);
 
 const game = new Game(
 	stateMachine,
