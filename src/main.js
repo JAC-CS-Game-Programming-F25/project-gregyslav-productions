@@ -20,11 +20,13 @@ import {
 	sounds,
 	stateMachine,
 } from './globals.js';
-import MainMenuState from './states/MainMenuState.js';
-import PlayState from './states/PlayState.js';
-import GameOverState from './states/GameOverState.js';
-import VictoryState from './states/VictoryState.js';
-import TitleScreenState from './states/TitleScreenState.js';
+
+import MainMenuState from './states/MenuState.js';
+import PlayState from './states/game/PlayState.js';
+import GameOverState from './states/game/GameOverState.js';
+import VictoryState from './states/game/VictoryState.js';
+import TitleScreenState from './states/game/TitleScreenState.js';
+import SoundName from './enums/SoundName.js';
 
 // Set the dimensions of the play area.
 canvas.width = CANVAS_WIDTH;
@@ -53,7 +55,7 @@ stateMachine.add(GameStateName.GameOver, new GameOverState());
 stateMachine.add(GameStateName.Victory, new VictoryState());
 stateMachine.add(GameStateName.Play, new PlayState());
 
-stateMachine.change(GameStateName.MainMenu);
+stateMachine.change(GameStateName.TitleScreen);
 
 const game = new Game(
 	stateMachine,
@@ -64,6 +66,8 @@ const game = new Game(
 );
 
 game.start();
+
+sounds.play(SoundName.BackgroundMusic);
 
 // Focus the canvas so that the player doesn't have to click on it.
 canvas.focus();

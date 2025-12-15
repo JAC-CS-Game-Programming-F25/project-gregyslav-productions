@@ -18,11 +18,13 @@ export default class MainMenuState extends State {
 		this.menuOptions = ['New Game', 'Continue'];
 		this.selectedIndex = 0;
 		this.hasSaveFile = false;
+		this.scene = null;
 	}
 
-	enter() {
+	enter(params) {
 		this.hasSaveFile = SaveManager.hasSave();
 		this.selectedIndex = 0;
+		this.scene = params.scene;
 	}
 
 	update(dt) {
@@ -46,6 +48,8 @@ export default class MainMenuState extends State {
 		if (input.isKeyPressed(Input.KEYS.ENTER) || input.isKeyPressed(Input.KEYS.SPACE)) {
 			this.selectOption();
 		}
+
+		this.scene.update(dt)
 	}
 
 	selectOption() {
@@ -53,15 +57,16 @@ export default class MainMenuState extends State {
 		if (this.selectedIndex === 0) {
 			// new game
 			SaveManager.deleteSave();
-			stateMachine.change(GameStateName.Play, { loadSave: false });
+			stateMachine.change(GameStateName.Play, { loadSave: false, scene: this.scene });
 		} else if (this.selectedIndex === 1 && this.hasSaveFile) {
 			// continue
-			stateMachine.change(GameStateName.Play, { loadSave: true });
+			stateMachine.change(GameStateName.Play, { loadSave: true, scene: this.scene });
 		}
 	}
 
 	render() {
-		this.renderBackground();
+		this.scene.render();
+		//this.renderBackground();
 		this.renderTitle();
 		this.renderMenu();
 		this.renderHighScore();
@@ -119,6 +124,7 @@ export default class MainMenuState extends State {
 		context.font = `8px ${FontName.PressStart2P}`;
 		context.fillText('W/S or UP/DOWN to select', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 60);
 		context.fillText('ENTER or SPACE to confirm', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40);
+		context.fillText('Press H during game to save', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 20);
 	}
 
 	renderHighScore() {

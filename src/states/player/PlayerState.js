@@ -22,7 +22,7 @@ export default class PlayerState extends State {
 		this.player.position.y = Math.max(0, Math.min(CANVAS_HEIGHT - this.player.dimensions.y, this.player.position.y));
 
 		// Update hitbox
-		this.player.hitbox.update(this.player.position.x, this.player.position.y);
+		//this.player.hitbox.update(this.player.position.x, this.player.position.y);
 	}
 
 	render(context) {

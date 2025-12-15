@@ -59,6 +59,54 @@
 			"path": "../assets/images/asteroid4.png",
 			"width": 88,
 			"height": 83
+		},
+		{
+			"name": "laser",
+			"path": "../assets/images/PngItem_1625645.png",
+			"width": 88,
+			"height": 83
+		},
+		{
+			"name": "speed-boost",
+			"path": "../assets/images/auxilliary_thrusters.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "shield-boost",
+			"path": "../assets/images/accelerated_shields.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "triple-shot-boost",
+			"path": "../assets/images/advanced_turret_gyros.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "fire-rate-boost",
+			"path": "../assets/images/expanded_missile_racks.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "clear_screen",
+			"path": "../assets/images/high_volition_attractor.png",
+			"width": 32,
+			"height": 32
+		},
+		{
+			"name": "explosion-sprites",
+			"path": "../assets/images/NicePng_explotion-png_1023139.png",
+			"width": 491,
+			"height": 477
+		},
+		{
+			"name": "hearts",
+			"path": "../assets/images/hearts.png",
+			"width": 96,
+			"height": 16
 		}
 	],
 	"fonts": [
@@ -70,7 +118,7 @@
 	"sounds": [
 		{
 			"name": "collision",
-			"path": "../assets/sounds/collision_asteriod_vs_asteroid_02.ogg",
+			"path": "../assets/sounds/collision_asteroid_vs_asteroid_02.ogg",
 			"size": 3,
 			"volume": 0.1
 		},
@@ -109,6 +157,19 @@
 			"path": "../assets/sounds/thermal_pulse_cannon_fire_01.ogg",
 			"size": 10,
 			"volume": 0.1
+		},
+		{
+			"name": "missile-explosion",
+			"path": "../assets/sounds/explosion_missile_02.ogg",
+			"size": 10,
+			"volume": 0.1
+		},
+		{
+			"name": "background-music",
+			"path": "../assets/sounds/gaming-game-minecraft-background-music-278382.mp3",
+			"size": 1,
+			"volume": 0.1,
+			"loop": true
 		}
 	]
 }

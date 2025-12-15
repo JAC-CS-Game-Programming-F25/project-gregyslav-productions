@@ -5,12 +5,14 @@ export default class SaveManager {
 	static HIGH_SCORE_KEY = 'space_raider_high_score';
 
 	static save(gameState) {
+		console.log("saving...")
+
 		const saveData = {
 			timestamp: Date.now(),
 			player: SaveManager.serializePlayer(gameState.player),
 			asteroids: SaveManager.serializeAsteroids(gameState.asteroids),
 			powerUps: SaveManager.serializePowerUps(gameState.powerUps),
-			bosses: SaveManager.serializeBosses(gameState.bosses), // TODO: implement when Boss class exists
+			bosses: SaveManager.serializeBosses(gameState.bosses),
 			playerBullets: SaveManager.serializeProjectiles(gameState.playerBullets), // TODO: implement when Projectile class exists
 			bossBullets: SaveManager.serializeProjectiles(gameState.bossBullets), // TODO: implement when Projectile class exists
 			score: gameState.score,
@@ -109,7 +111,22 @@ export default class SaveManager {
 	}
 
 	static serializeBosses(bosses) {
-		// TODO: implement when Boss class exists
+		if (!bosses) return [];
+		return bosses.filter(p => p && p.isActive).map(boss => ({
+			x: boss.position.x,
+			y: boss.position.y,
+			velocityX: boss.velocity.x,
+			velocityY: boss.velocity.y,
+			health: boss.health,
+			scale: boss.scale,
+			attackCooldown: boss.attackCooldown,
+			shieldMode: boss.shieldMode,
+			actionDone: boss.actionDone,
+			hit: boss.hit,
+			exploding: boss.exploding,
+			invincible: boss.invincible,
+			stateName: boss.stateMachine?.currentStateName || 'idle'
+		}));
 	}
 
 	static serializeProjectiles(projectiles) {
@@ -183,7 +200,25 @@ export default class SaveManager {
 	}
 
 	static deserializeBosses(dataArray, factory) {
-		// TODO: implement when Boss class exists
+		if (!dataArray) return [];
+		return dataArray.map(data => {
+			const boss = factory.createMechBoss(data.x, data.y);
+			boss.velocity.x = data.velocityX || 0;
+			boss.velocity.y = data.velocityY || 50;
+			boss.health = data.health || 200;
+			boss.scale = data.scale || boss.scale;
+			boss.attackCooldown = data.attackCooldown || boss.attackCooldown;
+			boss.shieldMode = data.shieldMode || boss.shieldMode;
+			boss.actionDone = data.actionDone || boss.actionDone;
+			boss.hit = data.hit || boss.hit;
+			boss.exploding = data.exploding || boss.exploding;
+			boss.invincible = data.invincible || boss.invincible;
+
+			if (data.stateName && boss.stateMachine) {
+				boss.stateMachine.change(data.stateName);
+			}
+			return boss;
+		});
 	}
 
 	static deserializeProjectiles(dataArray, factory, owner) {

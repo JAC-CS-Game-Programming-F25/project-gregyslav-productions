@@ -1,19 +1,25 @@
 import Vector from '../../lib/Vector.js';
+import Vector2 from '../../lib/Vector2.js';
 import Hitbox from '../../lib/Hitbox.js';
 import CollisionLayer from '../enums/CollisionLayer.js';
+import { DEBUG } from '../globals.js';
 
 export default class Entity {
-	constructor(x, y, width, height) {
+	constructor(x, y, width, height, angle = 0) {
 		this.position = new Vector(x, y);
 		this.dimensions = new Vector(width, height);
-		this.velocity = new Vector(0, 0);
-		this.hitbox = new Hitbox(x, y, width, height);
+		this.angle = angle;
+		this.velocity = new Vector2(0, 0);
+		this.hitbox = new Hitbox(x, y, width, height, angle);
 		this.isActive = true;
+		
 		this.isVisible = true;
 
 		// Sprites
 		this.sprites = [];
 		this.currentFrame = 0;
+
+		this.scale = new Vector(1, 1);
 
 		// Used to flash the entity when taking damage
 		this.alpha = 1;
@@ -29,7 +35,8 @@ export default class Entity {
 		this.position.y += this.velocity.y * dt;
 
 		// Update hitbox
-		this.hitbox.update(this.position.x, this.position.y);
+		this.hitbox.set(this.position.x, this.position.y, this.dimensions.x, this.dimensions.y);
+		this.hitbox.setDirection(this.angle);
 	}
 
 	render(context) {
@@ -37,24 +44,14 @@ export default class Entity {
 
 		context.save();
 		context.globalAlpha = this.alpha;
-
-		if (this.sprites.length > 0) {
-			this.sprites[this.currentFrame].render(
-				Math.floor(this.position.x),
-				Math.floor(this.position.y)
-			);
-		} else {
-			// Sprite placeholder - colored rectangle
-			context.fillStyle = this.color;
-			context.fillRect(
-				Math.floor(this.position.x),
-				Math.floor(this.position.y),
-				this.dimensions.x,
-				this.dimensions.y
-			);
-		}
-
+        context.translate(this.position.x, this.position.y);
+        context.rotate(this.angle * Math.PI / 180);
+		this.sprites[this.currentFrame].render(this.dimensions.x / -2, this.dimensions.y / -2, { x: this.scale.x, y: this.scale.y });
 		context.restore();
+		
+		if (DEBUG) {
+        	this.hitbox.render(context);
+		}
 	}
 
 	getHitbox() {

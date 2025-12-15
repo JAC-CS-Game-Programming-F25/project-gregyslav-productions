@@ -12,6 +12,7 @@ export default class PlayerDeadState extends PlayerState {
 		this.player.velocity.set(0, 0);
 		this.player.isVisible = true;
 		this.deathAnimationTimer = 0;
+		this.player.explode();
 		this.animationComplete = false;
 		// TODO: Play death sound effect
 		// TODO: Start death animation sprite sequence

@@ -1,5 +1,6 @@
 import Entity from './../Entity.js';
 import StateMachine from '../../../lib/StateMachine.js';
+import Sprite from '../../../lib/Sprite.js';
 import PowerUpStateName from '../../enums/PowerUpStateName.js';
 import PowerUpSpawningState from '../../states/powerup/PowerUpSpawningState.js';
 import PowerUpActiveState from '../../states/powerup/PowerUpActiveState.js';
@@ -7,10 +8,13 @@ import PowerUpBlinkingState from '../../states/powerup/PowerUpBlinkingState.js';
 import PowerUpCollectedState from '../../states/powerup/PowerUpCollectedState.js';
 import PowerUpExpiredState from '../../states/powerup/PowerUpExpiredState.js';
 import CollisionLayer from '../../enums/CollisionLayer.js';
+import ImageName from '../../enums/ImageName.js';
+import FontName from '../../enums/FontName.js';
+import { images } from '../../globals.js';
 
 export default class PowerUp extends Entity {
 	constructor(x, y, type) {
-		super(x, y, 24, 24); // TODO: Adjust to sprite size
+		super(x, y, 24, 24);
 
 		// Type
 		this.type = type;
@@ -27,7 +31,7 @@ export default class PowerUp extends Entity {
 
 		// Visual
 		this.isVisible = true;
-		this.sprite = null; // TODO: Set sprite based on type
+		this.sprite = this.initializeSprite();
 		this.color = this.getColorForType();
 
 		// Collision
@@ -37,6 +41,28 @@ export default class PowerUp extends Entity {
 		// State machine
 		this.stateMachine = new StateMachine();
 		this.initializeStateMachine();
+	}
+
+	initializeSprite() {
+		const imageName = this.getImageNameForType();
+		if (imageName) {
+			const graphic = images.get(imageName);
+			if (graphic) {
+				return new Sprite(graphic, 0, 0, graphic.width, graphic.height);
+			}
+		}
+		return null;
+	}
+
+	getImageNameForType() {
+		const imageNames = {
+			'rapid-fire': ImageName.RapidFirePowerUp,
+			'triple-shot': ImageName.TripleShotPowerUp,
+			'shield': ImageName.ShieldPowerUp,
+			'speed-boost': ImageName.SpeedPowerUp,
+			'screen-clear': ImageName.ScreenClearPowerUp
+		};
+		return imageNames[this.type] || null;
 	}
 
 	/**
@@ -72,8 +98,11 @@ export default class PowerUp extends Entity {
 		if (!this.isVisible) return;
 
 		if (this.sprite) {
-			// TODO: Render actual sprite based on type
-			this.sprite.render(context, this.position.x, this.position.y);
+			this.sprite.render(
+				this.position.x,
+				this.position.y,
+				{ x: this.dimensions.x / this.sprite.width, y: this.dimensions.y / this.sprite.height }
+			);
 		} else {
 			// Placeholder - colored rectangle with type initial
 			context.fillStyle = this.color;
@@ -86,7 +115,7 @@ export default class PowerUp extends Entity {
 
 			// Draw type initial
 			context.fillStyle = 'white';
-			context.font = '12px Arial';
+			context.font = `8px ${FontName.PressStart2P}`;
 			context.textAlign = 'center';
 			context.fillText(
 				this.type.charAt(0).toUpperCase(),

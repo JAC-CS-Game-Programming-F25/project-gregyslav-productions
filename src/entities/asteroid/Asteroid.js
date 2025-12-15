@@ -1,14 +1,15 @@
-import Entity from './../Entity.js';
+import Entity from '../Entity.js';
 import StateMachine from '../../../lib/StateMachine.js';
 import Sprite from '../../../lib/Sprite.js';
-import AsteroidSize from '../../../enums/AsteroidSize.js';
-import AsteroidStateName from '../../../enums/AsteroidStateName.js';
-import AsteroidFloatingState from '../../../states/asteroid/AsteroidFloatingState.js';
-import AsteroidBreakingState from '../../../states/asteroid/AsteroidBreakingState.js';
-import AsteroidDestroyedState from '../../../states/asteroid/AsteroidDestroyedState.js';
-import CollisionLayer from '../../../enums/CollisionLayer.js';
-import ImageName from '../../../enums/ImageName.js';
-import { images } from '../../globals.js';
+import AsteroidSize from '../../enums/AsteroidSize.js';
+import AsteroidStateName from '../../enums/AsteroidStateName.js';
+import AsteroidFloatingState from '../../states/asteroid/AsteroidFloatingState.js';
+import AsteroidBreakingState from '../../states/asteroid/AsteroidBreakingState.js';
+import AsteroidDestroyedState from '../../states/asteroid/AsteroidDestroyedState.js';
+import CollisionLayer from '../../enums/CollisionLayer.js';
+import ImageName from '../../enums/ImageName.js';
+import SoundName from '../../enums/SoundName.js';
+import { DEBUG, images, sounds } from '../../globals.js';
 
 export default class Asteroid extends Entity {
 	constructor(x, y, size = AsteroidSize.Medium) {
@@ -125,20 +126,21 @@ export default class Asteroid extends Entity {
 	renderSprite(context) {
 		if (!this.isVisible) return;
 
-		const centerX = this.position.x + this.size.x / 2;
-		const centerY = this.position.y + this.size.y / 2;
-
 		context.save();
-		context.translate(centerX, centerY);
+		context.translate(this.position.x, this.position.y);
 		context.rotate(this.rotation);
 
 		// Render sprite centered
 		this.sprites[this.currentFrame].render(
-			-this.size.x / 2,
-			-this.size.y / 2
+			-this.dimensions.x / 2,
+			-this.dimensions.y / 2
 		);
 
 		context.restore();
+
+		if (DEBUG) {
+			this.hitbox.render(context)
+		}
 	}
 
 	hit(damage, gameState) {
@@ -149,7 +151,7 @@ export default class Asteroid extends Entity {
 
 		if (this.currentHealth <= 0) {
 			this.stateMachine.change(AsteroidStateName.Breaking, { gameState });
-			// TODO: Play breaking sound effect
+			sounds.play(SoundName.MissileExplosion)
 		}
 	}
 
@@ -160,8 +162,8 @@ export default class Asteroid extends Entity {
 		if (!smallerSize || !gameState) return;
 
 		const childCount = Asteroid.getChildCount(this.asteroidSize);
-		const centerX = this.position.x + this.size.x / 2;
-		const centerY = this.position.y + this.size.y / 2;
+		const centerX = this.position.x + this.dimensions.x / 2;
+		const centerY = this.position.y + this.dimensions.y / 2;
 
 		for (let i = 0; i < childCount; i++) {
 			// Calculate spread angle for children
@@ -193,8 +195,8 @@ export default class Asteroid extends Entity {
 	dropPowerUp(gameState) {
 		if (gameState && gameState.factory) {
 			const powerUp = gameState.factory.createPowerUp(
-				this.position.x + this.size.x / 2 - 12,
-				this.position.y + this.size.y / 2 - 12
+				this.position.x + this.dimensions.x / 2 - 12,
+				this.position.y + this.dimensions.y / 2 - 12
 			);
 			if (powerUp) {
 				gameState.powerUps.push(powerUp);
@@ -204,6 +206,9 @@ export default class Asteroid extends Entity {
 
 	onCollision(other, gameState) {
 		if (other.collisionLayer & CollisionLayer.PlayerProjectile) {
+			this.hit(other.damage || 1, gameState);
+		} else if (other.collisionLayer & CollisionLayer.Player) {
+			sounds.play(SoundName.Collision)
 			this.hit(other.damage || 1, gameState);
 		}
 	}

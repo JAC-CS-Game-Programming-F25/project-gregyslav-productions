@@ -4,14 +4,15 @@ import Sounds from '../lib/Sounds.js';
 import StateMachine from '../lib/StateMachine.js';
 import Timer from '../lib/Timer.js';
 import Input from '../lib/Input.js';
+import ProjectileFactory from './services/ProjectileFactory.js';
 
 export const canvas = document.createElement('canvas');
 export const context =
 	canvas.getContext('2d') || new CanvasRenderingContext2D();
 
 // Replace these values according to how big you want your canvas.
-export const CANVAS_WIDTH = 0;
-export const CANVAS_HEIGHT = 0;
+export const CANVAS_WIDTH = 480;
+export const CANVAS_HEIGHT = 320;
 
 const resizeCanvas = () => {
 	const scaleX = window.innerWidth / CANVAS_WIDTH;
@@ -34,3 +35,14 @@ export const stateMachine = new StateMachine();
 export const timer = new Timer();
 export const input = new Input(canvas);
 export const sounds = new Sounds();
+export const projectileFactory = new ProjectileFactory();
+export const DEBUG = false;
+export const gameData = {
+	score: 0,
+	highScore: 0,
+	bossCount: 1
+}
+
+export const saveHighScore = () => {
+
+}
