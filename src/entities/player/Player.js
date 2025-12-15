@@ -137,6 +137,8 @@ export default class Player extends Entity {
 			this.shield.isVisible = false;
 			delete this.activePowerUps['shield'];
 			// TODO: Play shield break sound
+			this.isInvincible = true;
+			this.stateMachine.change(PlayerStateName.Invincible);
 			return;
 		}
 

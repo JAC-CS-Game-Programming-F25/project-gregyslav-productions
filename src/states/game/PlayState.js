@@ -9,11 +9,13 @@ import PlayerBullet from "../../entities/projectiles/PlayerBullet.js";
 import Shield from "../../entities/Shield.js";
 import GameStateName from "../../enums/GameStateName.js";
 import FontName from "../../enums/FontName.js";
+import ImageName from "../../enums/ImageName.js";
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
   context,
   gameData,
+  images,
   input,
   projectileFactory,
   stateMachine,
@@ -83,6 +85,11 @@ export default class PlayState extends State {
     this.powerUps.forEach(powerup => {
       powerup.update(dt);
       if (powerup.hitbox.didCollide(this.player.hitbox)) {
+          if (powerup.type === 'screen-clear') {
+              this.asteroids.forEach(asteroid => {
+                  asteroid.isActive = false;
+              });
+          }
           this.player.onCollision(powerup);
           powerup.onCollision(this.player);
       }
@@ -115,52 +122,67 @@ export default class PlayState extends State {
   }
 
   renderActivePowerUps() {
-      const iconSize = 24;
-      const iconPadding = 6;
-      const contourWidth = 3;
-      const startX = 20;
-      const startY = CANVAS_HEIGHT - 40;
+    const iconSize = 24;
+    const iconPadding = 6;
+    const contourWidth = 3;
+    const startX = 20;
+    const startY = CANVAS_HEIGHT - 40;
 
-      let offsetX = 0;
+    let offsetX = 0;
 
-      for (const [type, data] of Object.entries(this.player.activePowerUps)) {
-          const iconX = startX + offsetX;
-          const iconY = startY;
-          const percentage = data.duration / data.maxDuration;
+    for (const [type, data] of Object.entries(this.player.activePowerUps)) {
+        const iconX = startX + offsetX;
+        const iconY = startY;
+        const percentage = data.duration / data.maxDuration;
 
-          // Background (dark)
-          context.fillStyle = '#333333';
-          context.fillRect(iconX, iconY, iconSize, iconSize);
+        // Background (dark)
+        context.fillStyle = '#333333';
+        context.fillRect(iconX, iconY, iconSize, iconSize);
 
-          // Colored fill from bottom, shrinks upward as timer expires
-          const fillHeight = iconSize * percentage;
-          const fillY = iconY + iconSize - fillHeight;
-          context.fillStyle = this.getContourColor(data.duration, data.maxDuration);
-          context.fillRect(iconX, fillY, iconSize, fillHeight);
+        // Colored fill from bottom, shrinks upward as timer expires
+        const fillHeight = iconSize * percentage;
+        const fillY = iconY + iconSize - fillHeight;
+        context.fillStyle = this.getContourColor(data.duration, data.maxDuration);
+        context.fillRect(iconX, fillY, iconSize, fillHeight);
 
-          // Border
-          context.strokeStyle = '#ffffff';
-          context.lineWidth = contourWidth;
-          context.strokeRect(
-              iconX - contourWidth / 2,
-              iconY - contourWidth / 2,
-              iconSize + contourWidth,
-              iconSize + contourWidth
-          );
+        // Draw power-up sprite
+        const graphic = this.getPowerUpGraphic(type);
+        if (graphic && graphic.image) {
+            context.globalAlpha = 0.9;
+            context.drawImage(graphic.image, iconX + 2, iconY + 2, iconSize - 4, iconSize - 4);
+            context.globalAlpha = 1;
+        }
 
-          // Type initial
-          context.fillStyle = 'white';
-          context.font = `10px ${FontName.PressStart2P}`;
-          context.textAlign = 'center';
-          context.textBaseline = 'middle';
-          context.fillText(
-              type.charAt(0).toUpperCase(),
-              iconX + iconSize / 2,
-              iconY + iconSize / 2
-          );
+        // Border
+        context.strokeStyle = '#ffffff';
+        context.lineWidth = contourWidth;
+        context.strokeRect(
+            iconX - contourWidth / 2,
+            iconY - contourWidth / 2,
+            iconSize + contourWidth,
+            iconSize + contourWidth
+        );
 
-          offsetX += iconSize + iconPadding + contourWidth * 2;
+        offsetX += iconSize + iconPadding + contourWidth * 2;
+    }
+}
+
+  getPowerUpGraphic(type) {
+      const imageNames = {
+          'rapid-fire': ImageName.RapidFirePowerUp,
+          'triple-shot': ImageName.TripleShotPowerUp,
+          'shield': ImageName.ShieldPowerUp,
+          'speed-boost': ImageName.SpeedPowerUp,
+          'screen-clear': ImageName.ScreenClearPowerUp
+      };
+      const imageName = imageNames[type];
+      if (imageName) {
+          const graphic = images.get(imageName);
+          if (graphic) {
+              return graphic;
+          }
       }
+      return null;
   }
 
   getContourColor(remaining, max) {
