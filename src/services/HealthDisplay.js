@@ -37,7 +37,7 @@ export default class HealthDisplay {
 		context.closePath();
 
         for (let index = 0; index < this.playerHealth; index++) {
-            this.playerHeartSprite.render(50 + (index * 30), CANVAS_HEIGHT - 50, {x: 1.5, y: 1.5});
+            this.playerHeartSprite.render((CANVAS_WIDTH - 50) - (index * 30), CANVAS_HEIGHT - 50, {x: 1.5, y: 1.5});
         }
 		context.restore();
     }
