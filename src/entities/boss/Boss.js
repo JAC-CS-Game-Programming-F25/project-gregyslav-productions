@@ -76,6 +76,9 @@ export default class Boss extends Entity {
             sounds.play(SoundName.Hit)
             this.health -= other.damage;
             this.hit = true;
+            
+            this.alpha = 0
+            timer.addTask(() => {}, 1, 0.05, () => {this.alpha = 1})
         }
     }
 
