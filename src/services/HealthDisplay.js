@@ -9,7 +9,6 @@ export default class HealthDisplay {
         this.bossHealthBar = null;
         this.playerLives = [];
         this.playerHeartSprite = new Sprite(images.get(ImageName.Hearts), 64, 0, 16, 16);
-        console.log(this.playerHeartSprite)
         this.playerHealth = 3;
         this.bossHealth = bossMaxHealth;
     }

@@ -124,6 +124,7 @@ export default class MainMenuState extends State {
 		context.font = `8px ${FontName.PressStart2P}`;
 		context.fillText('W/S or UP/DOWN to select', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 60);
 		context.fillText('ENTER or SPACE to confirm', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40);
+		context.fillText('Press H during game to save', CANVAS_WIDTH / 2, CANVAS_HEIGHT - 20);
 	}
 
 	renderHighScore() {

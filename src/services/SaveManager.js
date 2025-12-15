@@ -5,6 +5,8 @@ export default class SaveManager {
 	static HIGH_SCORE_KEY = 'space_raider_high_score';
 
 	static save(gameState) {
+		console.log("saving...")
+
 		const saveData = {
 			timestamp: Date.now(),
 			player: SaveManager.serializePlayer(gameState.player),
@@ -119,8 +121,8 @@ export default class SaveManager {
 			scale: boss.scale,
 			sprites: boss.sprites,
 			attackCooldown: boss.attackCooldown,
-			leftWeapon: boss.leftWeapon,
-			rightWeapon: boss.rightWeapon,
+			// leftWeapon: boss.leftWeapon,
+			// rightWeapon: boss.rightWeapon,
 			shield: boss.shield,
 			shieldMode: boss.shieldMode,
 			actionDone: boss.actionDone,
@@ -211,8 +213,8 @@ export default class SaveManager {
 			boss.scale = data.scale || boss.scale;
 			boss.sprites = data.sprites || boss.sprites;
 			boss.attackCooldown = data.attackCooldown || boss.attackCooldown;
-			boss.leftWeapon = data.leftWeapon || boss.leftWeapon;
-			boss.rightWeapon = data.rightWeapon || boss.rightWeapon;
+			// boss.leftWeapon = data.leftWeapon || boss.leftWeapon;
+			// boss.rightWeapon = data.rightWeapon || boss.rightWeapon;
 			boss.shield = data.shield || boss.shield;
 			boss.shieldMode = data.shieldMode || boss.shieldMode;
 			boss.actionDone = data.actionDone || boss.actionDone;

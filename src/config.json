@@ -163,6 +163,13 @@
 			"path": "../assets/sounds/explosion_missile_02.ogg",
 			"size": 10,
 			"volume": 0.1
+		},
+		{
+			"name": "background-music",
+			"path": "../assets/sounds/gaming-game-minecraft-background-music-278382.mp3",
+			"size": 1,
+			"volume": 0.1,
+			"loop": true
 		}
 	]
 }

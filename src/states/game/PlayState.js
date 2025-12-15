@@ -23,6 +23,8 @@ import {
 import GameEntityFactory from "../../services/GameFactory.js";
 import HealthDisplay from "../../services/HealthDisplay.js";
 import ProjectileFactory from "../../services/ProjectileFactory.js";
+import Input from "../../../lib/Input.js";
+import SaveManager from "../../services/SaveManager.js";
 
 export default class PlayState extends State {
   constructor() {
@@ -110,6 +112,10 @@ export default class PlayState extends State {
       this.asteroids.push(
         this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50)
       );
+    }
+
+    if(input.isKeyPressed(Input.KEYS.H)) {
+      SaveManager.save(this);
     }
   }
 
