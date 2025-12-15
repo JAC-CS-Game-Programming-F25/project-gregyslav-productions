@@ -203,16 +203,16 @@ export default class SaveManager {
 		if (!dataArray) return [];
 		return dataArray.map(data => {
 			const boss = factory.createMechBoss(data.x, data.y);
-			boss.velocity.x = data.velocityX || 0;
-			boss.velocity.y = data.velocityY || 50;
+			boss.velocity.x = data.velocityX ?? 0;
+			boss.velocity.y = data.velocityY ?? 0;
 			boss.health = data.health || 200;
 			boss.scale = data.scale || boss.scale;
 			boss.attackCooldown = data.attackCooldown || boss.attackCooldown;
 			boss.shieldMode = data.shieldMode || boss.shieldMode;
 			boss.actionDone = data.actionDone || boss.actionDone;
-			boss.hit = data.hit || boss.hit;
-			boss.exploding = data.exploding || boss.exploding;
-			boss.invincible = data.invincible || boss.invincible;
+			boss.hit = data.hit ?? boss.hit;
+			boss.exploding = data.exploding ?? boss.exploding;
+			boss.invincible = data.invincible ?? boss.invincible;
 
 			if (data.stateName && boss.stateMachine) {
 				boss.stateMachine.change(data.stateName);
