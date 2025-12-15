@@ -88,39 +88,32 @@ export default class PlayState extends State {
 
   exit() {}
 
-  shakeScreen() {
+  shakeScreen(steps = 10, strength = 1) {
+  const doShake = (remaining) => {
+    if (remaining <= 0) {
+      timer.tween(
+        this.shakeOffset,
+        { x: 0, y: 0 },
+        0.03,
+        Easing.linear
+      );
+      return;
+    }
+
     timer.tween(
       this.shakeOffset,
-      { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
-      0.2,
+      {
+        x: getRandomNumber(-5 * strength, 5 * strength),
+        y: getRandomNumber(-5 * strength, 5 * strength)
+      },
+      0.03,
       Easing.linear,
-      () => {
-        timer.tween(
-          this.shakeOffset,
-          { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
-          0.2,
-          Easing.linear,
-          () => {
-            timer.tween(
-              this.shakeOffset,
-              { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
-              0.2,
-              Easing.linear,
-              () => {
-                timer.tween(
-                  this.shakeOffset,
-                  { x: 0, y: 0 },
-                  0.2,
-                  Easing.linear,
-                  () => {}
-                );
-              }
-            );
-          }
-        );
-      }
+      () => doShake(remaining - 1)
     );
-  }
+  };
+
+  doShake(steps);
+}
 
   update(dt) {
     this.scene.update(dt);
@@ -158,7 +151,6 @@ export default class PlayState extends State {
       if (asteroid.hitbox.didCollide(this.player.hitbox)) {
         this.player.onCollision(asteroid);
         asteroid.onCollision(this.player);
-        this.shakeScreen();
       }
     });
     this.powerUps.forEach((powerup) => {

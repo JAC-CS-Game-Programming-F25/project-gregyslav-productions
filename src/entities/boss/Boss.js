@@ -5,7 +5,7 @@ import BossStateName from "../../enums/BossStateName.js";
 import CollisionLayer from "../../enums/CollisionLayer.js";
 import ImageName from "../../enums/ImageName.js";
 import SoundName from "../../enums/SoundName.js";
-import { images, sounds, timer } from "../../globals.js";
+import { images, sounds, stateMachine, timer } from "../../globals.js";
 import BossAttackingState from "../../states/boss/BossAttackingState.js";
 import BossDyingState from "../../states/boss/BossDyingState.js";
 import BossHitState from "../../states/boss/BossHitState.js";
@@ -151,6 +151,8 @@ export default class Boss extends Entity {
             new Sprite(images.get(ImageName.Explosion), 294.6, 381.6, 98.2, 95.4),
             new Sprite(images.get(ImageName.Explosion), 392.8, 381.6, 98.2, 95.4),
         ];
+
+        stateMachine.currentState.shakeScreen(10, 3);
 
         timer.addTask(() => {
             if (this.currentFrame < this.sprites.length - 1) {
