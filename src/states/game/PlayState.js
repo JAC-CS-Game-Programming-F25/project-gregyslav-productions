@@ -43,12 +43,27 @@ export default class PlayState extends State {
   enter(parameters) {
     this.scene = parameters.scene;
     projectileFactory.clear();
-    this.player = this.factory.createPlayer(
-      CANVAS_WIDTH / 2,
-      CANVAS_HEIGHT - 100
-    );
-    this.bosses = [];
-    for (let index = 0; index < gameData.bossCount; index++) {
+
+    if (parameters.loadSave) {
+
+      let data = SaveManager.load()
+
+      this.player = SaveManager.deserializePlayer(data.player, this.factory);
+      this.asteroids = SaveManager.deserializeAsteroids(data.asteroids, this.factory);
+      this.powerUps = SaveManager.deserializePowerUps(data.powerUps, this.factory);
+      this.bosses = SaveManager.deserializeBosses(data.bosses, this.factory);
+      gameData.score = data.score;
+
+    }
+
+    if (this.player === null || this.player === undefined) {
+      this.player = this.factory.createPlayer(
+        CANVAS_WIDTH / 2,
+        CANVAS_HEIGHT - 100
+      );
+    }
+
+    for (let index = this.bosses.length; index < gameData.bossCount; index++) {
       this.bosses.push(
         this.factory.createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
       );
@@ -80,6 +95,11 @@ export default class PlayState extends State {
     if (this.bosses.length === 0) {
       stateMachine.change(GameStateName.Victory, { scene: this.scene });
     } else if (!this.player.isActive) {
+      this.bosses = [];
+      this.player = this.factory.createPlayer(
+        CANVAS_WIDTH / 2,
+        CANVAS_HEIGHT - 100
+      );
       stateMachine.change(GameStateName.GameOver, { scene: this.scene });
     }
     

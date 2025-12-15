@@ -119,11 +119,7 @@ export default class SaveManager {
 			velocityY: boss.velocity.y,
 			health: boss.health,
 			scale: boss.scale,
-			sprites: boss.sprites,
 			attackCooldown: boss.attackCooldown,
-			// leftWeapon: boss.leftWeapon,
-			// rightWeapon: boss.rightWeapon,
-			shield: boss.shield,
 			shieldMode: boss.shieldMode,
 			actionDone: boss.actionDone,
 			hit: boss.hit,
@@ -211,11 +207,7 @@ export default class SaveManager {
 			boss.velocity.y = data.velocityY || 50;
 			boss.health = data.health || 200;
 			boss.scale = data.scale || boss.scale;
-			boss.sprites = data.sprites || boss.sprites;
 			boss.attackCooldown = data.attackCooldown || boss.attackCooldown;
-			// boss.leftWeapon = data.leftWeapon || boss.leftWeapon;
-			// boss.rightWeapon = data.rightWeapon || boss.rightWeapon;
-			boss.shield = data.shield || boss.shield;
 			boss.shieldMode = data.shieldMode || boss.shieldMode;
 			boss.actionDone = data.actionDone || boss.actionDone;
 			boss.hit = data.hit || boss.hit;
@@ -225,7 +217,7 @@ export default class SaveManager {
 			if (data.stateName && boss.stateMachine) {
 				boss.stateMachine.change(data.stateName);
 			}
-			return powerUp;
+			return boss;
 		});
 	}
 
