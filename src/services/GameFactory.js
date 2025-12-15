@@ -20,11 +20,25 @@ export default class GameEntityFactory {
 		return new MechBoss(x, y, 200)
 	}
 
-	createAsteroid(x, y) {
-		return new Asteroid(x, y, AsteroidSize[Math.floor(Math.random() * Object.keys(AsteroidSize).length)])
+	createPowerUp(x, y, type = null) {
+		const powerUpType = type || this.getRandomPowerUpType();
+		return new PowerUp(x, y, powerUpType);
 	}
 
-	createPowerUp(x, y) {
-		return new PowerUp(x, y, PowerUpType.SpeedBoost)
+	getRandomPowerUpType() {
+		const types = Object.values(PowerUpType);
+		return types[Math.floor(Math.random() * types.length)];
+	}
+
+	createAsteroid(x, y, size = null) {
+		const asteroidSize = size || this.getRandomAsteroidSize();
+		return new Asteroid(x, y, asteroidSize);
+	}
+
+	getRandomAsteroidSize() {
+		const rand = Math.random();
+		if (rand < 0.5) return AsteroidSize.Small;
+		if (rand < 0.85) return AsteroidSize.Medium;
+		return AsteroidSize.Large;
 	}
 }

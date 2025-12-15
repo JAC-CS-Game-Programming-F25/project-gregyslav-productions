@@ -118,7 +118,7 @@
 	"sounds": [
 		{
 			"name": "collision",
-			"path": "../assets/sounds/collision_asteriod_vs_asteroid_02.ogg",
+			"path": "../assets/sounds/collision_asteroid_vs_asteroid_02.ogg",
 			"size": 3,
 			"volume": 0.1
 		},

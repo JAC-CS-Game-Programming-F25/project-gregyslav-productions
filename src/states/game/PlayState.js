@@ -8,11 +8,14 @@ import BossBullet from "../../entities/projectiles/BossBullet.js";
 import PlayerBullet from "../../entities/projectiles/PlayerBullet.js";
 import Shield from "../../entities/Shield.js";
 import GameStateName from "../../enums/GameStateName.js";
+import FontName from "../../enums/FontName.js";
+import ImageName from "../../enums/ImageName.js";
 import {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
   context,
   gameData,
+  images,
   input,
   projectileFactory,
   stateMachine,
@@ -31,6 +34,8 @@ export default class PlayState extends State {
     this.powerUps = [];
     this.asteroids = [];
     this.healthDisplay = new HealthDisplay(200);
+    this.asteroidSpawnTimer = 0;
+    this.asteroidSpawnInterval = 2;
   }
 
   enter(parameters) {
@@ -40,20 +45,18 @@ export default class PlayState extends State {
       CANVAS_WIDTH / 2,
       CANVAS_HEIGHT - 100
     );
-	this.bosses = [];
+    this.bosses = [];
     for (let index = 0; index < gameData.bossCount; index++) {
       this.bosses.push(
         this.factory.createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
       );
     }
-
+    
     this.healthDisplay.bossMaxHealth = 0;
     this.bosses.forEach((boss) => {
       boss.lockOnTarget(this.player);
       this.healthDisplay.bossMaxHealth += boss.health;
     });
-
-    this.asteroids.push(this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50));
   }
 
   exit() {}
@@ -71,9 +74,7 @@ export default class PlayState extends State {
         this.player.onCollision(boss);
       }
     });
-
     this.bosses = this.bosses.filter((boss) => boss.isActive);
-
     if (this.bosses.length === 0) {
       stateMachine.change(GameStateName.Victory, { scene: this.scene });
     } else if (!this.player.isActive) {
@@ -81,24 +82,35 @@ export default class PlayState extends State {
     }
     
     this.asteroids.forEach(asteroid => {
-      asteroid.update(dt, GameStateName.Play);
+      asteroid.update(dt, this);
       if (asteroid.hitbox.didCollide(this.player.hitbox)) {
           this.player.onCollision(asteroid);
           asteroid.onCollision(this.player);
       }
     });
     this.powerUps.forEach(powerup => {
-      powerup.update(dt, GameStateName.Play);
+      powerup.update(dt);
       if (powerup.hitbox.didCollide(this.player.hitbox)) {
+          if (powerup.type === 'screen-clear') {
+              this.asteroids.forEach(asteroid => {
+                  asteroid.isActive = false;
+              });
+          }
           this.player.onCollision(powerup);
           powerup.onCollision(this.player);
       }
     });
-
     this.asteroids = this.asteroids.filter((asteroid) => asteroid.isActive);
     this.powerUps = this.powerUps.filter((powerUp) => powerUp.isActive);
 
     this.healthDisplay.updateHealthDisplay(this.player.currentHealth, totalBossHealth);
+    this.asteroidSpawnTimer += dt;
+    if (this.asteroidSpawnTimer >= this.asteroidSpawnInterval) {
+      this.asteroidSpawnTimer = 0;
+      this.asteroids.push(
+        this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50)
+      );
+    }
   }
 
   render() {
@@ -114,5 +126,98 @@ export default class PlayState extends State {
       powerUp.render(context);
     });
     this.healthDisplay.render(context);
+    this.renderActivePowerUps();
+  }
+
+  renderActivePowerUps() {
+    const iconSize = 24;
+    const iconPadding = 6;
+    const contourWidth = 3;
+    const startX = 20;
+    const startY = CANVAS_HEIGHT - 40;
+
+    let offsetX = 0;
+
+    for (const [type, data] of Object.entries(this.player.activePowerUps)) {
+        const iconX = startX + offsetX;
+        const iconY = startY;
+        const percentage = data.duration / data.maxDuration;
+
+        // Background (dark)
+        context.fillStyle = '#333333';
+        context.fillRect(iconX, iconY, iconSize, iconSize);
+
+        // Colored fill from bottom, shrinks upward as timer expires
+        const fillHeight = iconSize * percentage;
+        const fillY = iconY + iconSize - fillHeight;
+        context.fillStyle = this.getContourColor(data.duration, data.maxDuration);
+        context.fillRect(iconX, fillY, iconSize, fillHeight);
+
+        // Draw power-up sprite
+        const graphic = this.getPowerUpGraphic(type);
+        if (graphic && graphic.image) {
+            context.globalAlpha = 0.9;
+            context.drawImage(graphic.image, iconX + 2, iconY + 2, iconSize - 4, iconSize - 4);
+            context.globalAlpha = 1;
+        }
+
+        // Border
+        context.strokeStyle = '#ffffff';
+        context.lineWidth = contourWidth;
+        context.strokeRect(
+            iconX - contourWidth / 2,
+            iconY - contourWidth / 2,
+            iconSize + contourWidth,
+            iconSize + contourWidth
+        );
+
+        offsetX += iconSize + iconPadding + contourWidth * 2;
+    }
+}
+
+  getPowerUpGraphic(type) {
+      const imageNames = {
+          'rapid-fire': ImageName.RapidFirePowerUp,
+          'triple-shot': ImageName.TripleShotPowerUp,
+          'shield': ImageName.ShieldPowerUp,
+          'speed-boost': ImageName.SpeedPowerUp,
+          'screen-clear': ImageName.ScreenClearPowerUp
+      };
+      const imageName = imageNames[type];
+      if (imageName) {
+          const graphic = images.get(imageName);
+          if (graphic) {
+              return graphic;
+          }
+      }
+      return null;
+  }
+
+  getContourColor(remaining, max) {
+    const percentage = remaining / max;
+
+    if (percentage > 0.5) {
+      const progress = (percentage - 0.5) / 0.5;
+      const r = Math.floor(255 * (1 - progress));
+      const g = 255;
+      return `rgb(${r}, ${g}, 0)`;
+    } else if (percentage > 0.25) {
+      const progress = (percentage - 0.25) / 0.25;
+      const g = Math.floor(255 * progress);
+      return `rgb(255, ${g}, 0)`;
+    } else {
+      return 'rgb(255, 0, 0)';
+    }
+  }
+
+  getIconBackgroundColor(type) {
+    const colors = {
+      'rapid-fire': '#cc6600',
+      'triple-shot': '#cccc00',
+      'shield': '#0066cc',
+      'speed-boost': '#00cc00',
+      'screen-clear': '#cc0000'
+    };
+    return colors[type] || '#666666';
   }
 }
