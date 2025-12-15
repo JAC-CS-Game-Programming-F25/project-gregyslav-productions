@@ -2,7 +2,7 @@ import Boss from "./Boss.js";
 import Sprite from "../../../lib/Sprite.js";
 import Hitbox from "../../../lib/Hitbox.js";
 import ImageName from "../../enums/ImageName.js";
-import { images, projectileFactory, timer } from "../../globals.js";
+import { images, projectileFactory, sounds, timer } from "../../globals.js";
 import Weapon from "./Weapon.js";
 import Vector from "../../../lib/Vector.js";
 import BossWeapon from "./BossWeapon.js";
@@ -13,6 +13,7 @@ import {
 } from "../../../lib/utilities.js";
 import Shield from "../Shield.js";
 import Easing from "../../../lib/Easing.js";
+import SoundName from "../../enums/SoundName.js";
 
 const MECH_BOSS_WEAPON_OFFSET_FROM_CENTER = { x: 88, y: -27 };
 const SCALE = 0.3;
@@ -62,6 +63,7 @@ export default class MechBoss extends Boss {
     ) {
       return;
     }
+    //sounds.play(SoundName.BossAbilityAlarm)
     this.actionDone = false;
     let num = getRandomNumber(0, 10);
     if (num < 5) {
@@ -188,6 +190,7 @@ export default class MechBoss extends Boss {
 
   explode() {
     this.shield.isVisible = false;
+    sounds.play(SoundName.BossDeath)
     this.scale = new Vector(2, 2);
     this.dimensions.x = 98.2 * this.scale.x;
     this.dimensions.y = 95.4 * this.scale.y;

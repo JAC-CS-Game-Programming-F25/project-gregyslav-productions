@@ -151,7 +151,7 @@ export default class Asteroid extends Entity {
 
 		if (this.currentHealth <= 0) {
 			this.stateMachine.change(AsteroidStateName.Breaking, { gameState });
-			sounds.play(SoundName.Collision)
+			sounds.play(SoundName.MissileExplosion)
 		}
 	}
 
@@ -206,6 +206,9 @@ export default class Asteroid extends Entity {
 
 	onCollision(other, gameState) {
 		if (other.collisionLayer & CollisionLayer.PlayerProjectile) {
+			this.hit(other.damage || 1, gameState);
+		} else if (other.collisionLayer & CollisionLayer.Player) {
+			sounds.play(SoundName.Collision)
 			this.hit(other.damage || 1, gameState);
 		}
 	}

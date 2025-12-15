@@ -4,7 +4,8 @@ import StateMachine from "../../../lib/StateMachine.js";
 import BossStateName from "../../enums/BossStateName.js";
 import CollisionLayer from "../../enums/CollisionLayer.js";
 import ImageName from "../../enums/ImageName.js";
-import { images, timer } from "../../globals.js";
+import SoundName from "../../enums/SoundName.js";
+import { images, sounds, timer } from "../../globals.js";
 import BossAttackingState from "../../states/boss/BossAttackingState.js";
 import BossDyingState from "../../states/boss/BossDyingState.js";
 import BossHitState from "../../states/boss/BossHitState.js";
@@ -72,6 +73,7 @@ export default class Boss extends Entity {
 
     onCollision(other) {
         if (other.collisionLayer === CollisionLayer.PlayerProjectile) {
+            sounds.play(SoundName.Hit)
             this.health -= other.damage;
             this.hit = true;
         }

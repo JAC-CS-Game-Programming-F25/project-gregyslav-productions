@@ -132,6 +132,8 @@ export default class Player extends Entity {
 			return;
 		}
 
+		sounds.play(SoundName.Hit)
+
 		this.currentHealth -= amount;
 
 		// TODO: Play damage sound effect

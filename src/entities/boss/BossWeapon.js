@@ -3,7 +3,8 @@ import { getRandomNumber } from "../../../lib/utilities.js";
 import Vector from "../../../lib/Vector.js";
 import BulletPattern from "../../enums/BulletPattern.js";
 import ImageName from "../../enums/ImageName.js";
-import { images, projectileFactory } from "../../globals.js";
+import SoundName from "../../enums/SoundName.js";
+import { images, projectileFactory, sounds } from "../../globals.js";
 import Weapon from "./Weapon.js";
 
 export default class BossWeapon extends Weapon {
@@ -27,51 +28,59 @@ export default class BossWeapon extends Weapon {
     for (let index = 0; index < burstSize; index++) {
       if (missile) {
         this.attackStack.push({
-          action: () =>
+          action: () => {
             projectileFactory.fireBossMissile(
               this.position.x,
               this.position.y,
               this.angle + getRandomNumber(-10, 10),
               this.target
-            ),
+            )
+            sounds.play(SoundName.BossMissileFire)
+          },
           delay: 0.1,
         });
       } else {
         switch (pattern) {
           case BulletPattern.Random:
             this.attackStack.push({
-              action: () =>
+              action: () => {
                 projectileFactory.fireBossBullet(
                   this.position.x,
                   this.position.y,
                   this.angle + getRandomNumber(-15, 15),
                   null
-                ),
+                )
+                sounds.play(SoundName.BossFire)
+              },
               delay: 0.02,
             });
             break;
           case BulletPattern.Wave:
             for (let index = -15; index < 30; index += 5) {
               this.attackStack.push({
-                action: () =>
+                action: () => {
                   projectileFactory.fireBossBullet(
                     this.position.x,
                     this.position.y,
                     this.angle + index,
                     null
-                  ),
+                  )
+                sounds.play(SoundName.BossFire)
+                },
                 delay: 0.05,
               });
             }
             for (let index = -15; index < 30; index += 5) {
               this.attackStack.push({
-                action: () =>
+                action: () => {
                   projectileFactory.fireBossBullet(
                     this.position.x,
                     this.position.y,
                     this.angle - index,
                     null
-                  ),
+                  )
+                sounds.play(SoundName.BossFire)
+                },
                 delay: 0.05,
               });
             }
@@ -79,26 +88,30 @@ export default class BossWeapon extends Weapon {
           case BulletPattern.Spread:
             for (let index = -15; index < 30; index += 3) {
               this.attackStack.push({
-                action: () =>
+                action: () => {
                   projectileFactory.fireBossBullet(
                     this.position.x,
                     this.position.y,
                     this.angle + index,
                     null
-                  ),
+                  )
+                sounds.play(SoundName.BossFire)
+                },
                 delay: 0.1,
               });
             }
             break;
           default:
             this.attackStack.push({
-              action: () =>
+              action: () => {
                 projectileFactory.fireBossBullet(
                   this.position.x,
                   this.position.y,
                   this.angle,
                   null
-                ),
+                )
+                sounds.play(SoundName.BossFire)
+              },
               delay: 0.03,
             });
             break;
