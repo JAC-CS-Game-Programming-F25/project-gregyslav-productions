@@ -101,6 +101,12 @@
 			"path": "../assets/images/NicePng_explotion-png_1023139.png",
 			"width": 491,
 			"height": 477
+		},
+		{
+			"name": "hearts",
+			"path": "../assets/images/hearts.png",
+			"width": 96,
+			"height": 16
 		}
 	],
 	"fonts": [

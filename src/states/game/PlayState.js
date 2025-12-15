@@ -18,6 +18,7 @@ import {
   stateMachine,
 } from "../../globals.js";
 import GameEntityFactory from "../../services/GameFactory.js";
+import HealthDisplay from "../../services/HealthDisplay.js";
 import ProjectileFactory from "../../services/ProjectileFactory.js";
 
 export default class PlayState extends State {
@@ -29,6 +30,7 @@ export default class PlayState extends State {
     this.factory = new GameEntityFactory();
     this.powerUps = [];
     this.asteroids = [];
+    this.healthDisplay = new HealthDisplay(200);
   }
 
   enter(parameters) {
@@ -45,11 +47,11 @@ export default class PlayState extends State {
       );
     }
 
+    this.healthDisplay.bossMaxHealth = 0;
     this.bosses.forEach((boss) => {
       boss.lockOnTarget(this.player);
+      this.healthDisplay.bossMaxHealth += boss.health;
     });
-
-    
 
     this.asteroids.push(this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50));
   }
@@ -60,8 +62,11 @@ export default class PlayState extends State {
     this.scene.update(dt);
     projectileFactory.update(dt, this, this.player, this.bosses, this.asteroids);
     this.player.update(dt, GameStateName.Play);
+
+    let totalBossHealth = 0;
     this.bosses.forEach((boss) => {
       boss.stateMachine.update(dt);
+      totalBossHealth += boss.health
       if (this.player.hitbox.didCollide(boss.hitbox)) {
         this.player.onCollision(boss);
       }
@@ -92,6 +97,8 @@ export default class PlayState extends State {
 
     this.asteroids = this.asteroids.filter((asteroid) => asteroid.isActive);
     this.powerUps = this.powerUps.filter((powerUp) => powerUp.isActive);
+
+    this.healthDisplay.updateHealthDisplay(this.player.currentHealth, totalBossHealth);
   }
 
   render() {
@@ -106,5 +113,6 @@ export default class PlayState extends State {
     this.powerUps.forEach(powerUp => {
       powerUp.render(context);
     });
+    this.healthDisplay.render(context);
   }
 }

@@ -15,7 +15,8 @@ const ImageName = {
 	TripleShotPowerUp: 'triple-shot-boost',
 	RapidFirePowerUp: 'fire-rate-boost',
 	ScreenClearPowerUp: 'clear-screen',
-	Explosion: 'explosion-sprites'
+	Explosion: 'explosion-sprites',
+	Hearts: 'hearts'
 };
 
 export default ImageName;
