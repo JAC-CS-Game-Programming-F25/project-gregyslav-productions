@@ -1,6 +1,6 @@
 import Hitbox from "../../../lib/Hitbox.js";
 import State from "../../../lib/State.js";
-import { getRandomPositiveNumber } from "../../../lib/utilities.js";
+import { getRandomNumber, getRandomPositiveNumber } from "../../../lib/utilities.js";
 import Vector from "../../../lib/Vector.js";
 import MechBoss from "../../entities/boss/MechBoss.js";
 import Player from "../../entities/player/Player.js";
@@ -19,12 +19,14 @@ import {
   input,
   projectileFactory,
   stateMachine,
+  timer,
 } from "../../globals.js";
 import GameEntityFactory from "../../services/GameFactory.js";
 import HealthDisplay from "../../services/HealthDisplay.js";
 import ProjectileFactory from "../../services/ProjectileFactory.js";
 import Input from "../../../lib/Input.js";
 import SaveManager from "../../services/SaveManager.js";
+import Easing from "../../../lib/Easing.js";
 
 export default class PlayState extends State {
   constructor() {
@@ -38,6 +40,7 @@ export default class PlayState extends State {
     this.healthDisplay = new HealthDisplay(200);
     this.asteroidSpawnTimer = 0;
     this.asteroidSpawnInterval = 2;
+    this.shakeOffset = new Vector(0, 0);
   }
 
   enter(parameters) {
@@ -45,15 +48,19 @@ export default class PlayState extends State {
     projectileFactory.clear();
 
     if (parameters.loadSave) {
-
-      let data = SaveManager.load()
+      let data = SaveManager.load();
 
       this.player = SaveManager.deserializePlayer(data.player, this.factory);
-      this.asteroids = SaveManager.deserializeAsteroids(data.asteroids, this.factory);
-      this.powerUps = SaveManager.deserializePowerUps(data.powerUps, this.factory);
+      this.asteroids = SaveManager.deserializeAsteroids(
+        data.asteroids,
+        this.factory
+      );
+      this.powerUps = SaveManager.deserializePowerUps(
+        data.powerUps,
+        this.factory
+      );
       this.bosses = SaveManager.deserializeBosses(data.bosses, this.factory);
       gameData.score = data.score;
-
     }
 
     if (this.player === null || this.player === undefined) {
@@ -65,10 +72,13 @@ export default class PlayState extends State {
 
     for (let index = this.bosses.length; index < gameData.bossCount; index++) {
       this.bosses.push(
-        this.factory.createMechBoss(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), 70)
+        this.factory.createMechBoss(
+          getRandomPositiveNumber(50, CANVAS_WIDTH - 50),
+          70
+        )
       );
     }
-    
+
     this.healthDisplay.bossMaxHealth = 0;
     this.bosses.forEach((boss) => {
       boss.lockOnTarget(this.player);
@@ -78,15 +88,55 @@ export default class PlayState extends State {
 
   exit() {}
 
+  shakeScreen() {
+    timer.tween(
+      this.shakeOffset,
+      { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
+      0.2,
+      Easing.linear,
+      () => {
+        timer.tween(
+          this.shakeOffset,
+          { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
+          0.2,
+          Easing.linear,
+          () => {
+            timer.tween(
+              this.shakeOffset,
+              { x: getRandomNumber(-5, 5), y: getRandomNumber(-5, 5) },
+              0.2,
+              Easing.linear,
+              () => {
+                timer.tween(
+                  this.shakeOffset,
+                  { x: 0, y: 0 },
+                  0.2,
+                  Easing.linear,
+                  () => {}
+                );
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+
   update(dt) {
     this.scene.update(dt);
-    projectileFactory.update(dt, this, this.player, this.bosses, this.asteroids);
+    projectileFactory.update(
+      dt,
+      this,
+      this.player,
+      this.bosses,
+      this.asteroids
+    );
     this.player.update(dt, GameStateName.Play);
 
     let totalBossHealth = 0;
     this.bosses.forEach((boss) => {
       boss.stateMachine.update(dt);
-      totalBossHealth += boss.health
+      totalBossHealth += boss.health;
       if (this.player.hitbox.didCollide(boss.hitbox)) {
         this.player.onCollision(boss);
       }
@@ -102,57 +152,67 @@ export default class PlayState extends State {
       );
       stateMachine.change(GameStateName.GameOver, { scene: this.scene });
     }
-    
-    this.asteroids.forEach(asteroid => {
+
+    this.asteroids.forEach((asteroid) => {
       asteroid.update(dt, this);
       if (asteroid.hitbox.didCollide(this.player.hitbox)) {
-          this.player.onCollision(asteroid);
-          asteroid.onCollision(this.player);
+        this.player.onCollision(asteroid);
+        asteroid.onCollision(this.player);
+        this.shakeScreen();
       }
     });
-    this.powerUps.forEach(powerup => {
+    this.powerUps.forEach((powerup) => {
       powerup.update(dt);
       if (powerup.hitbox.didCollide(this.player.hitbox)) {
-          if (powerup.type === 'screen-clear') {
-              this.asteroids.forEach(asteroid => {
-                  asteroid.isActive = false;
-              });
-          }
-          this.player.onCollision(powerup);
-          powerup.onCollision(this.player);
+        if (powerup.type === "screen-clear") {
+          this.asteroids.forEach((asteroid) => {
+            asteroid.isActive = false;
+          });
+        }
+        this.player.onCollision(powerup);
+        powerup.onCollision(this.player);
       }
     });
     this.asteroids = this.asteroids.filter((asteroid) => asteroid.isActive);
     this.powerUps = this.powerUps.filter((powerUp) => powerUp.isActive);
 
-    this.healthDisplay.updateHealthDisplay(this.player.currentHealth, totalBossHealth);
+    this.healthDisplay.updateHealthDisplay(
+      this.player.currentHealth,
+      totalBossHealth
+    );
     this.asteroidSpawnTimer += dt;
     if (this.asteroidSpawnTimer >= this.asteroidSpawnInterval) {
       this.asteroidSpawnTimer = 0;
       this.asteroids.push(
-        this.factory.createAsteroid(getRandomPositiveNumber(50, CANVAS_WIDTH - 50), -50)
+        this.factory.createAsteroid(
+          getRandomPositiveNumber(50, CANVAS_WIDTH - 50),
+          -50
+        )
       );
     }
 
-    if(input.isKeyPressed(Input.KEYS.H)) {
+    if (input.isKeyPressed(Input.KEYS.H)) {
       SaveManager.save(this);
     }
   }
 
   render() {
     this.scene.render();
+    context.save();
+    context.translate(this.shakeOffset.x, this.shakeOffset.y);
     this.bosses.forEach((boss) => {
       boss.render(context);
     });
     this.player.render(context);
-    this.asteroids.forEach(asteroid => {
+    this.asteroids.forEach((asteroid) => {
       asteroid.render(context);
     });
-    this.powerUps.forEach(powerUp => {
+    this.powerUps.forEach((powerUp) => {
       powerUp.render(context);
     });
     this.healthDisplay.render(context);
     this.renderActivePowerUps();
+    context.restore();
   }
 
   renderActivePowerUps() {
@@ -165,58 +225,64 @@ export default class PlayState extends State {
     let offsetX = 0;
 
     for (const [type, data] of Object.entries(this.player.activePowerUps)) {
-        const iconX = startX + offsetX;
-        const iconY = startY;
-        const percentage = data.duration / data.maxDuration;
+      const iconX = startX + offsetX;
+      const iconY = startY;
+      const percentage = data.duration / data.maxDuration;
 
-        // Background (dark)
-        context.fillStyle = '#333333';
-        context.fillRect(iconX, iconY, iconSize, iconSize);
+      // Background (dark)
+      context.fillStyle = "#333333";
+      context.fillRect(iconX, iconY, iconSize, iconSize);
 
-        // Colored fill from bottom, shrinks upward as timer expires
-        const fillHeight = iconSize * percentage;
-        const fillY = iconY + iconSize - fillHeight;
-        context.fillStyle = this.getContourColor(data.duration, data.maxDuration);
-        context.fillRect(iconX, fillY, iconSize, fillHeight);
+      // Colored fill from bottom, shrinks upward as timer expires
+      const fillHeight = iconSize * percentage;
+      const fillY = iconY + iconSize - fillHeight;
+      context.fillStyle = this.getContourColor(data.duration, data.maxDuration);
+      context.fillRect(iconX, fillY, iconSize, fillHeight);
 
-        // Draw power-up sprite
-        const graphic = this.getPowerUpGraphic(type);
-        if (graphic && graphic.image) {
-            context.globalAlpha = 0.9;
-            context.drawImage(graphic.image, iconX + 2, iconY + 2, iconSize - 4, iconSize - 4);
-            context.globalAlpha = 1;
-        }
-
-        // Border
-        context.strokeStyle = '#ffffff';
-        context.lineWidth = contourWidth;
-        context.strokeRect(
-            iconX - contourWidth / 2,
-            iconY - contourWidth / 2,
-            iconSize + contourWidth,
-            iconSize + contourWidth
+      // Draw power-up sprite
+      const graphic = this.getPowerUpGraphic(type);
+      if (graphic && graphic.image) {
+        context.globalAlpha = 0.9;
+        context.drawImage(
+          graphic.image,
+          iconX + 2,
+          iconY + 2,
+          iconSize - 4,
+          iconSize - 4
         );
+        context.globalAlpha = 1;
+      }
 
-        offsetX += iconSize + iconPadding + contourWidth * 2;
+      // Border
+      context.strokeStyle = "#ffffff";
+      context.lineWidth = contourWidth;
+      context.strokeRect(
+        iconX - contourWidth / 2,
+        iconY - contourWidth / 2,
+        iconSize + contourWidth,
+        iconSize + contourWidth
+      );
+
+      offsetX += iconSize + iconPadding + contourWidth * 2;
     }
-}
+  }
 
   getPowerUpGraphic(type) {
-      const imageNames = {
-          'rapid-fire': ImageName.RapidFirePowerUp,
-          'triple-shot': ImageName.TripleShotPowerUp,
-          'shield': ImageName.ShieldPowerUp,
-          'speed-boost': ImageName.SpeedPowerUp,
-          'screen-clear': ImageName.ScreenClearPowerUp
-      };
-      const imageName = imageNames[type];
-      if (imageName) {
-          const graphic = images.get(imageName);
-          if (graphic) {
-              return graphic;
-          }
+    const imageNames = {
+      "rapid-fire": ImageName.RapidFirePowerUp,
+      "triple-shot": ImageName.TripleShotPowerUp,
+      shield: ImageName.ShieldPowerUp,
+      "speed-boost": ImageName.SpeedPowerUp,
+      "screen-clear": ImageName.ScreenClearPowerUp,
+    };
+    const imageName = imageNames[type];
+    if (imageName) {
+      const graphic = images.get(imageName);
+      if (graphic) {
+        return graphic;
       }
-      return null;
+    }
+    return null;
   }
 
   getContourColor(remaining, max) {
@@ -232,18 +298,18 @@ export default class PlayState extends State {
       const g = Math.floor(255 * progress);
       return `rgb(255, ${g}, 0)`;
     } else {
-      return 'rgb(255, 0, 0)';
+      return "rgb(255, 0, 0)";
     }
   }
 
   getIconBackgroundColor(type) {
     const colors = {
-      'rapid-fire': '#cc6600',
-      'triple-shot': '#cccc00',
-      'shield': '#0066cc',
-      'speed-boost': '#00cc00',
-      'screen-clear': '#cc0000'
+      "rapid-fire": "#cc6600",
+      "triple-shot": "#cccc00",
+      shield: "#0066cc",
+      "speed-boost": "#00cc00",
+      "screen-clear": "#cc0000",
     };
-    return colors[type] || '#666666';
+    return colors[type] || "#666666";
   }
 }
